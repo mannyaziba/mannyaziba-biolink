@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sprint Projects — Manny Aziba</title>
+  <meta name="description" content="Nine sprint projects by Manny Aziba — UI tools, dashboards and systems. Free to access." />
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --obsidian:       #0E0F11;
+      --obsidian-hover: #111215;
+      --graphite:       #1C1F24;
+      --graphite-2:     #22252b;
+      --zen-bone:       #ECEBE6;
+      --fog:            #8E9095;
+      --gold:           #B9A46A;
+      --gold-dim:       rgba(185,164,106,0.12);
+      --gold-mid:       rgba(185,164,106,0.25);
+      --gold-hi:        rgba(185,164,106,0.5);
+      --teal:           #2FB8B0;
+      --crimson:        #A12121;
+      --err:            #c94040;
+      --ease:           cubic-bezier(0.22,1,0.36,1);
+    }
+
+    /* ── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--obsidian);
+      color: var(--zen-bone);
+      font-family: 'Urbanist', sans-serif;
+      font-size: 16px; line-height: 1.65;
+      min-height: 100dvh; overflow-x: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation: none !important; opacity: 1 !important; transform: none !important; }
+    }
+
+    /* ── GRAIN + GLOW ────────────────────────────────────── */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.022; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed;
+      width: 800px; height: 500px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(185,164,106,0.035) 0%, transparent 70%);
+      top: 0; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── PAGE SHELL ──────────────────────────────────────── */
+    .page {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 40px 120px;
+    }
+    @media (max-width: 960px) { .page { padding: 0 24px 80px; } }
+    @media (max-width: 580px) { .page { padding: 0 16px 64px; } }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    nav {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--gold-dim);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .nav-logo img { width: 52px; height: 26px; display: block; }
+    .nav-wordmark {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog);
+    }
+    .nav-link {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      display: flex; align-items: center; gap: 7px;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--zen-bone); }
+    .nav-link svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .nav-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+
+    /* ── HERO ────────────────────────────────────────────── */
+    /* Adopted from CPSA: 2-col hero with stat cards right side */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      padding: 72px 0 64px;
+    }
+    @media (max-width: 840px) {
+      .hero { grid-template-columns: 1fr; gap: 40px; padding: 56px 0 48px; }
+      .hero-stats { display: none; }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block;
+      width: 24px; height: 1px;
+      background: var(--gold); opacity: 0.5;
+    }
+
+    h1 {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: clamp(34px, 4vw, 50px);
+      line-height: 1.1; letter-spacing: -0.015em;
+      color: var(--zen-bone);
+      margin-bottom: 20px;
+    }
+    /* Adopted from CPSA: em accent on key phrase, but uses teal not crimson */
+    h1 em { font-style: normal; color: var(--teal); }
+
+    .hero-body {
+      font-size: 16px; font-weight: 400;
+      color: var(--fog); line-height: 1.7;
+      max-width: 460px; margin-bottom: 32px;
+    }
+
+    /* Adopted from CPSA: primary CTA + ghost CTA pair */
+    .hero-ctas { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--zen-bone); text-decoration: none;
+      background: var(--graphite);
+      padding: 11px 20px; border-radius: 2px;
+      border: 1px solid rgba(236,235,230,0.12);
+      transition: all 0.2s var(--ease);
+    }
+    .btn-primary:hover {
+      background: var(--graphite-2);
+      border-color: var(--gold-mid);
+      transform: translateY(-1px);
+    }
+    .btn-primary svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .btn-primary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      padding: 11px 18px; border-radius: 2px;
+      border: 1px solid rgba(142,144,149,0.2);
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--gold-mid); color: var(--zen-bone); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    /* Adopted from CPSA: stat cards on hero right — reskinned to Blackroom */
+    .hero-stats { display: flex; flex-direction: column; gap: 10px; }
+
+    .stat-card {
+      background: var(--graphite);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      padding: 18px 20px;
+      display: flex; align-items: center; gap: 16px;
+      border-left: 2px solid var(--gold-dim);
+    }
+    .stat-card.accent-teal { border-left-color: var(--teal); }
+    .stat-card.accent-gold { border-left-color: var(--gold); }
+    .stat-card.accent-fog  { border-left-color: var(--fog); }
+
+    /* stat-n uses Urbanist 600 — Fraunces reserved for h1, pa-score-num, modal-title, footer-statement (4 anchor sites) */
+    .stat-n {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600; font-size: 26px; line-height: 1;
+      color: var(--zen-bone); min-width: 36px;
+      letter-spacing: -0.01em;
+    }
+    .stat-n.teal { color: var(--teal); }
+    .stat-n.gold { color: var(--gold); }
+
+    .stat-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--zen-bone); margin-bottom: 3px;
+    }
+    .stat-sub {
+      font-size: 12px; color: var(--fog); line-height: 1.4;
+    }
+
+    /* ── SECTION DIVIDER ─────────────────────────────────── */
+    .section-divider {
+      height: 1px; background: var(--gold-dim);
+      margin: 0 0 40px;
+    }
+
+    /* ── SECTION HEADER ──────────────────────────────────── */
+    /* Adopted from CPSA: heading + filter bar in one flex row */
+    .section-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0; gap: 16px; flex-wrap: wrap;
+      padding-bottom: 32px;
+    }
+
+    .section-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    .filter-bar { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+    .filter-btn {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 2px;
+      border: 1px solid rgba(142,144,149,0.2);
+      background: transparent; color: var(--fog);
+      cursor: pointer; transition: all 0.18s;
+      white-space: nowrap;
+    }
+    .filter-btn:hover { border-color: var(--gold-mid); color: var(--zen-bone); }
+    .filter-btn.active { background: var(--gold-dim); border-color: var(--gold-mid); color: var(--gold); }
+    .filter-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    /* ── CARD GRID ───────────────────────────────────────── */
+    /* Keeping Manny's divider-as-gap grid system */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-dim);
+      overflow: hidden;
+    }
+    @media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .grid { grid-template-columns: 1fr; } }
+
+    /* ── CARD ────────────────────────────────────────────── */
+    .card {
+      background: var(--obsidian);
+      display: flex; flex-direction: column;
+      cursor: pointer;
+      transition: background 0.22s;
+    }
+    .card:hover { background: var(--obsidian-hover); }
+
+    /* Status distinction: live gets gold top rule, dev gets dashed */
+    .card.live  { border-top: 2px solid var(--gold); }
+    .card.dev   { border-top: 2px solid var(--graphite-2); }
+
+    /* ── CARD PREVIEW ────────────────────────────────────── */
+    .card-preview {
+      height: 196px;
+      background: var(--graphite);
+      position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--gold-dim);
+      flex-shrink: 0;
+    }
+
+    .card-badge {
+      position: absolute; top: 14px; left: 14px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 2px; z-index: 2;
+    }
+    .badge-live { background: rgba(47,184,176,0.12); color: var(--teal); border: 1px solid rgba(47,184,176,0.25); }
+    .badge-dev  { background: rgba(142,144,149,0.08); color: var(--fog); border: 1px solid rgba(142,144,149,0.18); }
+
+    .card-index {
+      position: absolute; bottom: 12px; right: 14px;
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 400; font-size: 32px; line-height: 1;
+      color: var(--zen-bone); opacity: 0.05; z-index: 1;
+    }
+
+    /* ── CARD BODY ───────────────────────────────────────── */
+    .card-body {
+      padding: 20px 22px;
+      display: flex; flex-direction: column; flex: 1;
+    }
+
+    .card-name {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 14px; font-weight: 500;
+      letter-spacing: 0.02em; color: var(--zen-bone);
+      margin-bottom: 6px;
+    }
+
+    /* Adopted from CPSA: jtbd as the primary body copy */
+    .card-jtbd {
+      font-size: 13px; color: var(--fog);
+      line-height: 1.6; flex: 1; margin-bottom: 12px;
+    }
+
+    /* Adopted from CPSA: capability tags */
+    .card-caps { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+    .cap {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 2px;
+      background: rgba(236,235,230,0.05);
+      color: var(--fog);
+      border: 1px solid rgba(142,144,149,0.15);
+    }
+
+    /* Adopted from CPSA: ETA for dev cards */
+    .card-eta {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.6;
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .card-footer {
+      margin-top: auto; padding-top: 14px;
+      border-top: 1px solid var(--gold-dim);
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 8px;
+    }
+    .card-cat {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.7;
+    }
+    .card-action {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fog);
+      display: flex; align-items: center; gap: 5px;
+      transition: color 0.18s, gap 0.18s;
+    }
+    .card.live .card-action { color: var(--gold); }
+    .card:hover .card-action { gap: 8px; }
+    .card.live:hover .card-action { color: var(--zen-bone); }
+    .card-action svg {
+      width: 11px; height: 11px;
+      stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round;
+      transition: transform 0.18s;
+    }
+    .card:hover .card-action svg { transform: translate(2px, -2px); }
+
+    /* ─────────────────────────────────────────────────────
+       SNAPSHOT PREVIEWS (kept from Manny — key differentiator)
+    ───────────────────────────────────────────────────── */
+    .preview-audit, .preview-critic, .preview-onboard,
+    .preview-wealth, .preview-betnote, .preview-paper,
+    .preview-designsys, .preview-sandbox, .preview-career,
+    .preview-dev {
+      width: 100%; height: 100%;
+      padding: 40px 14px 12px;
+      display: flex; flex-direction: column;
+    }
+
+    /* Dev placeholder preview — no bespoke preview yet */
+    .preview-dev {
+      align-items: center; justify-content: center;
+      gap: 10px; text-align: center;
+    }
+    .preview-dev-icon {
+      width: 40px; height: 40px; border-radius: 2px;
+      background: rgba(236,235,230,0.05);
+      border: 1px solid rgba(142,144,149,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .preview-dev-icon svg {
+      width: 18px; height: 18px;
+      stroke: var(--fog); fill: none;
+      stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+      opacity: 0.5;
+    }
+    .preview-dev-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.4;
+    }
+
+    /* 01 — UX Audit Tool */
+    .preview-audit { gap: 7px; }
+    .pa-row { display: flex; align-items: center; gap: 8px; }
+    .pa-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 8px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.55; min-width: 72px;
+    }
+    .pa-bar {
+      flex: 1; height: 5px; border-radius: 2px;
+      background: var(--graphite-2); position: relative; overflow: hidden;
+    }
+    .pa-bar::after { content: ''; position: absolute; top: 0; left: 0; height: 100%; border-radius: 2px; }
+    .pa-bar.warn::after  { width: 38%; background: var(--err); }
+    .pa-bar.mid::after   { width: 52%; background: var(--gold); }
+    .pa-bar.good::after  { width: 71%; background: var(--gold); }
+    .pa-bar.great::after { width: 83%; background: var(--teal); }
+    .pa-score-row { display: flex; align-items: baseline; gap: 5px; margin-top: 4px; }
+    .pa-score-num { font-family: 'Fraunces', serif; font-weight: 300; font-size: 24px; line-height: 1; color: var(--zen-bone); }
+    .pa-score-den { font-family: 'Albert Sans', sans-serif; font-size: 10px; color: var(--fog); opacity: 0.55; }
+
+    /* 02 — SaaS Dashboard Critic */
+    .preview-critic { gap: 7px; }
+    .pc-input { height: 26px; border-radius: 2px; border: 1px solid rgba(142,144,149,0.18); background: var(--graphite-2); display: flex; align-items: center; padding: 0 10px; gap: 6px; margin-bottom: 1px; }
+    .pc-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal); opacity: 0.5; flex-shrink: 0; }
+    .pc-ph { font-size: 9px; color: var(--fog); opacity: 0.38; }
+    .pc-row { display: flex; align-items: center; gap: 8px; }
+    .pc-lbl { font-family: 'Albert Sans', sans-serif; font-size: 8px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--fog); opacity: 0.5; min-width: 72px; }
+    .pc-bar { flex: 1; height: 5px; border-radius: 2px; background: var(--graphite-2); position: relative; overflow: hidden; }
+    .pc-bar::after { content: ''; position: absolute; top: 0; left: 0; height: 100%; border-radius: 2px; }
+    .pc-bar.bad::after  { width: 29%; background: var(--err); }
+    .pc-bar.poor::after { width: 41%; background: rgba(185,164,106,0.65); }
+    .pc-bar.ok::after   { width: 68%; background: var(--teal); }
+    .pc-chips { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px; }
+    .pc-chip { font-family: 'Albert Sans', sans-serif; font-size: 7.5px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; padding: 2px 7px; border-radius: 2px; }
+    .pc-chip.r { background: rgba(161,33,33,0.15); color: var(--err); border: 1px solid rgba(161,33,33,0.2); }
+    .pc-chip.g { background: rgba(185,164,106,0.1); color: var(--gold); border: 1px solid rgba(185,164,106,0.18); }
+    .pc-chip.t { background: rgba(47,184,176,0.1); color: var(--teal); border: 1px solid rgba(47,184,176,0.18); }
+
+    /* 03 — Onboarding */
+    .preview-onboard { gap: 0; }
+    .po-step { display: flex; align-items: flex-start; gap: 10px; padding-bottom: 10px; }
+    .po-step:last-child { padding-bottom: 0; }
+    .po-rail { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .po-dot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--graphite-2); background: var(--graphite); display: flex; align-items: center; justify-content: center; }
+    .po-dot.done { background: var(--teal); border-color: var(--teal); }
+    .po-dot.warn { background: rgba(161,33,33,0.2); border-color: var(--err); }
+    .po-dot.next { opacity: 0.4; }
+    .po-dot-inner { width: 5px; height: 5px; border-radius: 50%; background: var(--obsidian); }
+    .po-dot.next .po-dot-inner { background: var(--fog); }
+    .po-connector { width: 1px; height: 10px; background: rgba(142,144,149,0.18); margin: 1px 0; }
+    .po-connector.done { background: rgba(47,184,176,0.3); }
+    .po-content { padding-top: 1px; }
+    .po-name { font-family: 'Albert Sans', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--fog); }
+    .po-name.warn { color: var(--err); }
+    .po-pct { font-size: 9px; color: var(--fog); opacity: 0.45; margin-top: 1px; }
+    .po-pct.warn { color: var(--err); opacity: 0.8; }
+
+    /* 04 — Wealth OS */
+    .preview-wealth { gap: 8px; }
+    .pw-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
+    .pw-metric { background: var(--graphite-2); border-radius: 2px; padding: 7px 9px; }
+    .pw-metric-label { font-family: 'Albert Sans', sans-serif; font-size: 7.5px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fog); opacity: 0.5; margin-bottom: 3px; }
+    .pw-metric-val { font-family: 'Urbanist', sans-serif; font-weight: 600; font-size: 15px; line-height: 1; color: var(--zen-bone); }
+    .pw-metric-val.pos { color: var(--teal); }
+    .pw-metric-val.neg { color: var(--err); }
+    .pw-chart { flex: 1; background: var(--graphite-2); border-radius: 2px; position: relative; overflow: hidden; min-height: 55px; }
+    .pw-bars { position: absolute; bottom: 0; left: 0; right: 0; display: flex; align-items: flex-end; gap: 3px; padding: 0 10px; height: 100%; }
+    .pw-bar { flex: 1; border-radius: 1px 1px 0 0; }
+
+    /* 05 — BetNote */
+    .preview-betnote { gap: 6px; }
+    .pb-header { display: flex; justify-content: space-between; align-items: center; }
+    .pb-title { font-family: 'Albert Sans', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fog); opacity: 0.55; }
+    .pb-odds { font-family: 'Urbanist', sans-serif; font-weight: 600; font-size: 18px; color: var(--teal); }
+    .pb-rows { display: flex; flex-direction: column; gap: 4px; }
+    .pb-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 8px; background: var(--graphite-2); border-radius: 2px; }
+    .pb-name { font-size: 9px; color: var(--zen-bone); font-weight: 500; }
+    .pb-stat { font-family: 'Albert Sans', sans-serif; font-size: 7.5px; font-weight: 500; letter-spacing: 0.05em; color: var(--fog); }
+    .pb-pill { font-size: 7.5px; padding: 2px 6px; border-radius: 2px; }
+    .pb-pill.win  { background: rgba(47,184,176,0.12);  color: var(--teal); }
+    .pb-pill.loss { background: rgba(161,33,33,0.15);   color: var(--err); }
+    .pb-pill.push { background: rgba(185,164,106,0.1);  color: var(--gold); }
+
+    /* 06 — Paper Stack */
+    .preview-paper { gap: 5px; }
+    .pp-row { display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid rgba(185,164,106,0.08); }
+    .pp-row:last-child { border-bottom: none; }
+    .pp-icon { width: 20px; height: 24px; background: var(--graphite-2); border-radius: 2px; border-top-right-radius: 5px; position: relative; flex-shrink: 0; }
+    .pp-icon::after { content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 5px; background: var(--graphite); border-bottom-left-radius: 3px; }
+    .pp-info { flex: 1; min-width: 0; }
+    .pp-fname { font-size: 9px; font-weight: 500; color: var(--zen-bone); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pp-meta { font-family: 'Albert Sans', sans-serif; font-size: 7px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--fog); opacity: 0.4; }
+    .pp-status { font-size: 8px; padding: 2px 6px; border-radius: 2px; flex-shrink: 0; }
+    .pp-status.reviewed { background: rgba(47,184,176,0.1);  color: var(--teal); }
+    .pp-status.pending  { background: rgba(185,164,106,0.1); color: var(--gold); }
+    .pp-status.draft    { background: rgba(142,144,149,0.1); color: var(--fog); }
+
+    /* 07 — Design System Generator */
+    .preview-designsys { gap: 8px; }
+    .pd-swatch-row { display: flex; gap: 4px; }
+    .pd-swatch { height: 16px; border-radius: 2px; flex: 1; }
+    .pd-tokens { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; flex: 1; }
+    .pd-token { background: var(--graphite-2); border-radius: 2px; padding: 6px 8px; }
+    .pd-token-key { font-family: 'Albert Sans', sans-serif; font-size: 7.5px; font-weight: 500; letter-spacing: 0.09em; text-transform: uppercase; color: var(--fog); opacity: 0.45; margin-bottom: 3px; }
+    .pd-token-val { font-size: 9px; color: var(--zen-bone); font-weight: 500; }
+
+    /* 08 — UI Component Sandbox */
+    .preview-sandbox { gap: 8px; }
+    .ps-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
+    .ps-tab { background: var(--graphite-2); border: 1px solid var(--gold-dim); border-radius: 2px; padding: 4px 10px; font-family: 'Albert Sans', sans-serif; font-size: 8.5px; font-weight: 500; letter-spacing: 0.06em; color: var(--fog); white-space: nowrap; }
+    .ps-tab.sel { border-color: var(--gold-mid); color: var(--gold); background: rgba(185,164,106,0.06); }
+    .ps-tab.act { border-color: rgba(47,184,176,0.25); color: var(--teal); background: rgba(47,184,176,0.06); }
+    .ps-preview { flex: 1; background: var(--graphite-2); border: 1px solid var(--gold-dim); border-radius: 2px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+    .ps-btn-sim { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border: 1px solid var(--gold-mid); border-radius: 2px; font-family: 'Albert Sans', sans-serif; font-size: 9px; font-weight: 500; letter-spacing: 0.06em; color: var(--gold); background: rgba(185,164,106,0.06); width: fit-content; }
+    .ps-input-sim { height: 18px; border-radius: 2px; border: 1px solid rgba(142,144,149,0.18); background: var(--obsidian); width: 100%; }
+
+    /* 09 — Career Roadmap */
+    .preview-career { gap: 8px; }
+    .prm-track { display: flex; align-items: center; }
+    .prm-node { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Albert Sans', sans-serif; font-size: 7.5px; font-weight: 500; letter-spacing: 0.04em; flex-shrink: 0; }
+    .prm-node.done { background: rgba(47,184,176,0.15); border: 1.5px solid var(--teal); color: var(--teal); }
+    .prm-node.now  { background: rgba(185,164,106,0.12); border: 1.5px solid var(--gold); color: var(--gold); }
+    .prm-node.next { background: var(--graphite-2); border: 1.5px solid var(--graphite-2); color: var(--fog); opacity: 0.4; }
+    .prm-seg { flex: 1; height: 1px; background: var(--graphite-2); }
+    .prm-seg.done { background: rgba(47,184,176,0.3); }
+    .prm-items { display: flex; flex-direction: column; gap: 4px; }
+    .prm-item { display: flex; align-items: center; justify-content: space-between; padding: 5px 8px; background: var(--graphite-2); border-radius: 2px; }
+    .prm-item-name { font-size: 9px; color: var(--zen-bone); font-weight: 500; }
+    .prm-item-date { font-family: 'Albert Sans', sans-serif; font-size: 7.5px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fog); opacity: 0.45; }
+
+    /* ── MODAL OVERLAY ───────────────────────────────────── */
+    /* Adopted from CPSA — reskinned to Blackroom */
+    .overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(8,8,10,0.82);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 220ms ease;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--graphite);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      width: 100%; max-width: 600px;
+      max-height: 90vh; overflow-y: auto;
+      position: relative;
+      transform: scale(0.97) translateY(10px);
+      transition: transform 260ms var(--ease);
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-dim) transparent;
+    }
+    .overlay.open .modal { transform: scale(1) translateY(0); }
+
+    /* Modal snapshot area */
+    .modal-snapshot {
+      width: 100%; min-height: 180px;
+      background: var(--obsidian);
+      border-bottom: 1px solid var(--gold-dim);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      padding: 28px;
+    }
+    /* Gold grid overlay on snapshot — adapted from CPSA snapshot-grid */
+    .modal-snapshot::before {
+      content: ''; position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(185,164,106,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(185,164,106,0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .modal-close {
+      position: absolute; top: 12px; left: 12px;
+      width: 28px; height: 28px; border-radius: 2px;
+      background: rgba(236,235,230,0.06);
+      border: 1px solid rgba(236,235,230,0.1);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 2;
+      transition: background 0.18s;
+    }
+    .modal-close:hover { background: rgba(236,235,230,0.12); }
+    .modal-close svg { width: 12px; height: 12px; stroke: var(--fog); fill: none; stroke-width: 1.5; stroke-linecap: round; }
+    .modal-close:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    .modal-snapshot-badge {
+      position: absolute; top: 12px; right: 12px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 2px;
+    }
+    .modal-snapshot-badge.live { background: rgba(47,184,176,0.12); color: var(--teal); border: 1px solid rgba(47,184,176,0.25); }
+    .modal-snapshot-badge.dev  { background: rgba(142,144,149,0.08); color: var(--fog); border: 1px solid rgba(142,144,149,0.18); }
+
+    /* Placeholder for dev snapshots */
+    .snapshot-placeholder { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; position: relative; z-index: 1; }
+    .snapshot-placeholder-icon {
+      width: 48px; height: 48px; border-radius: 2px;
+      background: rgba(236,235,230,0.05); border: 1px solid var(--gold-dim);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .snapshot-placeholder-icon svg { width: 22px; height: 22px; stroke: var(--fog); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; opacity: 0.5; }
+    .snapshot-placeholder-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.4; max-width: 240px; line-height: 1.6;
+    }
+
+    /* Modal body */
+    .modal-body { padding: 24px 26px 22px; }
+
+    .modal-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 300; font-size: 24px; line-height: 1.15;
+      letter-spacing: -0.01em; color: var(--zen-bone);
+      margin-bottom: 4px;
+    }
+    .modal-cat {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.7;
+      margin-bottom: 20px;
+    }
+
+    .modal-rule { height: 1px; background: var(--gold-dim); margin: 20px 0; }
+
+    .modal-sec-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.65; margin-bottom: 10px;
+    }
+
+    .modal-desc {
+      font-size: 14px; color: var(--fog);
+      line-height: 1.7; margin-bottom: 20px;
+    }
+
+    /* Adopted from CPSA: minis grid (replaces / ideal for) */
+    .modal-minis {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8px; margin-bottom: 20px;
+    }
+    @media (max-width: 480px) { .modal-minis { grid-template-columns: 1fr; } }
+
+    .mini {
+      background: var(--graphite-2);
+      border: 1px solid var(--gold-dim); border-radius: 2px;
+      padding: 11px 13px;
+    }
+    .mini-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.65; margin-bottom: 5px;
+    }
+    .mini-val { font-size: 12px; color: var(--zen-bone); line-height: 1.45; }
+
+    /* Adopted from CPSA: features list */
+    .modal-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; }
+    .feat { display: flex; align-items: flex-start; gap: 10px; }
+    .feat-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); opacity: 0.6; margin-top: 8px; flex-shrink: 0; }
+    .feat-text { font-size: 13px; color: var(--fog); line-height: 1.6; }
+
+    /* Dev notice — adapted from CPSA */
+    .dev-notice {
+      background: rgba(142,144,149,0.06);
+      border: 1px solid rgba(142,144,149,0.15);
+      border-left: 2px solid var(--fog);
+      border-radius: 0 2px 2px 0;
+      padding: 12px 14px; margin-bottom: 20px;
+    }
+    .dev-notice-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); margin-bottom: 6px;
+    }
+    .dev-notice p { font-size: 12px; color: var(--fog); opacity: 0.7; line-height: 1.6; }
+
+    /* Modal actions */
+    .modal-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .btn-modal-primary {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--zen-bone); text-decoration: none;
+      background: var(--graphite-2);
+      padding: 10px 20px; border-radius: 2px;
+      border: 1px solid var(--gold-mid);
+      transition: all 0.18s var(--ease);
+    }
+    .btn-modal-primary:hover { background: rgba(185,164,106,0.12); border-color: var(--gold-hi); transform: translateY(-1px); }
+    .btn-modal-primary svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; }
+    .btn-modal-primary:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    .btn-modal-ghost {
+      display: inline-flex; align-items: center;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fog); background: transparent;
+      padding: 10px 18px; border-radius: 2px;
+      border: 1px solid rgba(142,144,149,0.2);
+      cursor: pointer; transition: all 0.18s;
+    }
+    .btn-modal-ghost:hover { border-color: var(--gold-mid); color: var(--zen-bone); }
+    .btn-modal-ghost:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    /* Waitlist form — adapted from CPSA */
+    .waitlist-form {
+      background: var(--graphite-2);
+      border: 1px solid var(--gold-dim); border-radius: 2px;
+      padding: 16px; margin-bottom: 12px;
+    }
+    .waitlist-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); display: block; margin-bottom: 10px;
+    }
+    .waitlist-row { display: flex; gap: 8px; }
+    @media (max-width: 480px) { .waitlist-row { flex-direction: column; } }
+
+    .waitlist-input {
+      flex: 1;
+      font-family: 'Urbanist', sans-serif;
+      font-size: 14px; color: var(--zen-bone);
+      background: var(--obsidian);
+      border: 1px solid rgba(142,144,149,0.2); border-radius: 2px;
+      padding: 9px 13px; outline: none;
+      transition: border-color 0.18s, box-shadow 0.18s;
+    }
+    .waitlist-input::placeholder { color: var(--fog); opacity: 0.35; }
+    .waitlist-input:focus { border-color: rgba(47,184,176,0.45); box-shadow: 0 0 0 2px rgba(47,184,176,0.12); }
+
+    .waitlist-submit {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--graphite); color: var(--zen-bone);
+      border: 1px solid var(--gold-mid); border-radius: 2px;
+      padding: 9px 16px; cursor: pointer; white-space: nowrap;
+      transition: all 0.18s var(--ease);
+    }
+    .waitlist-submit:hover { background: rgba(185,164,106,0.1); border-color: var(--gold-hi); }
+    .waitlist-confirm {
+      display: none; font-size: 12px; color: var(--teal);
+      font-family: 'Albert Sans', sans-serif; font-weight: 500;
+      letter-spacing: 0.06em; text-align: center; padding: 10px 0;
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    footer {
+      margin-top: 80px; padding-top: 32px;
+      border-top: 1px solid var(--gold-dim);
+      display: flex; align-items: flex-start;
+      justify-content: space-between; gap: 24px; flex-wrap: wrap;
+    }
+    .footer-statement {
+      font-family: 'Fraunces', serif; font-style: italic;
+      font-weight: 300; font-size: 14px;
+      color: var(--fog); margin-bottom: 6px;
+    }
+    .footer-cpsa {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--crimson); opacity: 0.55;
+    }
+    .footer-cta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+    .footer-cta-label {
+      font-family: 'Albert Sans', sans-serif; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase; color: var(--fog); text-align: right;
+    }
+    .footer-cta-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      padding: 9px 18px; border: 1px solid var(--gold-mid); border-radius: 2px;
+      transition: all 0.18s var(--ease);
+    }
+    .footer-cta-link:hover { background: var(--gold-dim); border-color: var(--gold-hi); color: var(--zen-bone); }
+    .footer-cta-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    /* ── SR ONLY ─────────────────────────────────────────── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ── ANIMATION ───────────────────────────────────────── */
+    .anim {
+      opacity: 0;
+      animation: rise 0.6s var(--ease) var(--delay, 0s) forwards;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page" role="main">
+
+  <!-- Nav -->
+  <nav class="anim" style="--delay:0.05s">
+    <a class="nav-logo" href="https://mannyaziba.vercel.app/">
+      <img src="./manny_aziba_Logo.svg" alt="Manny Aziba" width="52" height="26" />
+      <span class="nav-wordmark" aria-hidden="true">Manny Aziba</span>
+    </a>
+    <a class="nav-link" href="https://mannyaziba.vercel.app/">
+      <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M7.5 2L3.5 6L7.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Portfolio
+    </a>
+  </nav>
+
+  <!-- Hero (CPSA structure, Manny visual) -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow anim" style="--delay:0.12s">Sprint Projects · Free to access</div>
+      <h1 class="anim" style="--delay:0.18s">
+        Interfaces built to show <em>range.</em>
+      </h1>
+      <p class="hero-body anim" style="--delay:0.26s">
+        Not templates. Not mockups. Each project is a sprint — scoped, finished, and live. Tools that prove the diagnostic method. Dashboards that demonstrate structured UI intelligence at rest.
+      </p>
+      <div class="hero-ctas anim" style="--delay:0.33s">
+        <a href="#systems" class="btn-primary">
+          <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6 2v8M2 7l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Explore systems
+        </a>
+        <a href="https://mannyaziba-offers.vercel.app/" class="btn-ghost" target="_blank" rel="noopener noreferrer">
+          Book an audit
+          <span class="sr-only">(opens in new tab)</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Hero stat cards (adopted from CPSA, reskinned) -->
+    <div class="hero-stats anim" id="hero-stats" style="--delay:0.3s">
+      <!-- Populated by JS from SYSTEMS data -->
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Systems section -->
+  <section id="systems">
+    <!-- Section header + filters in one row (adopted from CPSA) -->
+    <div class="section-header anim" style="--delay:0.38s">
+      <span class="section-title">All sprints</span>
+      <div class="filter-bar" id="filter-bar">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+
+    <div class="grid" id="grid">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="anim" style="--delay:0.5s">
+    <div>
+      <p class="footer-statement">"Design is not decoration. It is structured perception."</p>
+      <p class="footer-cpsa">Built on CPSA Architecture · Manny Aziba v2.0</p>
+    </div>
+    <div class="footer-cta">
+      <p class="footer-cta-label">Ready to fix your interface?</p>
+      <a class="footer-cta-link" href="https://mannyaziba-offers.vercel.app/" target="_blank" rel="noopener noreferrer">
+        Book a UX Audit →
+        <span class="sr-only">(opens in new tab)</span>
+      </a>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+
+<!-- Modal (adopted from CPSA structure, Manny visual) -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal" id="modal"></div>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────
+   SYSTEMS DATA
+   Single source of truth — all content, metadata, status here.
+   Update this array to add, remove, or update a sprint.
+   ───────────────────────────────────────────────────── */
+const SYSTEMS = [
+  {
+    id: "ux-audit",
+    name: "UX Intelligence Audit Tool",
+    jtbd: "Score any developer-built interface across the five CPSA lenses and get a prioritised fix list.",
+    category: "Tool",
+    status: "live",
+    url: "https://mannyaziba-free-trials.vercel.app/audit",
+    capabilities: ["Five-lens scoring", "Diagnosis output", "Fix priority"],
+    replaces: "Gut feel + user complaints",
+    idealFor: "Developers with a live product and unnamed usability problems",
+    description: "The UX Intelligence Audit Tool scores any developer-built interface across the five lenses drawn from CPSA's architecture — structure, flow, feedback, readability, consistency. The output is a diagnosis: what is failing, why it is failing, and what to fix first. Not a checklist. A clinical read.",
+    features: [
+      "Scores across all five CPSA diagnostic lenses",
+      "Output names specific failure points, not general advice",
+      "Prioritised fix list — one clear first action",
+      "Directly connected to the Tier 1 paid audit offer"
+    ],
+    preview: "audit",
+    eta: null
+  },
+  {
+    id: "saas-critic",
+    name: "SaaS Dashboard Critic",
+    jtbd: "Describe your dashboard. Get a scored breakdown of where it loses users — specific, not general.",
+    category: "Tool",
+    status: "dev",
+    url: null,
+    capabilities: ["Hierarchy analysis", "Scan path scoring", "Failure tagging"],
+    replaces: "User testing guesswork + anonymous feedback",
+    idealFor: "SaaS founders whose dashboard works technically but underperforms",
+    description: "SaaS Dashboard Critic takes a text description of your dashboard and returns a scored breakdown — hierarchy, scan path, feedback states — with named failure chips and a prioritised fix direction. Dashboards that work technically still fail when the information hierarchy does not match how people actually scan.",
+    features: [
+      "Describes the problem in the language the interface speaks",
+      "Scores hierarchy, scan path, and feedback independently",
+      "Outputs failure chips — named, not vague",
+      "CTA routes directly to a paid Tier 1 audit"
+    ],
+    preview: "critic",
+    eta: "Q3 2026"
+  },
+  {
+    id: "onboarding",
+    name: "Onboarding Flow Builder",
+    jtbd: "Map your onboarding sequence and surface the exact step where the interface stops directing the user.",
+    category: "Tool",
+    status: "dev",
+    url: null,
+    capabilities: ["Step mapping", "Drop-off detection", "Dead zone flagging"],
+    replaces: "Hotjar funnels + spreadsheet guesswork",
+    idealFor: "Post-launch products with high drop-off before first value moment",
+    description: "Onboarding Flow Builder maps a user onboarding sequence step by step and surfaces drop-off points, dead zones, and the exact moment the interface stops directing the user. Onboarding fails not at complexity — but at the moment the interface stops telling the user what to do next.",
+    features: [
+      "Step-by-step funnel mapping with completion data",
+      "Drop-off detection with severity flagging",
+      "Dead zone identification — steps that reach no one",
+      "Routes naturally into a Tier 2 Interface Rework"
+    ],
+    preview: "onboard",
+    eta: "Q3 2026"
+  },
+  {
+    id: "wealth-os",
+    name: "Wealth OS",
+    jtbd: "Financial intelligence dashboard — dense data made immediately legible through strict hierarchy.",
+    category: "Dashboard",
+    status: "dev",
+    url: null,
+    capabilities: ["Net worth tracking", "Allocation view", "Cash flow"],
+    replaces: "Excel models + Xero exports + gut feel",
+    idealFor: "Finance builders or founders who think in numbers",
+    description: "Wealth OS demonstrates what financial data looks like when hierarchy is applied correctly — net worth, allocations, cash flow at density, with the most important number always the first thing the eye lands on. Financial data at density breaks without hierarchy. Every number feels equally important, so none of them are.",
+    features: [
+      "Net worth, monthly delta, liabilities in immediate view",
+      "Bar chart growth history with progressive opacity",
+      "Strict visual hierarchy — primary metric always dominant",
+      "Available as a template sale or retainer entry point"
+    ],
+    preview: "wealth",
+    eta: "Q4 2026"
+  },
+  {
+    id: "betnote",
+    name: "BetNote",
+    jtbd: "High-frequency multi-sport data in a structured, scannable interface — structure replaces noise.",
+    category: "Dashboard",
+    status: "live",
+    url: "https://mannyaziba-free-trials.vercel.app/betnote",
+    capabilities: ["Position tracking", "Multi-sport", "Status clarity"],
+    replaces: "Spreadsheet tracking + bookmaker interfaces",
+    idealFor: "Builders working with high-frequency, real-time data",
+    description: "BetNote demonstrates what complex real-time data looks like when structure is applied instead of noise. High-frequency data fails when every update competes for attention — this sprint shows a scannable position table where signal is always separated from noise. A range signal and a collaboration entry point.",
+    features: [
+      "Position table with sport, round, and result in one row",
+      "Win / Push / Loss pills — state visible without reading",
+      "Aggregate odds display without visual hierarchy collapse",
+      "Signals collaboration potential for data-heavy products"
+    ],
+    preview: "betnote",
+    eta: null
+  },
+  {
+    id: "paper-stack",
+    name: "Paper Stack",
+    jtbd: "Document and file management UI — status, recency, and priority visible without opening anything.",
+    category: "Dashboard",
+    status: "dev",
+    url: null,
+    capabilities: ["File list UI", "Status tagging", "Recency sorting"],
+    replaces: "Google Drive + Notion + folder chaos",
+    idealFor: "Teams with high document volume and no management layer",
+    description: "Paper Stack demonstrates what document management looks like when the interface treats files as data, not icons. Status, recency, and priority are visible at a glance — without opening a single file. File systems collapse under volume not because files are disorganised but because the interface treats every file as equally visible.",
+    features: [
+      "File list with name, recency, size in one scannable row",
+      "Status tags — Reviewed, Pending, Draft — visible at rest",
+      "Folded-corner file icon with no external image dependency",
+      "Available as a template sale"
+    ],
+    preview: "paper",
+    eta: "Q4 2026"
+  },
+  {
+    id: "design-system-gen",
+    name: "Design System Generator",
+    jtbd: "Generate a complete UI token system — colour, type, spacing, grid — from your product's intent.",
+    category: "System",
+    status: "dev",
+    url: null,
+    capabilities: ["Colour tokens", "Type hierarchy", "Spacing scale"],
+    replaces: "Ad hoc CSS variables + inconsistent design decisions",
+    idealFor: "Developers building without a design system",
+    description: "Design System Generator produces a complete UI token system from a product's intent and context — colour scales, type hierarchy, spacing rules, and grid. The output is structured and dev-ready. Developer-built products accumulate visual decisions without a system, which means nothing is consistent and every fix is a one-off.",
+    features: [
+      "Six-colour palette generation with role assignments",
+      "Type hierarchy: body, structure, and anchor typefaces",
+      "8px base unit with explicit spacing scale",
+      "Grid specification: columns, gutters, max-width"
+    ],
+    preview: "designsys",
+    eta: "Q1 2027"
+  },
+  {
+    id: "component-sandbox",
+    name: "UI Component Sandbox",
+    jtbd: "Live component library built on the five-lens system — the difference between components and a system.",
+    category: "System",
+    status: "dev",
+    url: null,
+    capabilities: ["Component library", "System rules", "Live explorer"],
+    replaces: "Scattered Figma components + one-off implementations",
+    idealFor: "Developers approaching Tier 3 engagement depth",
+    description: "UI Component Sandbox is a live component library explorer built on the five-lens system. Every element — button, input, card, badge, tag — follows the same structural rules. This sprint exists to show what Tier 3 capability looks like before it is offered. The difference between having components and having a component system is whether every element follows the same rules.",
+    features: [
+      "Five component types: button, input, card, badge, tag",
+      "Every element governed by structure, feedback, consistency lenses",
+      "Tab-based explorer — see the system in motion",
+      "Signals the Tier 3 retainer conversation"
+    ],
+    preview: "sandbox",
+    eta: "Q1 2027"
+  },
+  {
+    id: "career-roadmap",
+    name: "Career Roadmap",
+    jtbd: "Complex personal planning data — goals, milestones, actions — structured into one navigable view.",
+    category: "Dashboard",
+    status: "dev",
+    url: null,
+    capabilities: ["Timeline view", "Milestone tracking", "Action list"],
+    replaces: "Scattered notes + spreadsheets + calendar fragments",
+    idealFor: "Anyone managing high-stakes personal planning data",
+    description: "Career Roadmap demonstrates what happens when complex personal planning data is given a hierarchy. Goals, milestones, and priority actions in a single navigable view. A UI sprint built not around career advice but around the interface problem: planning data is always fragmented because the interface gives it no structure.",
+    features: [
+      "Five-node timeline with done / active / upcoming states",
+      "Milestone list with date anchors — always in view",
+      "Demonstrates range: personal data, applied UI intelligence",
+      "Range signal — shows CPSA lenses outside product context"
+    ],
+    preview: "career",
+    eta: "Q2 2027"
+  }
+];
+
+/* ─────────────────────────────────────────────────────
+   PREVIEW HTML builders (kept from Manny — key differentiator)
+   ───────────────────────────────────────────────────── */
+const PREVIEWS = {
+  audit: `
+    <div class="preview-audit">
+      <div class="pa-row"><span class="pa-label">Structure</span><div class="pa-bar good"></div></div>
+      <div class="pa-row"><span class="pa-label">Flow</span><div class="pa-bar mid"></div></div>
+      <div class="pa-row"><span class="pa-label">Feedback</span><div class="pa-bar warn"></div></div>
+      <div class="pa-row"><span class="pa-label">Readability</span><div class="pa-bar great"></div></div>
+      <div class="pa-row"><span class="pa-label">Consistency</span><div class="pa-bar mid"></div></div>
+      <div class="pa-score-row"><span class="pa-score-num">62</span><span class="pa-score-den">/ 100</span></div>
+    </div>`,
+  critic: `
+    <div class="preview-critic">
+      <div class="pc-input"><div class="pc-dot"></div><span class="pc-ph">Describe your dashboard…</span></div>
+      <div class="pc-row"><span class="pc-lbl">Hierarchy</span><div class="pc-bar bad"></div></div>
+      <div class="pc-row"><span class="pc-lbl">Scan path</span><div class="pc-bar poor"></div></div>
+      <div class="pc-row"><span class="pc-lbl">Feedback</span><div class="pc-bar ok"></div></div>
+      <div class="pc-chips">
+        <span class="pc-chip r">Hierarchy collapse</span>
+        <span class="pc-chip g">Weak scan path</span>
+        <span class="pc-chip t">Good feedback</span>
+      </div>
+    </div>`,
+  onboard: `
+    <div class="preview-onboard">
+      <div class="po-step">
+        <div class="po-rail"><div class="po-dot done"><div class="po-dot-inner"></div></div><div class="po-connector done"></div></div>
+        <div class="po-content"><div class="po-name">Sign up</div><div class="po-pct">100% completion</div></div>
+      </div>
+      <div class="po-step">
+        <div class="po-rail"><div class="po-dot done"><div class="po-dot-inner"></div></div><div class="po-connector done"></div></div>
+        <div class="po-content"><div class="po-name">Profile setup</div><div class="po-pct">78% completion</div></div>
+      </div>
+      <div class="po-step">
+        <div class="po-rail"><div class="po-dot warn"><div class="po-dot-inner"></div></div><div class="po-connector"></div></div>
+        <div class="po-content"><div class="po-name warn">Activation</div><div class="po-pct warn">61% drop-off</div></div>
+      </div>
+      <div class="po-step">
+        <div class="po-rail"><div class="po-dot next"><div class="po-dot-inner"></div></div></div>
+        <div class="po-content"><div class="po-name">First value moment</div><div class="po-pct">15% reach</div></div>
+      </div>
+    </div>`,
+  wealth: `
+    <div class="preview-wealth">
+      <div class="pw-metrics">
+        <div class="pw-metric"><div class="pw-metric-label">Net Worth</div><div class="pw-metric-val">₦4.2M</div></div>
+        <div class="pw-metric"><div class="pw-metric-label">Monthly Δ</div><div class="pw-metric-val pos">+8.3%</div></div>
+        <div class="pw-metric"><div class="pw-metric-label">Liabilities</div><div class="pw-metric-val neg">−12%</div></div>
+      </div>
+      <div class="pw-chart">
+        <div class="pw-bars">
+          <div class="pw-bar" style="height:28%;background:rgba(185,164,106,0.28)"></div>
+          <div class="pw-bar" style="height:42%;background:rgba(185,164,106,0.33)"></div>
+          <div class="pw-bar" style="height:36%;background:rgba(185,164,106,0.30)"></div>
+          <div class="pw-bar" style="height:54%;background:rgba(185,164,106,0.38)"></div>
+          <div class="pw-bar" style="height:61%;background:rgba(185,164,106,0.44)"></div>
+          <div class="pw-bar" style="height:70%;background:rgba(185,164,106,0.52)"></div>
+          <div class="pw-bar" style="height:82%;background:var(--gold)"></div>
+        </div>
+      </div>
+    </div>`,
+  betnote: `
+    <div class="preview-betnote">
+      <div class="pb-header"><span class="pb-title">Active positions</span><span class="pb-odds">2.45×</span></div>
+      <div class="pb-rows">
+        <div class="pb-row"><span class="pb-name">Arsenal +1.5</span><span class="pb-stat">EPL · R28</span><span class="pb-pill win">Win</span></div>
+        <div class="pb-row"><span class="pb-name">Over 2.5 Goals</span><span class="pb-stat">UCL · QF</span><span class="pb-pill push">Push</span></div>
+        <div class="pb-row"><span class="pb-name">Lakers ML</span><span class="pb-stat">NBA · G6</span><span class="pb-pill loss">Loss</span></div>
+        <div class="pb-row"><span class="pb-name">Djokovic −1.5</span><span class="pb-stat">AO · SF</span><span class="pb-pill win">Win</span></div>
+      </div>
+    </div>`,
+  paper: `
+    <div class="preview-paper">
+      <div class="pp-row"><div class="pp-icon"></div><div class="pp-info"><div class="pp-fname">Q4 Strategy Brief.pdf</div><div class="pp-meta">2d ago · 340 KB</div></div><span class="pp-status reviewed">Reviewed</span></div>
+      <div class="pp-row"><div class="pp-icon"></div><div class="pp-info"><div class="pp-fname">Client Onboarding v2.docx</div><div class="pp-meta">5d ago · 88 KB</div></div><span class="pp-status pending">Pending</span></div>
+      <div class="pp-row"><div class="pp-icon"></div><div class="pp-info"><div class="pp-fname">Component Tokens.fig</div><div class="pp-meta">Today · 1.2 MB</div></div><span class="pp-status draft">Draft</span></div>
+      <div class="pp-row"><div class="pp-icon"></div><div class="pp-info"><div class="pp-fname">Audit Report — BetNote.pdf</div><div class="pp-meta">1d ago · 220 KB</div></div><span class="pp-status reviewed">Reviewed</span></div>
+    </div>`,
+  designsys: `
+    <div class="preview-designsys">
+      <div class="pd-swatch-row">
+        <div class="pd-swatch" style="background:#0E0F11;border:1px solid rgba(255,255,255,0.08)"></div>
+        <div class="pd-swatch" style="background:#1C1F24"></div>
+        <div class="pd-swatch" style="background:#B9A46A"></div>
+        <div class="pd-swatch" style="background:#2FB8B0"></div>
+        <div class="pd-swatch" style="background:#ECEBE6"></div>
+        <div class="pd-swatch" style="background:#A12121"></div>
+      </div>
+      <div class="pd-tokens">
+        <div class="pd-token"><div class="pd-token-key">Base unit</div><div class="pd-token-val">8px</div></div>
+        <div class="pd-token"><div class="pd-token-key">Body type</div><div class="pd-token-val">Urbanist 400</div></div>
+        <div class="pd-token"><div class="pd-token-key">Radius</div><div class="pd-token-val">4px</div></div>
+        <div class="pd-token"><div class="pd-token-key">Accent</div><div class="pd-token-val">#B9A46A</div></div>
+        <div class="pd-token"><div class="pd-token-key">Structure</div><div class="pd-token-val">Albert Sans</div></div>
+        <div class="pd-token"><div class="pd-token-key">Columns</div><div class="pd-token-val">12 / 24px</div></div>
+      </div>
+    </div>`,
+  sandbox: `
+    <div class="preview-sandbox">
+      <div class="ps-tabs">
+        <span class="ps-tab sel">Button</span>
+        <span class="ps-tab">Input</span>
+        <span class="ps-tab act">Card</span>
+        <span class="ps-tab">Badge</span>
+        <span class="ps-tab">Tag</span>
+      </div>
+      <div class="ps-preview">
+        <div class="ps-btn-sim">Confirm action →</div>
+        <div class="ps-input-sim"></div>
+      </div>
+    </div>`,
+  career: `
+    <div class="preview-career">
+      <div class="prm-track">
+        <div class="prm-node done">Now</div><div class="prm-seg done"></div>
+        <div class="prm-node done">3M</div><div class="prm-seg done"></div>
+        <div class="prm-node now">6M</div><div class="prm-seg"></div>
+        <div class="prm-node next">12M</div><div class="prm-seg"></div>
+        <div class="prm-node next">2Y</div>
+      </div>
+      <div class="prm-items">
+        <div class="prm-item"><span class="prm-item-name">Portfolio launch</span><span class="prm-item-date">Apr 2026</span></div>
+        <div class="prm-item"><span class="prm-item-name">First client retainer</span><span class="prm-item-date">Jun 2026</span></div>
+        <div class="prm-item"><span class="prm-item-name">Tier 3 activation</span><span class="prm-item-date">Q1 2027</span></div>
+      </div>
+    </div>`
+};
+
+/* ─────────────────────────────────────────────────────
+   HERO STAT CARDS (auto-computed from SYSTEMS data)
+   ───────────────────────────────────────────────────── */
+const liveCount = SYSTEMS.filter(s => s.status === 'live').length;
+const devCount  = SYSTEMS.filter(s => s.status === 'dev').length;
+
+document.getElementById('hero-stats').innerHTML = `
+  <div class="stat-card accent-teal">
+    <div class="stat-n teal">${liveCount}</div>
+    <div>
+      <div class="stat-label">Live sprints</div>
+      <div class="stat-sub">Ready to access — no setup required</div>
+    </div>
+  </div>
+  ${devCount > 0 ? `
+  <div class="stat-card accent-gold">
+    <div class="stat-n gold">${devCount}</div>
+    <div>
+      <div class="stat-label">In development</div>
+      <div class="stat-sub">Join the waitlist for early access</div>
+    </div>
+  </div>` : ''}
+  <div class="stat-card accent-fog">
+    <div class="stat-n" style="font-size:20px;letter-spacing:0;">Free</div>
+    <div>
+      <div class="stat-label">To access</div>
+      <div class="stat-sub">No card, no account, no friction</div>
+    </div>
+  </div>`;
+
+/* ─────────────────────────────────────────────────────
+   FILTER BAR (auto-generated from category set)
+   ───────────────────────────────────────────────────── */
+const cats = ['all', ...new Set(SYSTEMS.map(s => s.category))];
+const filterBar = document.getElementById('filter-bar');
+
+cats.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'filter-btn' + (cat === 'all' ? ' active' : '');
+  btn.dataset.cat = cat;
+  btn.setAttribute('aria-pressed', cat === 'all' ? 'true' : 'false');
+  btn.textContent = cat === 'all' ? 'All' : cat;
+  filterBar.appendChild(btn);
+});
+
+/* ─────────────────────────────────────────────────────
+   GRID RENDER
+   ───────────────────────────────────────────────────── */
+let activeCat = 'all';
+
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  grid.innerHTML = '';
+
+  const list = activeCat === 'all'
+    ? SYSTEMS
+    : SYSTEMS.filter(s => s.category === activeCat);
+
+  list.forEach((s, i) => {
+    const isLive = s.status === 'live';
+    const delay  = 0.48 + i * 0.05;
+
+    const card = document.createElement('div');
+    card.className = `card ${s.status} anim`;
+    card.style.setProperty('--delay', delay + 's');
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', `${s.name} — ${isLive ? 'live' : 'in development'}. Click to view details.`);
+
+    const previewHTML = isLive && PREVIEWS[s.preview]
+      ? PREVIEWS[s.preview]
+      : `<div class="preview-dev">
+           <div class="preview-dev-icon">
+             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2.5 2.5"/></svg>
+           </div>
+           <div class="preview-dev-label">Est. ${s.eta || 'TBD'}</div>
+         </div>`;
+
+    card.innerHTML = `
+      <div class="card-preview" role="img" aria-label="${s.name} interface preview">
+        <span class="card-badge badge-${s.status}">${isLive ? 'Live' : 'In development'}</span>
+        <span class="card-index" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+        ${previewHTML}
+      </div>
+      <div class="card-body">
+        <div class="card-name">${s.name}</div>
+        <div class="card-jtbd">${s.jtbd}</div>
+        ${!isLive && s.eta ? `<div class="card-eta">Est. ${s.eta}</div>` : ''}
+        <div class="card-caps">${s.capabilities.map(c => `<span class="cap">${c}</span>`).join('')}</div>
+        <div class="card-footer">
+          <span class="card-cat">${s.category}</span>
+          <span class="card-action">
+            ${isLive ? 'Preview' : 'Learn more'}
+            <svg viewBox="0 0 14 14">
+              <path d="M2 7h10M7.5 3 12 7l-4.5 4" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </div>
+      </div>`;
+
+    card.addEventListener('click', () => openModal(s));
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(s); } });
+    grid.appendChild(card);
+  });
+}
+
+/* ─────────────────────────────────────────────────────
+   MODAL
+   ───────────────────────────────────────────────────── */
+function openModal(s) {
+  const overlay = document.getElementById('overlay');
+  const modal   = document.getElementById('modal');
+  const isLive  = s.status === 'live';
+
+  const snapshotInner = isLive && PREVIEWS[s.preview]
+    ? `<div style="width:100%;height:180px;position:relative;overflow:hidden;">${PREVIEWS[s.preview]}</div>`
+    : `<div class="snapshot-placeholder">
+         <div class="snapshot-placeholder-icon">
+           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l2.5 2.5"/></svg>
+         </div>
+         <div class="snapshot-placeholder-label">Preview available when live — est. ${s.eta || 'TBD'}</div>
+       </div>`;
+
+  modal.innerHTML = `
+    <div class="modal-snapshot">
+      <button class="modal-close" id="modal-close" aria-label="Close">
+        <svg viewBox="0 0 13 13"><path d="M1 1l11 11M12 1 1 12"/></svg>
+      </button>
+      <span class="modal-snapshot-badge ${s.status}">${isLive ? 'Live' : `Est. ${s.eta || 'TBD'}`}</span>
+      ${snapshotInner}
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-title" id="modal-title">${s.name}</div>
+      <div class="modal-cat">${s.category}</div>
+
+      ${!isLive ? `
+      <div class="dev-notice">
+        <div class="dev-notice-title">In development — est. ${s.eta || 'TBD'}</div>
+        <p>This sprint is being built to the spec below. Join the waitlist to be first in when it launches.</p>
+      </div>` : ''}
+
+      <div class="modal-sec-label">What it does</div>
+      <div class="modal-desc">${s.description}</div>
+
+      <div class="modal-minis">
+        <div class="mini">
+          <div class="mini-label">Replaces</div>
+          <div class="mini-val">${s.replaces}</div>
+        </div>
+        <div class="mini">
+          <div class="mini-label">Ideal for</div>
+          <div class="mini-val">${s.idealFor}</div>
+        </div>
+      </div>
+
+      <div class="modal-rule"></div>
+
+      <div class="modal-sec-label">Key capabilities</div>
+      <div class="modal-features">
+        ${s.features.map(f => `
+          <div class="feat">
+            <div class="feat-dot"></div>
+            <div class="feat-text">${f}</div>
+          </div>`).join('')}
+      </div>
+
+      <div class="modal-rule"></div>
+
+      ${isLive ? `
+      <div class="modal-actions">
+        <a class="btn-modal-primary" href="${s.url}" target="_blank" rel="noopener noreferrer">
+          Access free
+          <svg viewBox="0 0 13 13"><path d="M1.5 11.5l10-10M11.5 4.5v-3h-3"/></svg>
+          <span class="sr-only">(opens in new tab)</span>
+        </a>
+        <button type="button" class="btn-modal-ghost" id="modal-dismiss">Close</button>
+      </div>` : `
+      <div class="waitlist-form" id="waitlist-form-${s.id}">
+        <label class="waitlist-label" for="wl-input-${s.id}">Get notified when ${s.name} launches</label>
+        <div class="waitlist-row">
+          <input class="waitlist-input" type="email" id="wl-input-${s.id}" placeholder="your@email.com" />
+          <button type="button" class="waitlist-submit" data-id="${s.id}" data-name="${s.name}">Join waitlist</button>
+        </div>
+      </div>
+      <div class="waitlist-confirm" id="wl-confirm-${s.id}">
+        You are on the list for ${s.name}. One email when it launches — nothing else.
+      </div>
+      <div class="modal-actions" style="margin-top:12px;">
+        <button type="button" class="btn-modal-ghost" id="modal-dismiss">Back to sprints</button>
+      </div>`}
+    </div>`;
+
+  overlay.classList.add('open');
+  modal.scrollTop = 0;
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  const dismiss = document.getElementById('modal-dismiss');
+  if (dismiss) dismiss.addEventListener('click', closeModal);
+
+  // Waitlist submit
+  const submitBtn = modal.querySelector('.waitlist-submit');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', () => {
+      const id    = submitBtn.dataset.id;
+      const input = document.getElementById(`wl-input-${id}`);
+      const form  = document.getElementById(`waitlist-form-${id}`);
+      const conf  = document.getElementById(`wl-confirm-${id}`);
+      if (!input || !input.value.includes('@')) {
+        input.style.borderColor = 'rgba(161,33,33,0.55)';
+        input.focus();
+        return;
+      }
+      /* Production: POST input.value + id to waitlist endpoint */
+      form.style.display = 'none';
+      conf.style.display = 'block';
+    });
+  }
+}
+
+function closeModal() {
+  document.getElementById('overlay').classList.remove('open');
+}
+
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeModal();
+});
+
+/* ─────────────────────────────────────────────────────
+   FILTER LOGIC
+   ───────────────────────────────────────────────────── */
+document.getElementById('filter-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
+  activeCat = btn.dataset.cat;
+  renderGrid();
+});
+
+/* ─────────────────────────────────────────────────────
+   INIT
+   ───────────────────────────────────────────────────── */
+renderGrid();
+</script>
+</body>
+</html>

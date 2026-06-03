@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work with Manny Aziba — UX Intelligence for Developer-Built Products</title>
+
+  <!-- SEO + OG -->
+  <meta name="description" content="UX Intelligence Audits and Interface Reworks for developer-built products. Manny Aziba diagnoses what is breaking your interface and fixes it." />
+  <meta name="keywords" content="UX audit, interface rework, developer products, UI systems, usability diagnosis" />
+  <meta property="og:title" content="Work with Manny Aziba — UX Intelligence" />
+  <meta property="og:description" content="I will show you exactly where your interface is losing users and what to fix." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Work with Manny Aziba — UX Intelligence" />
+  <meta name="twitter:description" content="I will show you exactly where your interface is losing users and what to fix." />
+
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- GA4 — replace G-XXXXXXXXXX with Measurement ID -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', { send_page_view: false });
+  </script>
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --obsidian:       #0E0F11;
+      --obsidian-hover: #111215;
+      --graphite:       #1C1F24;
+      --graphite-2:     #22252b;
+      --zen-bone:       #ECEBE6;
+      --fog:            #8E9095;
+      --gold:           #B9A46A;
+      --gold-dim:       rgba(185,164,106,0.12);
+      --gold-mid:       rgba(185,164,106,0.25);
+      --gold-hi:        rgba(185,164,106,0.5);
+      --teal:           #2FB8B0;
+      --crimson:        #A12121;
+      --err:            #c94040;
+      --ease:           cubic-bezier(0.22,1,0.36,1);
+    }
+
+    /* ── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--obsidian);
+      color: var(--zen-bone);
+      font-family: 'Urbanist', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation: none !important; opacity: 1 !important; transform: none !important; }
+      * { transition: none !important; }
+    }
+
+    /* ── GRAIN + GLOW ────────────────────────────────────── */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.022; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed;
+      width: 900px; height: 600px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(185,164,106,0.03) 0%, transparent 70%);
+      top: 0; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── LAYOUT ──────────────────────────────────────────── */
+    .page { position: relative; z-index: 1; }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 64px;
+    }
+    @media (max-width: 960px)  { .container { padding: 0 32px; } }
+    @media (max-width: 580px)  { .container { padding: 0 20px; } }
+
+    /* ── DIVIDER ─────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.15;
+      margin: 48px 0;
+    }
+
+    /* ── SR ONLY ─────────────────────────────────────────── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────────────────── */
+    .nav {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--gold-dim);
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .nav-logo img { width: 52px; height: 26px; display: block; }
+    .nav-wordmark {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog);
+    }
+    .nav-back {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      display: flex; align-items: center; gap: 7px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--zen-bone); }
+    .nav-back svg { width: 12px; height: 12px; }
+    .nav-back:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+
+    /* ─────────────────────────────────────────────────────
+       IDENTITY STAMP — adopted from CPSA
+    ───────────────────────────────────────────────────── */
+    .identity-stamp {
+      padding: 28px 0 0;
+      text-align: center;
+    }
+    .identity-stamp-text {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog);
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .identity-stamp-dot {
+      width: 3px; height: 3px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       HERO — adopted from CPSA, Manny voice + visual
+    ───────────────────────────────────────────────────── */
+    .hero {
+      padding: 64px 0 80px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; display: block;
+      width: 20px; height: 1px;
+      background: var(--gold); opacity: 0.4;
+    }
+
+    .hero-headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.1; letter-spacing: -0.015em;
+      color: var(--zen-bone);
+      margin-bottom: 20px;
+    }
+    /* Teal em accent — adapted from CPSA's crimson em, but Manny's teal is the insight/interaction colour */
+    .hero-headline em { font-style: normal; color: var(--teal); }
+
+    .hero-sub {
+      font-size: 18px; font-weight: 400;
+      color: var(--fog); line-height: 1.65;
+      max-width: 520px; margin: 0 auto 36px;
+    }
+
+    /* ── PRIMARY CTA BUTTON ──────────────────────────────── */
+    /* Graphite + gold border — NOT crimson. Crimson is truth marker only. */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--zen-bone); text-decoration: none;
+      background: var(--graphite);
+      padding: 14px 28px; border-radius: 2px;
+      border: 1px solid var(--gold-mid);
+      transition: all 0.22s var(--ease);
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: var(--graphite-2);
+      border-color: var(--gold-hi);
+      transform: translateY(-2px);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+    .btn-primary svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; }
+
+    /* ── GHOST BUTTON ────────────────────────────────────── */
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      background: transparent;
+      padding: 14px 24px; border-radius: 2px;
+      border: 1px solid rgba(142,144,149,0.2);
+      transition: all 0.22s var(--ease);
+      cursor: pointer;
+    }
+    .btn-ghost:hover { border-color: var(--gold-mid); color: var(--zen-bone); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+    /* ─────────────────────────────────────────────────────
+       OFFERS SECTION
+    ───────────────────────────────────────────────────── */
+    .offers-section { padding: 0 0 80px; }
+
+    /* Section framing — adopted from CPSA */
+    .section-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--fog); text-align: center;
+      margin-bottom: 10px;
+    }
+    .price-anchor {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 16px; font-weight: 400;
+      color: var(--fog); text-align: center;
+      margin-bottom: 48px;
+      opacity: 0.7;
+    }
+    .price-anchor strong { color: var(--zen-bone); font-weight: 600; }
+
+    /* Grid: single column for cards — stacked, not side by side.
+       Tier system reads as a sequence, not a choice of equals. */
+    .offers-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-dim);
+    }
+    @media (min-width: 720px) {
+      .offers-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      /* Tier 3 and collaboration span differently */
+      .offer-card.span-full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* ── OFFER CARD ──────────────────────────────────────── */
+    .offer-card {
+      background: var(--obsidian);
+      padding: 36px 32px;
+      display: flex; flex-direction: column;
+      position: relative;
+      transition: background 0.22s;
+      cursor: default;
+    }
+    .offer-card:hover { background: var(--obsidian-hover); }
+
+    /* Status rules — adopted from CPSA card top rule system */
+    .offer-card.tier-active   { border-top: 2px solid var(--gold); }
+    .offer-card.tier-entry    { border-top: 2px solid var(--teal); }
+    .offer-card.tier-inactive { border-top: 2px solid var(--graphite-2); }
+    .offer-card.tier-collab   { border-top: 2px solid rgba(142,144,149,0.3); }
+
+    /* Tag — adopted from CPSA offer-tag, reskinned */
+    .offer-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 2px;
+      margin-bottom: 20px; width: fit-content;
+    }
+    .tag-entry    { background: rgba(47,184,176,0.1); color: var(--teal); border: 1px solid rgba(47,184,176,0.25); }
+    .tag-active   { background: rgba(185,164,106,0.1); color: var(--gold); border: 1px solid rgba(185,164,106,0.22); }
+    .tag-inactive { background: rgba(142,144,149,0.08); color: var(--fog); border: 1px solid rgba(142,144,149,0.18); }
+    .tag-collab   { background: rgba(142,144,149,0.06); color: var(--fog); border: 1px solid rgba(142,144,149,0.14); }
+
+    .offer-tier {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.5;
+      margin-bottom: 8px;
+    }
+
+    /* Albert Sans — structural label, not philosophical anchor.
+       Fraunces reserved for: hero-headline, close-line, footer-statement. */
+    .offer-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-weight: 500; font-size: 20px;
+      letter-spacing: 0.01em; line-height: 1.2;
+      color: var(--zen-bone);
+      margin-bottom: 8px;
+    }
+
+    .offer-role {
+      font-size: 13px; font-weight: 400;
+      color: var(--fog); line-height: 1.6;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    /* Price block — adopted from CPSA, reskinned */
+    .offer-price {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600; font-size: 22px;
+      color: var(--zen-bone);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .price-note {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.6;
+      margin-bottom: 24px;
+    }
+
+    /* Deliverables list — adopted from CPSA's offer-includes */
+    .offer-includes {
+      border-top: 1px solid var(--gold-dim);
+      padding-top: 20px;
+      margin-bottom: 24px;
+    }
+    .offer-includes-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.65;
+      margin-bottom: 12px;
+    }
+    .offer-includes ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+    .offer-includes ul li {
+      font-size: 13px; color: var(--fog);
+      line-height: 1.5;
+      padding-left: 18px; position: relative;
+    }
+    .offer-includes ul li::before {
+      content: '—';
+      position: absolute; left: 0;
+      color: var(--gold); opacity: 0.6;
+      font-size: 11px;
+    }
+
+    /* Collaboration table */
+    .collab-table { width: 100%; border-collapse: collapse; }
+    .collab-table tr { border-bottom: 1px solid var(--gold-dim); }
+    .collab-table tr:last-child { border-bottom: none; }
+    .collab-table td { padding: 10px 0; font-size: 13px; vertical-align: top; }
+    .collab-table td:first-child { color: var(--zen-bone); font-weight: 500; padding-right: 24px; white-space: nowrap; }
+    .collab-table td:last-child { color: var(--fog); }
+
+    /* Card CTA row */
+    .offer-foot {
+      margin-top: auto; padding-top: 20px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .offer-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      padding: 8px 16px; border-radius: 2px;
+      border: 1px solid var(--gold-mid);
+      transition: all 0.18s var(--ease);
+      white-space: nowrap;
+    }
+    .offer-cta:hover {
+      background: var(--gold-dim);
+      border-color: var(--gold-hi);
+      color: var(--zen-bone);
+      transform: translateY(-1px);
+    }
+    .offer-cta:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .offer-cta svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; transition: transform 0.18s; }
+    .offer-cta:hover svg { transform: translate(2px, -2px); }
+
+    .offer-note {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.45;
+    }
+
+    /* Inactive tier CTA — no link, just a signal */
+    .offer-cta-inactive {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.4;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       MID CTA + FINAL CLOSE — adopted from CPSA
+    ───────────────────────────────────────────────────── */
+    .cta-section {
+      text-align: center;
+      padding: 64px 0;
+    }
+
+    .final-close {
+      text-align: center;
+      padding: 80px 0 64px;
+    }
+    .close-line {
+      font-family: 'Fraunces', serif;
+      font-weight: 300; font-size: 26px;
+      letter-spacing: -0.01em; line-height: 1.2;
+      color: var(--zen-bone); margin-bottom: 8px;
+    }
+    .close-sub {
+      font-size: 13px; color: var(--fog);
+      margin-bottom: 32px; opacity: 0.7;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────────────── */
+    .page-footer {
+      border-top: 1px solid var(--gold-dim);
+      padding: 28px 0 48px;
+    }
+    .footer-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-statement {
+      font-family: 'Fraunces', serif;
+      font-style: italic; font-weight: 300;
+      font-size: 13px; color: var(--fog); opacity: 0.6;
+    }
+    .footer-cpsa {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--crimson); opacity: 0.5;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       EXIT INTENT BANNER — adopted from CPSA, reskinned
+    ───────────────────────────────────────────────────── */
+    .exit-banner {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--graphite);
+      border-top: 1px solid var(--gold-mid);
+      padding: 18px 32px;
+      z-index: 1000;
+      align-items: center; justify-content: space-between; gap: 24px;
+      animation: slideUp 0.35s var(--ease) forwards;
+    }
+    .exit-banner.visible { display: flex; }
+    .exit-banner-text {
+      font-size: 14px; color: var(--fog); line-height: 1.55;
+      max-width: 560px;
+    }
+    .exit-banner-text strong { color: var(--gold); font-weight: 600; }
+    .exit-banner-actions { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
+    .btn-exit-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--zen-bone); text-decoration: none;
+      background: var(--graphite-2);
+      padding: 9px 18px; border-radius: 2px;
+      border: 1px solid var(--gold-mid);
+      transition: all 0.18s var(--ease); white-space: nowrap;
+    }
+    .btn-exit-cta:hover { border-color: var(--gold-hi); background: rgba(185,164,106,0.08); }
+    .btn-exit-dismiss {
+      background: none; border: none;
+      color: var(--fog); opacity: 0.5;
+      cursor: pointer; font-size: 18px; line-height: 1; padding: 4px;
+      transition: opacity 0.2s;
+    }
+    .btn-exit-dismiss:hover { opacity: 1; }
+
+    @media (max-width: 640px) {
+      .exit-banner { flex-direction: column; align-items: flex-start; padding: 16px 20px; gap: 14px; }
+      .exit-banner-actions { width: 100%; }
+      .btn-exit-cta { flex: 1; justify-content: center; }
+    }
+
+    /* ─────────────────────────────────────────────────────
+       ANIMATION
+    ───────────────────────────────────────────────────── */
+    .anim {
+      opacity: 0;
+      animation: rise 0.65s var(--ease) var(--delay, 0s) forwards;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+
+    /* ─────────────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 0 56px; }
+      .offer-card { padding: 28px 22px; }
+      .offer-title { font-size: 20px; }
+      .offer-price { font-size: 18px; }
+      .close-line { font-size: 22px; }
+      .btn-primary { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <div class="container">
+    <nav class="nav anim" style="--delay:0.05s">
+      <a class="nav-logo" href="https://mannyaziba.vercel.app/">
+        <img src="./manny_aziba_Logo.svg" alt="Manny Aziba" width="52" height="26" />
+        <span class="nav-wordmark" aria-hidden="true">Manny Aziba</span>
+      </a>
+      <a class="nav-back" href="https://mannyaziba.vercel.app/">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M7.5 2L3.5 6L7.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Portfolio
+      </a>
+    </nav>
+  </div>
+
+  <!-- ── IDENTITY STAMP — adopted from CPSA ───────────────── -->
+  <div class="container">
+    <div class="identity-stamp anim" style="--delay:0.1s">
+      <span class="identity-stamp-text">
+        Manny Aziba
+        <span class="identity-stamp-dot" aria-hidden="true"></span>
+        System Translator for Developer-Built Products
+      </span>
+    </div>
+  </div>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-eyebrow anim" style="--delay:0.15s">UX Intelligence Audits &amp; Interface Reworks</div>
+      <h1 class="hero-headline anim" id="hero-headline" style="--delay:0.2s">
+        I will show you exactly where your<br>interface is <em>losing users.</em>
+      </h1>
+      <p class="hero-sub anim" id="hero-sub" style="--delay:0.28s">
+        The audit is not a consultation. It is a deliverable. You receive something you can act on immediately — whether or not you continue to a rework.
+      </p>
+      <div class="anim" style="--delay:0.35s; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;">
+        <a href="./book.html" class="btn-primary" data-cta="hero" id="hero-cta">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
+          Book a UX Intelligence Audit
+        </a>
+        <a href="https://mannyaziba-free-trials.vercel.app/" class="btn-ghost" target="_blank" rel="noopener noreferrer">
+          Try a free sprint first
+          <span class="sr-only">(opens in new tab)</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── OFFERS SECTION ───────────────────────────────────── -->
+  <section class="offers-section" id="offers">
+    <div class="container">
+
+      <!-- Section frame — adopted from CPSA -->
+      <p class="section-label anim" id="section-label" style="--delay:0.1s">The Tier System</p>
+      <p class="price-anchor anim" style="--delay:0.16s">
+        Most engagements begin with a <strong>₦10,000 – ₦30,000</strong> audit. Everything follows from diagnosis.
+      </p>
+
+      <div class="offers-grid">
+
+        <!-- ── TIER 1: UX Intelligence Audit (Entry) ──────── -->
+        <div class="offer-card tier-entry anim" style="--delay:0.22s" data-offer="tier1_audit">
+          <span class="offer-tag tag-entry">Start Here</span>
+          <div class="offer-tier">Tier 1</div>
+          <h2 class="offer-title">UX Intelligence Audit</h2>
+          <p class="offer-role">A structured diagnosis of your interface — what is broken, why it is broken, and what to fix first.</p>
+
+          <div class="offer-price">₦10,000 – ₦30,000</div>
+          <div class="price-note">$50 – $150 for international clients · Scales with product complexity</div>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">What you receive</div>
+            <ul>
+              <li>Loom video walkthrough — 10 to 20 minutes</li>
+              <li>Five-lens diagnostic: structure, flow, feedback, readability, consistency</li>
+              <li>Prioritised fix list — one clear first action</li>
+              <li>Optional written summary with the full breakdown</li>
+            </ul>
+          </div>
+
+          <div class="offer-foot">
+            <span class="offer-note">Entry point · Standalone deliverable</span>
+            <a href="./book.html" class="offer-cta" data-cta="tier1">
+              Book audit
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── TIER 2: Interface Rework ───────────────────── -->
+        <div class="offer-card tier-active anim" style="--delay:0.28s" data-offer="tier2_rework">
+          <span class="offer-tag tag-active">After Audit</span>
+          <div class="offer-tier">Tier 2</div>
+          <h2 class="offer-title">Interface Rework</h2>
+          <p class="offer-role">The correction. After the audit identifies the problems, the rework fixes them — redesigning key screens, restructuring flow, rebuilding hierarchy.</p>
+
+          <div class="offer-price">₦50,000 – ₦150,000</div>
+          <div class="price-note">$200 – $600+ internationally · Scoped per engagement or per screen</div>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">What you receive</div>
+            <ul>
+              <li>Redesigned screens targeting the failures the audit named</li>
+              <li>Restructured flow and corrected visual hierarchy</li>
+              <li>Dev-ready handoff files</li>
+              <li>Scope defined after audit — no fixing the wrong things</li>
+            </ul>
+          </div>
+
+          <div class="offer-foot">
+            <span class="offer-note">Begins with a Tier 1 audit</span>
+            <a href="./book.html" class="offer-cta" data-cta="tier2">
+              Start with audit
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── TIER 3: Interface System (Not active) ──────── -->
+        <div class="offer-card tier-inactive anim" style="--delay:0.34s" data-offer="tier3_system">
+          <span class="offer-tag tag-inactive">Coming</span>
+          <div class="offer-tier">Tier 3</div>
+          <h2 class="offer-title">Interface System</h2>
+          <p class="offer-role">A complete, reusable UI system built for the product — component library, design rules, scalable structure. This tier is earned into over time as portfolio and positioning develop.</p>
+
+          <div class="offer-price" style="color:var(--fog);opacity:0.5;">Scoped per engagement</div>
+          <div class="price-note" style="opacity:0.4;">Significant investment — significant return</div>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">What it produces</div>
+            <ul>
+              <li>Full component library — buttons, inputs, cards, tags</li>
+              <li>Design tokens: colour, type, spacing, grid</li>
+              <li>System rules — every element follows the same logic</li>
+              <li>A codebase your developers can build from and scale with</li>
+            </ul>
+          </div>
+
+          <div class="offer-foot">
+            <span class="offer-cta-inactive">Not yet active — building toward it</span>
+          </div>
+        </div>
+
+        <!-- ── COLLABORATION ───────────────────────────────── -->
+        <div class="offer-card tier-collab span-full anim" style="--delay:0.4s" data-offer="collaboration">
+          <span class="offer-tag tag-collab">For Studios & Partners</span>
+          <div class="offer-tier">Collaboration</div>
+          <h2 class="offer-title">Work Together</h2>
+          <p class="offer-role">Collaboration engagements are scoped differently from client work. The structure depends on the nature of the relationship — subcontracted work, a design retainer, or a studio partnership.</p>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">Engagement structures</div>
+            <table class="collab-table" role="table">
+              <tbody>
+                <tr>
+                  <td>Subcontracted UI work</td>
+                  <td>Per screen or per project, agreed upfront</td>
+                </tr>
+                <tr>
+                  <td>Design partner on retainer</td>
+                  <td>Monthly rate, scoped to deliverable volume</td>
+                </tr>
+                <tr>
+                  <td>Studio partnership</td>
+                  <td>Revenue share or project-based split, agreed per engagement</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="offer-foot">
+            <span class="offer-note">Brand designers · Developer partners · Product studios</span>
+            <a href="mailto:hello@mannyaziba.com" class="offer-cta" data-cta="collab">
+              Start a conversation
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /offers-grid -->
+    </div>
+  </section>
+
+  <!-- ── MID CTA — adopted from CPSA ──────────────────────── -->
+  <section class="cta-section anim" style="--delay:0.1s">
+    <div class="container">
+      <a href="./book.html" class="btn-primary" data-cta="mid" id="mid-cta">
+        <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
+        Book a UX Intelligence Audit
+      </a>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── FINAL CLOSE — adopted from CPSA ───────────────────── -->
+  <section class="final-close anim" id="footer-close" style="--delay:0.1s">
+    <div class="container">
+      <p class="close-line">"Design is not decoration.</p>
+      <p class="close-line">It is structured perception."</p>
+      <p class="close-sub" style="margin-top:8px;">The audit is where that perception starts.</p>
+      <a href="./book.html" class="btn-primary" data-cta="footer" id="footer-cta">
+        <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
+        Book a UX Intelligence Audit
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="page-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-statement">"I remove noise until meaning remains."</span>
+        <span class="footer-cpsa">Built on CPSA Architecture · Manny Aziba v1.0</span>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+
+<!-- ── EXIT INTENT BANNER — adopted from CPSA, reskinned ──── -->
+<div class="exit-banner" id="exit-banner" role="complementary" aria-label="One more thing">
+  <p class="exit-banner-text">
+    Still deciding? The <strong>UX Intelligence Audit</strong> starts at ₦10,000 — a structured diagnosis of exactly what is breaking your interface. No commitment beyond that.
+  </p>
+  <div class="exit-banner-actions">
+    <a href="./book.html" class="btn-exit-cta" id="exit-cta">
+      Book the audit
+    </a>
+    <button type="button" class="btn-exit-dismiss" onclick="dismissExitBanner()" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<!-- ── ANALYTICS + TRACKING ─────────────────────────────────── -->
+<script>
+/*
+  MANNY AZIBA — OFFER HUB ANALYTICS
+  Adopted from CPSA's analytics structure, adapted for Manny's offer system.
+
+  TRACKING EVENTS:
+  ┌────────────────────────────────────────────────────────┐
+  │  page_view          on load                            │
+  │  cta_click          hero / mid / footer / exit_banner  │
+  │  offer_hover        per tier card                      │
+  │  offer_click        per tier card                      │
+  │  scroll_depth       25 / 50 / 75 / 100%               │
+  │  time_on_page       30s / 60s / 120s                   │
+  │  exit_intent        shown / dismissed                  │
+  │  session_duration   on pagehide                        │
+  └────────────────────────────────────────────────────────┘
+
+  A/B INFRASTRUCTURE: Built in but no active tests yet.
+  Enable when traffic volume supports statistical significance.
+  To activate a test: add a variant to TESTS, add copy to COPY,
+  and inject into DOM in the DOMContentLoaded handler.
+*/
+
+/* ── VARIANT INFRASTRUCTURE (inactive) ─────────────────── */
+const TESTS = {
+  /*
+    headline: {
+      key: 'manny_headline_v1',
+      variants: ['a', 'b'],
+      weights: [50, 50]
+    }
+  */
+};
+
+function assignVariant(test) {
+  const stored = localStorage.getItem(test.key);
+  if (stored) return stored;
+  const rand = Math.random() * 100;
+  let cumulative = 0;
+  for (let i = 0; i < test.variants.length; i++) {
+    cumulative += test.weights[i];
+    if (rand <= cumulative) {
+      localStorage.setItem(test.key, test.variants[i]);
+      return test.variants[i];
+    }
+  }
+  return test.variants[0];
+}
+
+const V = {}; /* No active variants yet */
+
+/* ── CORE TRACKING WRAPPER ──────────────────────────────── */
+function track(event, params) {
+  if (typeof gtag === 'undefined') return;
+  gtag('event', event, Object.assign({}, V, params || {}));
+}
+
+/* ── CTA CLICK HANDLER ──────────────────────────────────── */
+function handleCTA(position) {
+  track('cta_click', { position: position });
+  window.location.href = './book.html';
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ── PAGE VIEW ────────────────────────────────────────── */
+  track('page_view', { page_path: window.location.pathname });
+
+  /* ── CTA BUTTONS ──────────────────────────────────────── */
+  ['hero-cta', 'mid-cta', 'footer-cta'].forEach(function (id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const pos = id.replace('-cta', '');
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
+      track('cta_click', { position: pos });
+      window.location.href = './book.html';
+    });
+  });
+
+  /* Exit CTA */
+  const exitCta = document.getElementById('exit-cta');
+  if (exitCta) {
+    exitCta.addEventListener('click', function () {
+      track('cta_click', { position: 'exit_banner' });
+      track('exit_intent', { action: 'converted' });
+    });
+  }
+
+  /* ── OFFER CARD TRACKING ──────────────────────────────── */
+  document.querySelectorAll('.offer-card').forEach(function (card) {
+    const offer = card.dataset.offer;
+    card.addEventListener('mouseenter', function () {
+      track('offer_hover', { offer: offer });
+    });
+    card.addEventListener('click', function () {
+      track('offer_click', { offer: offer });
+    });
+  });
+
+  /* ── OFFER CTA LINKS ──────────────────────────────────── */
+  document.querySelectorAll('[data-cta]').forEach(function (el) {
+    if (el.id) return; /* already handled above */
+    el.addEventListener('click', function () {
+      track('cta_click', { position: el.dataset.cta });
+    });
+  });
+
+  /* ── SCROLL DEPTH ─────────────────────────────────────── */
+  const depths = [25, 50, 75, 100];
+  const reached = new Set();
+  window.addEventListener('scroll', function () {
+    const pct = Math.round(
+      (window.scrollY + window.innerHeight) /
+      document.documentElement.scrollHeight * 100
+    );
+    depths.forEach(function (d) {
+      if (pct >= d && !reached.has(d)) {
+        reached.add(d);
+        track('scroll_depth', { depth_percent: d });
+      }
+    });
+  }, { passive: true });
+
+  /* ── TIME ON PAGE ─────────────────────────────────────── */
+  [30, 60, 120].forEach(function (secs) {
+    setTimeout(function () {
+      track('time_on_page', { seconds: secs });
+    }, secs * 1000);
+  });
+
+  /* ── EXIT INTENT — desktop ────────────────────────────── */
+  let exitShown = false;
+  document.addEventListener('mouseleave', function (e) {
+    if (e.clientY < 5 && !exitShown && !sessionStorage.getItem('exit_dismissed')) {
+      exitShown = true;
+      document.getElementById('exit-banner').classList.add('visible');
+      track('exit_intent', { action: 'shown' });
+    }
+  });
+
+  /* ── EXIT INTENT — mobile (scroll-back-up) ────────────── */
+  let lastScrollY = 0;
+  let mobileExitShown = false;
+  window.addEventListener('scroll', function () {
+    const curr = window.scrollY;
+    if (
+      !mobileExitShown &&
+      !sessionStorage.getItem('exit_dismissed') &&
+      lastScrollY > 400 &&
+      curr < lastScrollY - 80
+    ) {
+      mobileExitShown = true;
+      document.getElementById('exit-banner').classList.add('visible');
+      track('exit_intent', { action: 'shown_mobile' });
+    }
+    lastScrollY = curr;
+  }, { passive: true });
+
+  /* ── SESSION DURATION ─────────────────────────────────── */
+  const sessionStart = Date.now();
+  window.addEventListener('pagehide', function () {
+    track('session_duration', {
+      seconds: Math.round((Date.now() - sessionStart) / 1000)
+    });
+  });
+
+}); /* end DOMContentLoaded */
+
+/* ── EXIT BANNER DISMISS ────────────────────────────────── */
+function dismissExitBanner() {
+  document.getElementById('exit-banner').classList.remove('visible');
+  sessionStorage.setItem('exit_dismissed', '1');
+  track('exit_intent', { action: 'dismissed' });
+}
+</script>
+</body>
+</html>

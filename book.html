@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a UX Intelligence Audit — Manny Aziba</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Calendly widget CSS -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGPBLSWHQ4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-LGPBLSWHQ4', { send_page_view: false });
+  </script>
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --obsidian:       #0E0F11;
+      --obsidian-hover: #111215;
+      --graphite:       #1C1F24;
+      --graphite-2:     #22252b;
+      --zen-bone:       #ECEBE6;
+      --fog:            #8E9095;
+      --gold:           #B9A46A;
+      --gold-dim:       rgba(185,164,106,0.12);
+      --gold-mid:       rgba(185,164,106,0.25);
+      --gold-hi:        rgba(185,164,106,0.5);
+      --teal:           #2FB8B0;
+      --crimson:        #A12121;
+      --ease:           cubic-bezier(0.22,1,0.36,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--obsidian);
+      color: var(--zen-bone);
+      font-family: 'Urbanist', sans-serif;
+      font-size: 16px; line-height: 1.65;
+      overflow-x: hidden; min-height: 100dvh;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation: none !important; opacity: 1 !important; transform: none !important; }
+      * { transition: none !important; }
+    }
+
+    /* ── GRAIN + GLOW ────────────────────────────────────── */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.022; pointer-events: none; z-index: 0;
+    }
+
+    /* ── PAGE ────────────────────────────────────────────── */
+    .page {
+      position: relative; z-index: 1;
+      max-width: 680px; margin: 0 auto;
+      padding: 0 24px 96px;
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────── */
+    .divider {
+      height: 1px; background: var(--gold);
+      opacity: 0.15; margin: 40px 0;
+    }
+
+    /* ── SR ONLY ─────────────────────────────────────────── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       IDENTITY STAMP — adopted from CPSA book.html
+    ───────────────────────────────────────────────────── */
+    .identity-stamp {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--gold-dim);
+      margin-bottom: 40px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .identity-stamp-text {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .identity-stamp-dot {
+      width: 3px; height: 3px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+    .identity-stamp-logo img { width: 40px; height: 20px; display: block; }
+
+    /* ─────────────────────────────────────────────────────
+       BOOKING SECTION
+    ───────────────────────────────────────────────────── */
+    .booking-section {}
+
+    .section-header { margin-bottom: 28px; }
+
+    .section-tag {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.7;
+      display: block; margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 300; font-size: 30px;
+      letter-spacing: -0.01em; line-height: 1.15;
+      color: var(--zen-bone); margin-bottom: 8px;
+    }
+
+    .section-sub {
+      font-size: 14px; color: var(--fog); line-height: 1.6;
+    }
+
+    /* ── INCLUDES STRIP — adopted from CPSA ──────────────── */
+    .includes-strip {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px; margin-bottom: 28px;
+    }
+    @media (max-width: 480px) { .includes-strip { grid-template-columns: 1fr; } }
+
+    .include-item {
+      background: var(--graphite);
+      border: 1px solid var(--gold-dim);
+      border-left: 2px solid var(--gold);
+      border-radius: 2px;
+      padding: 10px 14px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    /* ── CALENDLY WRAP — adopted from CPSA ───────────────── */
+    .calendly-wrap {
+      background: var(--graphite);
+      border: 1px solid var(--gold-dim);
+      border-top: 2px solid var(--gold);
+      border-radius: 2px;
+      overflow: hidden;
+      min-height: 700px;
+      position: relative;
+    }
+
+    .calendly-inline-widget {
+      min-width: 320px;
+      height: 700px;
+    }
+
+    /* Loading state */
+    .calendly-loading {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 14px;
+      background: var(--graphite);
+      pointer-events: none;
+      transition: opacity 0.4s;
+    }
+    .calendly-loading.hidden { opacity: 0; pointer-events: none; }
+
+    .identity-stamp-logo a:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold);
+      animation: pulse 1.8s ease infinite;
+    }
+    .loading-text {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.5;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       PAYMENT SECTION — adopted from CPSA, Blackroom skin
+       Hidden by default. Revealed via Calendly postMessage.
+    ───────────────────────────────────────────────────── */
+    .payment-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    }
+    .payment-section.visible { display: block; }
+    .payment-section.animated { opacity: 1; transform: translateY(0); }
+
+    .payment-card {
+      background: var(--graphite);
+      border: 1px solid var(--gold-dim);
+      border-top: 2px solid var(--gold);
+      border-radius: 2px;
+      padding: 40px 36px;
+    }
+    @media (max-width: 580px) { .payment-card { padding: 28px 20px; } }
+
+    /* Status dot */
+    .status-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--teal); margin: 0 auto 28px;
+      box-shadow: 0 0 0 3px rgba(47,184,176,0.18);
+      animation: teal-pulse 2s ease infinite;
+    }
+
+    .payment-heading {
+      font-family: 'Fraunces', serif;
+      font-weight: 300; font-size: 26px;
+      letter-spacing: -0.01em; line-height: 1.2;
+      color: var(--zen-bone); text-align: center;
+      margin-bottom: 8px;
+    }
+    .payment-subtext {
+      font-size: 13px; color: var(--fog);
+      text-align: center; line-height: 1.6;
+      margin-bottom: 36px;
+    }
+
+    /* Steps — adopted from CPSA, reskinned */
+    .steps {
+      background: var(--graphite-2);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      padding: 20px; margin-bottom: 28px;
+    }
+    .steps-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.13em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.65;
+      margin-bottom: 16px;
+    }
+    .step {
+      display: flex; align-items: flex-start;
+      gap: 14px; padding: 10px 0;
+      border-bottom: 1px solid var(--gold-dim);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600; font-size: 11px;
+      color: var(--gold); opacity: 0.7;
+      padding-top: 2px; flex-shrink: 0; min-width: 20px;
+    }
+    .step-text strong {
+      font-weight: 600; display: block;
+      font-size: 13px; color: var(--zen-bone); margin-bottom: 2px;
+    }
+    .step-text span { font-size: 12px; color: var(--fog); line-height: 1.5; }
+
+    /* Amount block */
+    .amount-block {
+      background: var(--graphite-2);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      padding: 14px 20px; margin-bottom: 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .amount-label { font-size: 13px; color: var(--fog); }
+    .amount-value {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600; font-size: 18px;
+      color: var(--zen-bone); letter-spacing: -0.01em;
+    }
+
+    /* Pay button — gold border, NOT crimson (crimson = truth marker only) */
+    .btn-pay {
+      display: block; width: 100%;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--zen-bone); text-decoration: none;
+      background: var(--graphite-2);
+      padding: 16px 28px; border-radius: 2px; text-align: center;
+      border: 1px solid var(--gold-mid);
+      transition: all 0.22s var(--ease);
+      cursor: pointer; margin-bottom: 16px;
+    }
+    .btn-pay:hover {
+      border-color: var(--gold-hi);
+      background: rgba(185,164,106,0.08);
+      transform: translateY(-1px);
+    }
+    .btn-pay:active { transform: translateY(0); }
+    .btn-pay:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    /* Reassurance */
+    .reassurance {
+      font-size: 12px; color: var(--fog);
+      text-align: center; line-height: 1.6; opacity: 0.7;
+    }
+    .reassurance a {
+      color: var(--gold); text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-color: rgba(185,164,106,0.4);
+    }
+    .reassurance a:hover { text-decoration-color: var(--gold); }
+
+    /* Countdown */
+    .countdown {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600;
+    }
+    .countdown.urgent { color: var(--err); }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    .footer-identity {
+      text-align: center; margin-top: 48px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.4;
+    }
+
+    /* ── ANIMATION ───────────────────────────────────────── */
+    .anim {
+      opacity: 0;
+      animation: rise 0.6s var(--ease) var(--delay, 0s) forwards;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+    @keyframes teal-pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(47,184,176,0.18); }
+      50%       { box-shadow: 0 0 0 6px rgba(47,184,176,0.06); }
+    }
+
+    /* ── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 480px) {
+      .amount-block { flex-direction: column; align-items: flex-start; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── IDENTITY STAMP ──────────────────────────────────── -->
+  <div class="identity-stamp anim" style="--delay:0.05s">
+    <span class="identity-stamp-text">
+      Manny Aziba
+      <span class="identity-stamp-dot" aria-hidden="true"></span>
+      System Translator
+    </span>
+    <div class="identity-stamp-logo">
+      <a href="./index.html">
+        <img src="./manny_aziba_Logo.svg" alt="Manny Aziba — back to offers" width="40" height="20" />
+      </a>
+    </div>
+  </div>
+
+  <!-- ── BOOKING SECTION ─────────────────────────────────── -->
+  <section class="booking-section anim" id="booking-section" style="--delay:0.12s">
+
+    <div class="section-header">
+      <span class="section-tag">Step 1 of 2</span>
+      <h1 class="section-title">Pick a time for your audit</h1>
+      <p class="section-sub">₦10,000 – ₦30,000 depending on product complexity · Payment collected after booking · Loom + written summary delivered within 3 working days</p>
+    </div>
+
+    <!-- What's included strip — adopted from CPSA -->
+    <div class="includes-strip">
+      <div class="include-item">Five-lens diagnosis</div>
+      <div class="include-item">Loom 10–20 min</div>
+      <div class="include-item">Prioritised fix list</div>
+      <div class="include-item">Written summary</div>
+    </div>
+
+    <!-- Calendly embed — adopted from CPSA -->
+    <div class="calendly-wrap">
+      <div class="calendly-loading" id="calendly-loading">
+        <div class="loading-dot"></div>
+        <p class="loading-text">Loading availability…</p>
+      </div>
+      <div
+        class="calendly-inline-widget"
+        id="calendly-embed"
+        data-url="https://calendly.com/YOUR-CALENDLY-USERNAME/ux-audit?hide_gdpr_banner=1&primary_color=b9a46a"
+        style="min-width:320px;height:700px;"
+      ></div>
+      <!--
+        ↑ Replace YOUR-CALENDLY-USERNAME with your Calendly username.
+          primary_color=b9a46a matches Manny's gold token exactly.
+      -->
+    </div>
+
+  </section>
+
+  <!-- ── DIVIDER (hidden until payment panel) ────────────── -->
+  <div class="divider" id="section-divider" style="display:none;"></div>
+
+  <!-- ─────────────────────────────────────────────────────
+       PAYMENT SECTION
+       Hidden on load. Revealed when Calendly fires
+       'calendly.event_scheduled' via postMessage.
+  ───────────────────────────────────────────────────── -->
+  <section class="payment-section" id="payment-section" aria-live="polite">
+    <div class="payment-card">
+
+      <div class="status-dot" aria-hidden="true"></div>
+
+      <h2 class="payment-heading" id="payment-heading">
+        Session booked.
+      </h2>
+      <p class="payment-subtext" id="payment-subtext">
+        Complete payment to confirm the slot. Your Loom + written summary will be delivered within 3 working days of the session.
+      </p>
+
+      <!-- Steps — adopted from CPSA -->
+      <div class="steps">
+        <p class="steps-label">What happens next</p>
+        <div class="step">
+          <span class="step-num">01</span>
+          <div class="step-text">
+            <strong>Complete payment below</strong>
+            <span>Secures the slot and confirms the engagement</span>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">02</span>
+          <div class="step-text">
+            <strong>Share your product URL</strong>
+            <span>A short prep form is sent to your email — takes 2 minutes to fill</span>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-num">03</span>
+          <div class="step-text">
+            <strong>Receive your audit</strong>
+            <span>Loom walkthrough + prioritised fix list + optional written summary — within 3 working days</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Amount -->
+      <div class="amount-block">
+        <span class="amount-label">UX Intelligence Audit</span>
+        <span class="amount-value" id="payment-amount">₦10,000 – ₦30,000</span>
+      </div>
+
+      <!-- Pay CTA -->
+      <a
+        href="https://paystack.shop/pay/ux-audit"
+        class="btn-pay"
+        id="pay-btn"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Complete Payment
+        <span class="sr-only">(opens Paystack in new tab)</span>
+      </a>
+      <!--
+        ↑ Replace YOUR-PAYSTACK-PAYMENT-LINK with your Paystack payment page slug.
+          Create the payment page at dashboard.paystack.com > Payment Pages.
+          Set it to a fixed or customer-set amount (for variable pricing).
+      -->
+
+      <p class="reassurance">
+        Your slot is held for <span class="countdown" id="countdown">15:00</span>.
+        <br>Questions? <a href="mailto:hello@mannyaziba.com">hello@mannyaziba.com</a>
+        <!--  ↑ Replace with your actual email address -->
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER ───────────────────────────────────────────── -->
+  <p class="footer-identity">Manny Aziba · System Translator · Built on CPSA Architecture</p>
+
+</div><!-- /page -->
+
+<!-- ── CALENDLY JS ──────────────────────────────────────────── -->
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+<!-- ── PAYMENT REVEAL + TRACKING — adopted from CPSA ──────── -->
+<script>
+/*
+  MANNY AZIBA — BOOKING PAGE
+  Adopted from CPSA's booking logic, adapted for Manny's offer structure.
+
+  HOW IT WORKS:
+  1. Calendly embeds inline — no popup, no redirect
+  2. On booking complete, Calendly fires postMessage: 'calendly.event_scheduled'
+  3. We reveal the payment panel + start 15-min countdown + track in GA4
+  4. Visitor pays on same page — no additional redirect
+*/
+
+/* ── GA4 WRAPPER ────────────────────────────────────────── */
+function track(event, params) {
+  if (typeof gtag === 'undefined') return;
+  gtag('event', event, params || {});
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ── PAGE VIEW ──────────────────────────────────────── */
+  track('page_view', { page_path: '/book' });
+
+  /* ── HIDE CALENDLY LOADER AFTER WIDGET LOADS ────────── */
+  setTimeout(function () {
+    const loader = document.getElementById('calendly-loading');
+    if (loader) loader.classList.add('hidden');
+  }, 2800);
+
+  /* ── PAYMENT BUTTON TRACKING ────────────────────────── */
+  const payBtn = document.getElementById('pay-btn');
+  if (payBtn) {
+    payBtn.addEventListener('click', function () {
+      track('payment_initiated', {
+        offer:    'ux_audit',
+        currency: 'NGN',
+        method:   'paystack'
+      });
+    });
+  }
+
+});
+
+/* ── CALENDLY EVENT LISTENER ────────────────────────────── */
+/*
+  Calendly fires 'calendly.event_scheduled' on booking completion.
+  We catch it and reveal the payment panel immediately, same page.
+
+  Other Calendly events (informational — not used here):
+    'calendly.date_and_time_selected'
+    'calendly.profile_page_viewed'
+    'calendly.event_type_viewed'
+*/
+window.addEventListener('message', function (e) {
+  if (!e.data || !e.data.event) return;
+  if (e.data.event !== 'calendly.event_scheduled') return;
+
+  const payload = e.data.payload || {};
+
+  /* ── 1. Track in GA4 ─────────────────────────────────── */
+  track('booking_confirmed', {
+    offer:         'ux_audit',
+    invitee_name:  payload.invitee  ? payload.invitee.name  : '',
+    invitee_email: payload.invitee  ? payload.invitee.email : '',
+    event_time:    payload.event    ? payload.event.start_time : ''
+  });
+
+  /* ── 2. Personalise heading if name available ─────────── */
+  const firstName = payload.invitee && payload.invitee.name
+    ? payload.invitee.name.split(' ')[0]
+    : null;
+
+  if (firstName) {
+    const heading = document.getElementById('payment-heading');
+    const subtext  = document.getElementById('payment-subtext');
+    if (heading) heading.textContent = firstName + ', your slot is locked.';
+    if (subtext)  subtext.textContent =
+      'Complete payment to confirm. Your Loom + written summary will be delivered within 3 working days of the session.';
+  }
+
+  /* ── 3. Reveal payment panel ─────────────────────────── */
+  revealPaymentPanel();
+});
+
+/* ── REVEAL PAYMENT PANEL ───────────────────────────────── */
+function revealPaymentPanel() {
+  const divider = document.getElementById('section-divider');
+  const section = document.getElementById('payment-section');
+  if (!section) return;
+
+  if (divider) divider.style.display = 'block';
+
+  section.classList.add('visible');
+  section.offsetHeight; /* force reflow for CSS transition */
+  section.classList.add('animated');
+
+  setTimeout(function () {
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 120);
+
+  startCountdown();
+  track('payment_panel_shown', { offer: 'ux_audit' });
+}
+
+/* ── COUNTDOWN TIMER ────────────────────────────────────── */
+function startCountdown() {
+  let total = 15 * 60;
+  const el = document.getElementById('countdown');
+  if (!el) return;
+
+  const timer = setInterval(function () {
+    total--;
+    const m = Math.floor(total / 60).toString().padStart(2, '0');
+    const s = (total % 60).toString().padStart(2, '0');
+    el.textContent = m + ':' + s;
+    if (total === 300) el.classList.add('urgent');
+    if (total <= 0) {
+      clearInterval(timer);
+      el.textContent = 'expired';
+      el.classList.add('urgent');
+    }
+  }, 1000);
+}
+</script>
+</body>
+</html>
