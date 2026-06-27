@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Candidates — Manny Aziba</title>
+  <meta name="description" content="10 developer-built products diagnosed by Manny Aziba. UX Intelligence Audits — structural failures identified, fix lists delivered." />
+
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGPBLSWHQ4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-LGPBLSWHQ4', { send_page_view: false });
+  </script>
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --obsidian:   #0E0F11;
+      --graphite:   #1C1F24;
+      --graphite-2: #22252b;
+      --zen-bone:   #ECEBE6;
+      --fog:        #8E9095;
+      --gold:       #B9A46A;
+      --gold-dim:   rgba(185,164,106,0.12);
+      --gold-mid:   rgba(185,164,106,0.25);
+      --gold-hi:    rgba(185,164,106,0.5);
+      --teal:       #2FB8B0;
+      --teal-dim:   rgba(47,184,176,0.12);
+      --ease:       cubic-bezier(0.22,1,0.36,1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--obsidian);
+      color: var(--zen-bone);
+      font-family: 'Urbanist', sans-serif;
+      font-size: 16px; line-height: 1.65;
+      min-height: 100dvh; overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation: none !important; opacity: 1 !important; transform: none !important; }
+      * { transition: none !important; }
+    }
+
+    /* ── GRAIN ───────────────────────────────────────────── */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.022; pointer-events: none; z-index: 0;
+    }
+
+    /* ── SR ONLY ─────────────────────────────────────────── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ── PAGE ────────────────────────────────────────────── */
+    .page {
+      position: relative; z-index: 1;
+      max-width: 760px; margin: 0 auto;
+      padding: 0 24px 96px;
+    }
+    @media (max-width: 580px) { .page { padding: 0 16px 80px; } }
+
+    /* ── ANIMATION ───────────────────────────────────────── */
+    .anim {
+      opacity: 0;
+      animation: rise 0.55s var(--ease) var(--delay, 0s) forwards;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── NAV ─────────────────────────────────────────────── */
+    .nav {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--gold-dim);
+      margin-bottom: 52px;
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+
+    .back-link {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      display: flex; align-items: center; gap: 7px;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--zen-bone); }
+    .back-link svg { width: 12px; height: 12px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+    .back-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+
+    .nav-logo img { width: 40px; height: 20px; display: block; opacity: 0.5; }
+
+    /* ── HEADER ──────────────────────────────────────────── */
+    .page-header { margin-bottom: 52px; }
+
+    .header-eyebrow {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.8;
+      margin-bottom: 16px; display: block;
+    }
+
+    .page-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: clamp(28px, 5vw, 40px);
+      line-height: 1.1; letter-spacing: -0.015em;
+      color: var(--zen-bone); margin-bottom: 14px;
+    }
+    .page-title em { font-style: normal; color: var(--teal); }
+
+    .page-sub {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 14px; color: var(--fog); line-height: 1.7;
+      max-width: 540px;
+    }
+
+    /* ── METHOD STRIP ────────────────────────────────────── */
+    .method-strip {
+      display: flex; gap: 6px; flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .method-pill {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fog);
+      background: var(--graphite);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      padding: 5px 10px;
+    }
+
+    /* ── SECTION LABEL ───────────────────────────────────── */
+    .section-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.5;
+      margin-bottom: 16px; display: block;
+    }
+
+    /* ── CANDIDATE LIST ──────────────────────────────────── */
+    .candidates { display: flex; flex-direction: column; gap: 2px; }
+
+    /* ── CANDIDATE CARD ──────────────────────────────────── */
+    .candidate {
+      background: var(--graphite);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .candidate:first-child { border-top: 2px solid var(--gold); }
+    .candidate--live { border-color: rgba(47,184,176,0.18); }
+    .candidate--live:first-child { border-top-color: var(--teal); }
+
+    /* Card top row — always visible */
+    .candidate-row {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      align-items: start;
+      gap: 16px;
+      padding: 18px 20px;
+      cursor: pointer;
+      user-select: none;
+    }
+    @media (max-width: 480px) { .candidate-row { gap: 12px; padding: 16px; } }
+    @media (max-width: 400px) {
+      .candidate-row { grid-template-columns: 1fr auto; }
+      .candidate-code { display: none; }
+    }
+
+    .candidate-row:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px; }
+
+    /* MSIA code */
+    .candidate-code {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600; font-size: 11px;
+      color: var(--gold); opacity: 0.5;
+      letter-spacing: 0.04em;
+      padding-top: 2px;
+      white-space: nowrap;
+    }
+    .candidate--live .candidate-code { opacity: 0.9; color: var(--teal); }
+
+    /* Name + product type */
+    .candidate-main {}
+    .candidate-name {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600; font-size: 15px;
+      color: var(--zen-bone); letter-spacing: 0.01em;
+      margin-bottom: 4px;
+    }
+    .candidate-type {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; color: var(--fog);
+      letter-spacing: 0.01em;
+    }
+
+    /* Status badge */
+    .candidate-status {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 4px 8px; border-radius: 2px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .status--complete {
+      background: var(--teal-dim);
+      border: 1px solid rgba(47,184,176,0.2);
+      color: var(--teal);
+    }
+    .status--pending {
+      background: rgba(185,164,106,0.07);
+      border: 1px solid var(--gold-dim);
+      color: var(--gold); opacity: 0.7;
+    }
+
+    /* Expand chevron */
+    .candidate-toggle {
+      width: 20px; height: 20px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--fog); opacity: 0.4;
+      transition: opacity 0.2s, transform 0.25s var(--ease);
+      flex-shrink: 0;
+    }
+    .candidate-toggle svg {
+      width: 12px; height: 12px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .candidate.open .candidate-toggle { opacity: 0.8; transform: rotate(180deg); }
+    .candidate-row:hover .candidate-toggle { opacity: 0.7; }
+
+    /* ── EXPAND PANEL ────────────────────────────────────── */
+    .candidate-panel {
+      display: none;
+      border-top: 1px solid var(--gold-dim);
+      padding: 20px 20px 20px 72px;
+    }
+    @media (max-width: 480px) { .candidate-panel { padding: 16px 16px 16px 16px; } }
+    .candidate.open .candidate-panel { display: block; }
+
+    /* Lenses */
+    .panel-section { margin-bottom: 20px; }
+    .panel-section:last-child { margin-bottom: 0; }
+
+    .panel-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.5;
+      margin-bottom: 10px; display: block;
+    }
+
+    .lenses { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .lens-tag {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 5px 10px; border-radius: 2px;
+      border: 1px solid rgba(161,33,33,0.25);
+      background: rgba(161,33,33,0.07);
+      color: #c96060;
+    }
+
+    /* Fix list */
+    .fix-list {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    .fix-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; color: var(--fog); line-height: 1.5;
+    }
+    .fix-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--gold); opacity: 0.5;
+      flex-shrink: 0; margin-top: 6px;
+    }
+
+    /* Panel actions */
+    .panel-actions {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding-top: 20px;
+      border-top: 1px solid var(--gold-dim);
+      margin-top: 20px;
+    }
+
+    .panel-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      padding: 9px 14px;
+      transition: all 0.2s var(--ease);
+    }
+    .panel-btn svg {
+      width: 11px; height: 11px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+    .panel-btn--loom {
+      background: var(--teal-dim);
+      border: 1px solid rgba(47,184,176,0.22);
+      color: var(--teal);
+    }
+    .panel-btn--loom:hover {
+      background: rgba(47,184,176,0.18);
+      border-color: rgba(47,184,176,0.4);
+    }
+    .panel-btn--behance {
+      background: var(--graphite-2);
+      border: 1px solid var(--gold-dim);
+      color: var(--fog);
+    }
+    .panel-btn--behance:hover {
+      border-color: var(--gold-mid); color: var(--zen-bone);
+    }
+    .panel-btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    .pending-note {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; color: var(--fog); opacity: 0.45;
+      letter-spacing: 0.04em; padding-top: 4px;
+    }
+
+    /* ── BOOK CTA ────────────────────────────────────────── */
+    .book-cta {
+      margin-top: 52px;
+      padding: 32px;
+      background: var(--graphite);
+      border: 1px solid var(--gold-dim);
+      border-top: 2px solid var(--gold);
+      border-radius: 2px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .book-cta-copy {}
+    .book-cta-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.7;
+      margin-bottom: 6px; display: block;
+    }
+    .book-cta-heading {
+      font-family: 'Fraunces', serif;
+      font-weight: 300; font-size: 20px;
+      letter-spacing: -0.01em; line-height: 1.2;
+      color: var(--zen-bone); margin-bottom: 4px;
+    }
+    .book-cta-sub {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; color: var(--fog); line-height: 1.55;
+    }
+
+    .btn-book {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--zen-bone); text-decoration: none;
+      background: var(--graphite-2);
+      padding: 12px 20px; border-radius: 2px;
+      border: 1px solid var(--gold-mid);
+      white-space: nowrap;
+      transition: all 0.22s var(--ease);
+      flex-shrink: 0;
+    }
+    .btn-book svg {
+      width: 12px; height: 12px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .btn-book:hover {
+      border-color: var(--gold-hi);
+      background: rgba(185,164,106,0.07);
+      transform: translateY(-1px);
+    }
+    .btn-book:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    /* ── FOOTER ──────────────────────────────────────────── */
+    .page-footer {
+      text-align: center; margin-top: 52px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.35;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── NAV ───────────────────────────────────────────── -->
+  <nav class="nav anim" style="--delay:0.04s">
+    <a href="./index.html" class="back-link">
+      <svg viewBox="0 0 12 12" aria-hidden="true">
+        <path d="M7.5 2L3.5 6L7.5 10"/>
+      </svg>
+      Back
+    </a>
+    <a href="./index.html">
+      <img src="./manny_aziba_Logo.svg" alt="Manny Aziba" class="nav-logo" width="40" height="20" />
+    </a>
+  </nav>
+
+  <!-- ── HEADER ────────────────────────────────────────── -->
+  <header class="page-header anim" style="--delay:0.1s">
+    <span class="header-eyebrow">MSIA Series · 10 Candidates</span>
+    <h1 class="page-title">Products diagnosed.<br><em>Failures named.</em></h1>
+    <p class="page-sub">
+      Ten developer-built products put through the five-lens UX Intelligence method. Each one has a structural failure — identified, named, and documented with a prioritised fix list. One candidate is fully published. The rest are in sequence.
+    </p>
+    <div class="method-strip" aria-label="The five diagnostic lenses">
+      <span class="method-pill">Structure</span>
+      <span class="method-pill">Feedback</span>
+      <span class="method-pill">Readability</span>
+      <span class="method-pill">Flow</span>
+      <span class="method-pill">Consistency</span>
+    </div>
+  </header>
+
+  <!-- ── CANDIDATE LIST ─────────────────────────────────── -->
+  <span class="section-label anim" style="--delay:0.18s">Audit candidates</span>
+
+  <div class="candidates anim" style="--delay:0.22s" id="candidates" role="list">
+
+    <!-- MSIA-001 — Remit-Path (LIVE) -->
+    <div class="candidate candidate--live" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-001">
+        <span class="candidate-code">001</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Remit-Path</div>
+          <div class="candidate-type">Cross-border remittance · Fintech</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--complete">Complete</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-001" role="region" aria-label="Remit-Path audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Feedback</span>
+            <span class="lens-tag">Structure</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Add inline confirmation after every transaction state — silence reads as failure even when the backend succeeded</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Promote "Receive Money" to primary action — current equal-weight dashboard buries the product's core job</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Surface transfer status persistently on the dashboard — users re-entering the app have no anchor</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <a href="https://www.loom.com/share/b1c902ff61664f0588d5f3ff65671252" class="panel-btn panel-btn--loom" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Watch audit
+            <span class="sr-only">(opens Loom in new tab)</span>
+          </a>
+          <a href="https://behance.net/mannyaziba" class="panel-btn panel-btn--behance" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8h-5M18 11h-5"/><rect x="3" y="8" width="6" height="8" rx="1"/><path d="M3 5h7"/></svg>
+            Case study
+            <span class="sr-only">(opens Behance in new tab)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- MSIA-002 — Ledgerlane -->
+    <div class="candidate" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-002">
+        <span class="candidate-code">002</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Ledgerlane</div>
+          <div class="candidate-type">Accounting & bookkeeping · Fintech</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--pending">Pending</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-002" role="region" aria-label="Ledgerlane audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Readability</span>
+            <span class="lens-tag">Structure</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Establish a clear type hierarchy — financial data at equal weight forces users to read everything to find the number that matters</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Restructure the ledger view around the primary action: reconcile, not browse</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Reduce visual noise in data rows — density without rhythm breaks scan patterns</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <span class="pending-note">Loom · Behance — publishing in sequence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MSIA-003 — Naira Stack -->
+    <div class="candidate" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-003">
+        <span class="candidate-code">003</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Naira Stack</div>
+          <div class="candidate-type">Savings & wallets · Fintech</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--pending">Pending</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-003" role="region" aria-label="Naira Stack audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Structure</span>
+            <span class="lens-tag">Flow</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Define a primary action per screen — savings products with multiple parallel CTAs collapse user intent</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Fix the funding flow: confirmation steps appear before the user has committed, creating false friction</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Group wallet and savings views by job-to-be-done, not by product type</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <span class="pending-note">Loom · Behance — publishing in sequence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MSIA-004 — Pingwatch -->
+    <div class="candidate" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-004">
+        <span class="candidate-code">004</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Pingwatch</div>
+          <div class="candidate-type">Uptime monitoring · Dev tools</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--pending">Pending</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-004" role="region" aria-label="Pingwatch audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Feedback</span>
+            <span class="lens-tag">Consistency</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Normalise alert severity language — three different terms for the same incident state break trust in the monitoring system</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Add persistent system status to the dashboard header — monitoring tools must answer "is anything down right now" in under 2 seconds</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Unify action states: "disable", "pause", and "mute" are doing the same job with different words</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <span class="pending-note">Loom · Behance — publishing in sequence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MSIA-005 — Marketlink NG -->
+    <div class="candidate" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-005">
+        <span class="candidate-code">005</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Marketlink NG</div>
+          <div class="candidate-type">B2B marketplace · Commerce</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--pending">Pending</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-005" role="region" aria-label="Marketlink NG audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Consistency</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Align component behaviour across mobile and desktop — the same action produces different visual outcomes on different screen sizes</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Establish a single CTA pattern for listing pages — four button variants for "contact seller" train users to distrust the interface</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Standardise empty states — each section invents its own language for "nothing here yet"</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <span class="pending-note">Loom · Behance — publishing in sequence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MSIA-006 — Cronspace -->
+    <div class="candidate" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-006">
+        <span class="candidate-code">006</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Cronspace</div>
+          <div class="candidate-type">Job scheduling · Dev tools</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--pending">Pending</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-006" role="region" aria-label="Cronspace audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Readability</span>
+            <span class="lens-tag">Flow</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Make cron syntax human-readable at the point of entry — displaying raw expressions without translation breaks the creation flow for non-expert users</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Redesign the job log view: timestamps at equal weight to status codes create a reading task, not a scan</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Add a confirmation step before destructive job actions — delete and disable are adjacent with no visual distinction</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <span class="pending-note">Loom · Behance — publishing in sequence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MSIA-007 — Campus Wallet -->
+    <div class="candidate" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-007">
+        <span class="candidate-code">007</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Campus Wallet</div>
+          <div class="candidate-type">Student payments · Fintech</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--pending">Pending</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-007" role="region" aria-label="Campus Wallet audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Flow ×2</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Collapse the top-up flow from 5 steps to 3 — identity verification is requested twice across a single session</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Fix the payment confirmation loop: successful payments return users to the start screen with no receipt state</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Separate the "pay fees" and "transfer money" flows — sharing a flow for two distinct jobs creates decision paralysis at the most critical screen</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <span class="pending-note">Loom · Behance — publishing in sequence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MSIA-008 — Okada Track -->
+    <div class="candidate" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-008">
+        <span class="candidate-code">008</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Okada Track</div>
+          <div class="candidate-type">Logistics tracking · Mobility</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--pending">Pending</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-008" role="region" aria-label="Okada Track audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Structure</span>
+            <span class="lens-tag">Feedback</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Make live location the primary element on every active-delivery screen — it is currently below the fold behind order metadata</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Add granular delivery status states — "in transit" covers a 45-minute window with no intermediate feedback</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Surface the driver contact action persistently — buried in a collapsed panel during the one moment users need it most</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <span class="pending-note">Loom · Behance — publishing in sequence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MSIA-009 — Queueform -->
+    <div class="candidate" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-009">
+        <span class="candidate-code">009</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Queueform</div>
+          <div class="candidate-type">Form builder · Productivity</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--pending">Pending</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-009" role="region" aria-label="Queueform audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Flow</span>
+            <span class="lens-tag">Readability</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Separate form building from form publishing — two distinct jobs share one screen, creating a constant context-switching problem</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Increase field label contrast — labels render at the same weight as placeholder text, making the builder hard to navigate</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Add a preview mode that reflects the actual respondent view — builder and output are visually identical, breaking the mental model</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <span class="pending-note">Loom · Behance — publishing in sequence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MSIA-010 — Stackmeter -->
+    <div class="candidate" role="listitem">
+      <div class="candidate-row" tabindex="0" role="button" aria-expanded="false" aria-controls="panel-010">
+        <span class="candidate-code">010</span>
+        <div class="candidate-main">
+          <div class="candidate-name">Stackmeter</div>
+          <div class="candidate-type">SaaS spend tracking · Dev tools</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="candidate-status status--pending">Pending</span>
+          <span class="candidate-toggle" aria-hidden="true">
+            <svg viewBox="0 0 12 12"><path d="M2 4l4 4 4-4"/></svg>
+          </span>
+        </div>
+      </div>
+      <div class="candidate-panel" id="panel-010" role="region" aria-label="Stackmeter audit details">
+        <div class="panel-section">
+          <span class="panel-label">Failing lenses</span>
+          <div class="lenses">
+            <span class="lens-tag">Feedback</span>
+          </div>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fix list</span>
+          <div class="fix-list">
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Show the invoice screen before the dashboard on first load — starting with the spend overview creates false confidence before the user has verified their data</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Add cost-change indicators to every line item — the dashboard shows totals without delta, making it impossible to act on the information</div>
+            <div class="fix-item"><span class="fix-dot" aria-hidden="true"></span>Surface anomaly alerts above the fold — buried notification system means cost spikes go undetected until the invoice arrives</div>
+          </div>
+        </div>
+        <div class="panel-actions">
+          <span class="pending-note">Loom · Behance — publishing in sequence</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /candidates -->
+
+  <!-- ── BOOK CTA ───────────────────────────────────────── -->
+  <div class="book-cta anim" style="--delay:0.3s">
+    <div class="book-cta-copy">
+      <span class="book-cta-label">Your product · Next</span>
+      <h2 class="book-cta-heading">Yours could be MSIA-011.</h2>
+      <p class="book-cta-sub">Your product. Your diagnosis. ₦15,000 · async · 48–72 hrs.</p>
+    </div>
+    <a href="./offers.html" class="btn-book">
+      Book the audit
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <p class="page-footer anim" style="--delay:0.38s">Manny Aziba · Interface Intelligence Studio</p>
+
+</div>
+
+<script>
+  function track(e, p) { if (typeof gtag !== 'undefined') gtag('event', e, p || {}); }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    track('page_view', { page_path: '/audits' });
+
+    /* Track candidate expansions */
+    document.getElementById('candidates').addEventListener('click', function(e) {
+      const row = e.target.closest('.candidate-row');
+      if (!row) return;
+      const card = row.closest('.candidate');
+      const name = card.querySelector('.candidate-name');
+      if (name && !card.classList.contains('open')) {
+        track('candidate_expanded', { candidate: name.textContent.trim() });
+      }
+    });
+
+    /* Track book CTA click */
+    const bookBtn = document.querySelector('.btn-book');
+    if (bookBtn) bookBtn.addEventListener('click', function () {
+      track('cta_click', { position: 'audits_book_cta' });
+    });
+  });
+
+  /* ── ACCORDION ────────────────────────────────────────── */
+  document.getElementById('candidates').addEventListener('click', function(e) {
+    const row = e.target.closest('.candidate-row');
+    if (!row) return;
+    const card = row.closest('.candidate');
+    const isOpen = card.classList.contains('open');
+
+    /* Close all */
+    document.querySelectorAll('.candidate.open').forEach(function(c) {
+      c.classList.remove('open');
+      c.querySelector('.candidate-row').setAttribute('aria-expanded', 'false');
+    });
+
+    /* Open clicked (unless it was already open) */
+    if (!isOpen) {
+      card.classList.add('open');
+      row.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  /* Keyboard support */
+  document.getElementById('candidates').addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    const row = e.target.closest('.candidate-row');
+    if (!row) return;
+    e.preventDefault();
+    row.click();
+  });
+</script>
+</body>
+</html>
