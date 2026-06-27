@@ -9,10 +9,7 @@
   <link rel="icon" type="image/png" href="./favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- Calendly widget CSS -->
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet" />
 
   <!-- GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGPBLSWHQ4"></script>
@@ -26,19 +23,17 @@
   <style>
     /* ── TOKENS ─────────────────────────────────────────── */
     :root {
-      --obsidian:       #0E0F11;
-      --obsidian-hover: #111215;
-      --graphite:       #1C1F24;
-      --graphite-2:     #22252b;
-      --zen-bone:       #ECEBE6;
-      --fog:            #8E9095;
-      --gold:           #B9A46A;
-      --gold-dim:       rgba(185,164,106,0.12);
-      --gold-mid:       rgba(185,164,106,0.25);
-      --gold-hi:        rgba(185,164,106,0.5);
-      --teal:           #2FB8B0;
-      --crimson:        #A12121;
-      --ease:           cubic-bezier(0.22,1,0.36,1);
+      --obsidian:     #0E0F11;
+      --graphite:     #1C1F24;
+      --graphite-2:   #22252b;
+      --zen-bone:     #ECEBE6;
+      --fog:          #8E9095;
+      --gold:         #B9A46A;
+      --gold-dim:     rgba(185,164,106,0.12);
+      --gold-mid:     rgba(185,164,106,0.25);
+      --gold-hi:      rgba(185,164,106,0.5);
+      --teal:         #2FB8B0;
+      --ease:         cubic-bezier(0.22,1,0.36,1);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,6 +45,7 @@
       font-family: 'Urbanist', sans-serif;
       font-size: 16px; line-height: 1.65;
       overflow-x: hidden; min-height: 100dvh;
+      -webkit-font-smoothing: antialiased;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -57,7 +53,7 @@
       * { transition: none !important; }
     }
 
-    /* ── GRAIN + GLOW ────────────────────────────────────── */
+    /* ── GRAIN ───────────────────────────────────────────── */
     body::before {
       content: ''; position: fixed; inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
@@ -67,14 +63,8 @@
     /* ── PAGE ────────────────────────────────────────────── */
     .page {
       position: relative; z-index: 1;
-      max-width: 680px; margin: 0 auto;
+      max-width: 600px; margin: 0 auto;
       padding: 0 24px 96px;
-    }
-
-    /* ── DIVIDER ─────────────────────────────────────────── */
-    .divider {
-      height: 1px; background: var(--gold);
-      opacity: 0.15; margin: 40px 0;
     }
 
     /* ── SR ONLY ─────────────────────────────────────────── */
@@ -84,221 +74,220 @@
       clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
 
-    /* ─────────────────────────────────────────────────────
-       IDENTITY STAMP — adopted from CPSA book.html
-    ───────────────────────────────────────────────────── */
-    .identity-stamp {
+    /* ── ANIMATION ───────────────────────────────────────── */
+    .anim {
+      opacity: 0;
+      animation: rise 0.55s var(--ease) var(--delay, 0s) forwards;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes teal-pulse {
+      0%, 100% { box-shadow: 0 0 0 3px rgba(47,184,176,0.15); }
+      50%       { box-shadow: 0 0 0 7px rgba(47,184,176,0.04); }
+    }
+
+    /* ── NAV STAMP ───────────────────────────────────────── */
+    .nav-stamp {
       padding: 28px 0;
       border-bottom: 1px solid var(--gold-dim);
-      margin-bottom: 40px;
+      margin-bottom: 48px;
       display: flex; align-items: center;
       justify-content: space-between;
     }
-    .identity-stamp-text {
+
+    .back-link {
       font-family: 'Albert Sans', sans-serif;
       font-size: 11px; font-weight: 500;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--fog);
-      display: flex; align-items: center; gap: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      display: flex; align-items: center; gap: 7px;
+      transition: color 0.2s;
     }
-    .identity-stamp-dot {
-      width: 3px; height: 3px; border-radius: 50%;
-      background: var(--gold); flex-shrink: 0;
+    .back-link:hover { color: var(--zen-bone); }
+    .back-link svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .back-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+
+    .nav-logo img {
+      width: 40px; height: 20px; display: block; opacity: 0.55;
     }
-    .identity-stamp-logo img { width: 40px; height: 20px; display: block; }
+    a.nav-logo { display: flex; align-items: center; }
 
-    /* ─────────────────────────────────────────────────────
-       BOOKING SECTION
-    ───────────────────────────────────────────────────── */
-    .booking-section {}
+    /* ── HEADER ──────────────────────────────────────────── */
+    .book-header { margin-bottom: 44px; }
 
-    .section-header { margin-bottom: 28px; }
-
-    .section-tag {
+    .header-tag {
       font-family: 'Albert Sans', sans-serif;
-      font-size: 11px; font-weight: 500;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--gold); opacity: 0.7;
-      display: block; margin-bottom: 12px;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.8;
+      display: block; margin-bottom: 14px;
     }
 
-    .section-title {
+    .book-title {
       font-family: 'Fraunces', serif;
-      font-weight: 300; font-size: 30px;
-      letter-spacing: -0.01em; line-height: 1.15;
-      color: var(--zen-bone); margin-bottom: 8px;
+      font-weight: 300;
+      font-size: clamp(28px, 5vw, 38px);
+      line-height: 1.1; letter-spacing: -0.015em;
+      color: var(--zen-bone); margin-bottom: 12px;
     }
 
-    .section-sub {
-      font-size: 14px; color: var(--fog); line-height: 1.6;
+    .book-sub {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 14px; color: var(--fog); line-height: 1.65;
+      max-width: 480px;
     }
 
-    /* ── INCLUDES STRIP — adopted from CPSA ──────────────── */
-    .includes-strip {
+    /* ── WHAT YOU GET ────────────────────────────────────── */
+    .deliverables {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 8px; margin-bottom: 28px;
+      gap: 8px;
+      margin-bottom: 36px;
     }
-    @media (max-width: 480px) { .includes-strip { grid-template-columns: 1fr; } }
+    @media (max-width: 420px) { .deliverables { grid-template-columns: 1fr; } }
 
-    .include-item {
+    .deliverable-item {
       background: var(--graphite);
       border: 1px solid var(--gold-dim);
-      border-left: 2px solid var(--gold);
+      border-left: 2px solid rgba(185,164,106,0.5);
       border-radius: 2px;
-      padding: 10px 14px;
+      padding: 11px 14px;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+
+    .deliverable-item svg {
+      width: 13px; height: 13px;
+      stroke: var(--gold); fill: none;
+      stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0; margin-top: 1px; opacity: 0.75;
+    }
+
+    .deliverable-text {
       font-family: 'Albert Sans', sans-serif;
-      font-size: 10px; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--fog);
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--fog); line-height: 1.4;
     }
 
-    /* ── CALENDLY WRAP — adopted from CPSA ───────────────── */
-    .calendly-wrap {
-      background: var(--graphite);
-      border: 1px solid var(--gold-dim);
-      border-top: 2px solid var(--gold);
-      border-radius: 2px;
-      overflow: hidden;
-      min-height: 700px;
-      position: relative;
-    }
-
-    .calendly-inline-widget {
-      min-width: 320px;
-      height: 700px;
-    }
-
-    /* Loading state */
-    .calendly-loading {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 14px;
-      background: var(--graphite);
-      pointer-events: none;
-      transition: opacity 0.4s;
-    }
-    .calendly-loading.hidden { opacity: 0; pointer-events: none; }
-
-    .identity-stamp-logo a:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--gold);
-      animation: pulse 1.8s ease infinite;
-    }
-    .loading-text {
-      font-family: 'Albert Sans', sans-serif;
-      font-size: 10px; font-weight: 500;
-      letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--fog); opacity: 0.5;
-    }
-
-    /* ─────────────────────────────────────────────────────
-       PAYMENT SECTION — adopted from CPSA, Blackroom skin
-       Hidden by default. Revealed via Calendly postMessage.
-    ───────────────────────────────────────────────────── */
-    .payment-section {
-      display: none;
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-    }
-    .payment-section.visible { display: block; }
-    .payment-section.animated { opacity: 1; transform: translateY(0); }
-
+    /* ── PAYMENT CARD ────────────────────────────────────── */
     .payment-card {
       background: var(--graphite);
       border: 1px solid var(--gold-dim);
       border-top: 2px solid var(--gold);
       border-radius: 2px;
-      padding: 40px 36px;
+      padding: 36px 32px;
     }
-    @media (max-width: 580px) { .payment-card { padding: 28px 20px; } }
+    @media (max-width: 480px) { .payment-card { padding: 24px 20px; } }
 
     /* Status dot */
     .status-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--teal); margin: 0 auto 28px;
-      box-shadow: 0 0 0 3px rgba(47,184,176,0.18);
-      animation: teal-pulse 2s ease infinite;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--teal);
+      margin: 0 auto 28px;
+      animation: teal-pulse 2.2s ease infinite;
     }
 
-    .payment-heading {
+    .card-heading {
       font-family: 'Fraunces', serif;
-      font-weight: 300; font-size: 26px;
+      font-weight: 300; font-size: 22px;
       letter-spacing: -0.01em; line-height: 1.2;
       color: var(--zen-bone); text-align: center;
-      margin-bottom: 8px;
-    }
-    .payment-subtext {
-      font-size: 13px; color: var(--fog);
-      text-align: center; line-height: 1.6;
-      margin-bottom: 36px;
+      margin-bottom: 6px;
     }
 
-    /* Steps — adopted from CPSA, reskinned */
-    .steps {
+    .card-sub {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; color: var(--fog);
+      text-align: center; line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    /* How it works — process steps */
+    .process {
       background: var(--graphite-2);
       border: 1px solid var(--gold-dim);
       border-radius: 2px;
-      padding: 20px; margin-bottom: 28px;
+      padding: 18px 20px;
+      margin-bottom: 28px;
     }
-    .steps-label {
+
+    .process-label {
       font-family: 'Albert Sans', sans-serif;
       font-size: 9px; font-weight: 500;
       letter-spacing: 0.13em; text-transform: uppercase;
-      color: var(--gold); opacity: 0.65;
-      margin-bottom: 16px;
+      color: var(--gold); opacity: 0.6;
+      margin-bottom: 14px;
     }
-    .step {
+
+    .process-step {
       display: flex; align-items: flex-start;
-      gap: 14px; padding: 10px 0;
+      gap: 14px; padding: 9px 0;
       border-bottom: 1px solid var(--gold-dim);
     }
-    .step:last-child { border-bottom: none; }
-    .step-num {
-      font-family: 'Urbanist', sans-serif;
-      font-weight: 600; font-size: 11px;
-      color: var(--gold); opacity: 0.7;
-      padding-top: 2px; flex-shrink: 0; min-width: 20px;
-    }
-    .step-text strong {
-      font-weight: 600; display: block;
-      font-size: 13px; color: var(--zen-bone); margin-bottom: 2px;
-    }
-    .step-text span { font-size: 12px; color: var(--fog); line-height: 1.5; }
+    .process-step:last-child { border-bottom: none; padding-bottom: 0; }
 
-    /* Amount block */
+    .step-marker {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--gold); opacity: 0.45;
+      flex-shrink: 0; margin-top: 6px;
+    }
+
+    .step-body strong {
+      font-family: 'Albert Sans', sans-serif;
+      font-weight: 500; font-size: 12px;
+      color: var(--zen-bone); display: block; margin-bottom: 2px;
+      letter-spacing: 0.01em;
+    }
+    .step-body span {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; color: var(--fog); line-height: 1.5;
+    }
+
+    /* Amount */
     .amount-block {
       background: var(--graphite-2);
       border: 1px solid var(--gold-dim);
       border-radius: 2px;
-      padding: 14px 20px; margin-bottom: 20px;
+      padding: 14px 20px; margin-bottom: 18px;
       display: flex; justify-content: space-between; align-items: center;
     }
-    .amount-label { font-size: 13px; color: var(--fog); }
+    @media (max-width: 380px) { .amount-block { flex-direction: column; align-items: flex-start; gap: 4px; } }
+
+    .amount-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; color: var(--fog);
+    }
     .amount-value {
       font-family: 'Urbanist', sans-serif;
-      font-weight: 600; font-size: 18px;
-      color: var(--zen-bone); letter-spacing: -0.01em;
+      font-weight: 600; font-size: 20px;
+      color: var(--zen-bone); letter-spacing: -0.02em;
     }
 
-    /* Pay button — gold border, NOT crimson (crimson = truth marker only) */
+    /* Pay button */
     .btn-pay {
-      display: block; width: 100%;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; width: 100%;
       font-family: 'Albert Sans', sans-serif;
       font-size: 12px; font-weight: 500;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--zen-bone); text-decoration: none;
       background: var(--graphite-2);
-      padding: 16px 28px; border-radius: 2px; text-align: center;
+      padding: 16px 28px; border-radius: 2px;
       border: 1px solid var(--gold-mid);
       transition: all 0.22s var(--ease);
       cursor: pointer; margin-bottom: 16px;
     }
+    .btn-pay svg {
+      width: 13px; height: 13px;
+      stroke: currentColor; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0; opacity: 0.6;
+    }
     .btn-pay:hover {
       border-color: var(--gold-hi);
-      background: rgba(185,164,106,0.08);
+      background: rgba(185,164,106,0.07);
       transform: translateY(-1px);
     }
     .btn-pay:active { transform: translateY(0); }
@@ -306,320 +295,248 @@
 
     /* Reassurance */
     .reassurance {
-      font-size: 12px; color: var(--fog);
-      text-align: center; line-height: 1.6; opacity: 0.7;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; color: var(--fog);
+      text-align: center; line-height: 1.65; opacity: 0.65;
     }
     .reassurance a {
       color: var(--gold); text-decoration: underline;
       text-underline-offset: 2px;
-      text-decoration-color: rgba(185,164,106,0.4);
+      text-decoration-color: rgba(185,164,106,0.35);
+      transition: text-decoration-color 0.15s;
     }
     .reassurance a:hover { text-decoration-color: var(--gold); }
 
-    /* Countdown */
-    .countdown {
-      font-family: 'Urbanist', sans-serif;
-      font-weight: 600;
+    /* ── LOOM PROOF ──────────────────────────────────────── */
+    .loom-proof {
+      margin-top: 48px;
+      padding-top: 36px;
+      border-top: 1px solid var(--gold-dim);
     }
-    .countdown.urgent { color: var(--err); }
+
+    .proof-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.13em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.6;
+      margin-bottom: 16px;
+    }
+
+    .loom-link {
+      display: flex; align-items: center;
+      gap: 16px;
+      background: var(--graphite);
+      border: 1px solid var(--gold-dim);
+      border-radius: 2px;
+      padding: 16px 20px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .loom-link:hover {
+      border-color: rgba(185,164,106,0.3);
+      background: rgba(185,164,106,0.04);
+    }
+    .loom-link:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+    .loom-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(47,184,176,0.1);
+      border: 1px solid rgba(47,184,176,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .loom-icon svg {
+      width: 14px; height: 14px;
+      stroke: var(--teal); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    .loom-meta { flex: 1; min-width: 0; }
+    .loom-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; font-weight: 500;
+      color: var(--zen-bone); letter-spacing: 0.01em;
+      margin-bottom: 3px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .loom-desc {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; color: var(--fog); line-height: 1.4;
+    }
+
+    .loom-arrow {
+      width: 14px; height: 14px;
+      stroke: var(--fog); fill: none;
+      stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0; opacity: 0.5;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .loom-link:hover .loom-arrow { opacity: 1; transform: translateX(2px); }
 
     /* ── FOOTER ──────────────────────────────────────────── */
     .footer-identity {
-      text-align: center; margin-top: 48px;
+      text-align: center; margin-top: 52px;
       font-family: 'Albert Sans', sans-serif;
       font-size: 9px; font-weight: 500;
       letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--fog); opacity: 0.4;
-    }
-
-    /* ── ANIMATION ───────────────────────────────────────── */
-    .anim {
-      opacity: 0;
-      animation: rise 0.6s var(--ease) var(--delay, 0s) forwards;
-    }
-    @keyframes rise {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.4; }
-    }
-    @keyframes teal-pulse {
-      0%, 100% { box-shadow: 0 0 0 3px rgba(47,184,176,0.18); }
-      50%       { box-shadow: 0 0 0 6px rgba(47,184,176,0.06); }
-    }
-
-    /* ── RESPONSIVE ──────────────────────────────────────── */
-    @media (max-width: 480px) {
-      .amount-block { flex-direction: column; align-items: flex-start; gap: 4px; }
+      color: var(--fog); opacity: 0.35;
     }
   </style>
 </head>
 <body>
 <div class="page">
 
-  <!-- ── IDENTITY STAMP ──────────────────────────────────── -->
-  <div class="identity-stamp anim" style="--delay:0.05s">
-    <span class="identity-stamp-text">
-      Manny Aziba
-      <span class="identity-stamp-dot" aria-hidden="true"></span>
-      System Translator
-    </span>
-    <div class="identity-stamp-logo">
-      <a href="./index.html">
-        <img src="./manny_aziba_Logo.svg" alt="Manny Aziba — back to offers" width="40" height="20" />
-      </a>
+  <!-- ── NAV STAMP ──────────────────────────────────────── -->
+  <div class="nav-stamp anim" style="--delay:0.04s">
+    <a href="./offers.html" class="back-link">
+      <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M7.5 2L3.5 6L7.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Back
+    </a>
+    <a href="./offers.html" class="nav-logo">
+      <img src="./manny_aziba_Logo.svg" alt="Manny Aziba" width="40" height="20" />
+    </a>
+  </div>
+
+  <!-- ── HEADER ─────────────────────────────────────────── -->
+  <header class="book-header anim" style="--delay:0.1s">
+    <span class="header-tag">UX Intelligence Audit</span>
+    <h1 class="book-title">One decision.<br>No scheduling.</h1>
+    <p class="book-sub">Pay once. I access your product, record a structured Loom walkthrough, and deliver a prioritised fix list — within 48–72 hours. No calls. No back-and-forth.</p>
+  </header>
+
+  <!-- ── WHAT YOU GET ────────────────────────────────────── -->
+  <div class="deliverables anim" style="--delay:0.18s" aria-label="What's included">
+    <div class="deliverable-item">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+      <span class="deliverable-text">Five-lens diagnosis</span>
+    </div>
+    <div class="deliverable-item">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+      <span class="deliverable-text">Loom walkthrough</span>
+    </div>
+    <div class="deliverable-item">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="14" y2="18"/><polyline points="3 6 4 7 6 5"/><polyline points="3 12 4 13 6 11"/><polyline points="3 18 4 19 6 17"/></svg>
+      <span class="deliverable-text">Prioritised fix list</span>
+    </div>
+    <div class="deliverable-item">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span class="deliverable-text">Written summary</span>
     </div>
   </div>
 
-  <!-- ── BOOKING SECTION ─────────────────────────────────── -->
-  <section class="booking-section anim" id="booking-section" style="--delay:0.12s">
+  <!-- ── PAYMENT CARD ────────────────────────────────────── -->
+  <div class="payment-card anim" style="--delay:0.26s">
 
-    <div class="section-header">
-      <span class="section-tag">Step 1 of 2</span>
-      <h1 class="section-title">Pick a time for your audit</h1>
-      <p class="section-sub">₦10,000 – ₦30,000 depending on product complexity · Payment collected after booking · Loom + written summary delivered within 3 working days</p>
-    </div>
+    <div class="status-dot" aria-hidden="true"></div>
 
-    <!-- What's included strip — adopted from CPSA -->
-    <div class="includes-strip">
-      <div class="include-item">Five-lens diagnosis</div>
-      <div class="include-item">Loom 10–20 min</div>
-      <div class="include-item">Prioritised fix list</div>
-      <div class="include-item">Written summary</div>
-    </div>
+    <h2 class="card-heading">Ready when you are.</h2>
+    <p class="card-sub">Payment confirms the engagement. Your audit starts within 24 hours of receipt.</p>
 
-    <!-- Calendly embed — adopted from CPSA -->
-    <div class="calendly-wrap">
-      <div class="calendly-loading" id="calendly-loading">
-        <div class="loading-dot"></div>
-        <p class="loading-text">Loading availability…</p>
-      </div>
-      <div
-        class="calendly-inline-widget"
-        id="calendly-embed"
-        data-url="https://calendly.com/YOUR-CALENDLY-USERNAME/ux-audit?hide_gdpr_banner=1&primary_color=b9a46a"
-        style="min-width:320px;height:700px;"
-      ></div>
-      <!--
-        ↑ Replace YOUR-CALENDLY-USERNAME with your Calendly username.
-          primary_color=b9a46a matches Manny's gold token exactly.
-      -->
-    </div>
+    <!-- Process -->
+    <div class="process" role="list" aria-label="How it works">
+      <p class="process-label">How it works</p>
 
-  </section>
-
-  <!-- ── DIVIDER (hidden until payment panel) ────────────── -->
-  <div class="divider" id="section-divider" style="display:none;"></div>
-
-  <!-- ─────────────────────────────────────────────────────
-       PAYMENT SECTION
-       Hidden on load. Revealed when Calendly fires
-       'calendly.event_scheduled' via postMessage.
-  ───────────────────────────────────────────────────── -->
-  <section class="payment-section" id="payment-section" aria-live="polite">
-    <div class="payment-card">
-
-      <div class="status-dot" aria-hidden="true"></div>
-
-      <h2 class="payment-heading" id="payment-heading">
-        Session booked.
-      </h2>
-      <p class="payment-subtext" id="payment-subtext">
-        Complete payment to confirm the slot. Your Loom + written summary will be delivered within 3 working days of the session.
-      </p>
-
-      <!-- Steps — adopted from CPSA -->
-      <div class="steps">
-        <p class="steps-label">What happens next</p>
-        <div class="step">
-          <span class="step-num">01</span>
-          <div class="step-text">
-            <strong>Complete payment below</strong>
-            <span>Secures the slot and confirms the engagement</span>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step-num">02</span>
-          <div class="step-text">
-            <strong>Share your product URL</strong>
-            <span>A short prep form is sent to your email — takes 2 minutes to fill</span>
-          </div>
-        </div>
-        <div class="step">
-          <span class="step-num">03</span>
-          <div class="step-text">
-            <strong>Receive your audit</strong>
-            <span>Loom walkthrough + prioritised fix list + optional written summary — within 3 working days</span>
-          </div>
+      <div class="process-step" role="listitem">
+        <span class="step-marker" aria-hidden="true"></span>
+        <div class="step-body">
+          <strong>Pay below</strong>
+          <span>Secures the engagement — no scheduling required</span>
         </div>
       </div>
 
-      <!-- Amount -->
-      <div class="amount-block">
-        <span class="amount-label">UX Intelligence Audit</span>
-        <span class="amount-value" id="payment-amount">₦10,000 – ₦30,000</span>
+      <div class="process-step" role="listitem">
+        <span class="step-marker" aria-hidden="true"></span>
+        <div class="step-body">
+          <strong>Fill a 2-minute intake form</strong>
+          <span>Share your product URL and what's breaking — you'll be redirected after payment</span>
+        </div>
       </div>
 
-      <!-- Pay CTA -->
-      <a
-        href="https://paystack.shop/pay/ux-audit"
-        class="btn-pay"
-        id="pay-btn"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Complete Payment
-        <span class="sr-only">(opens Paystack in new tab)</span>
-      </a>
-      <!--
-        ↑ Replace YOUR-PAYSTACK-PAYMENT-LINK with your Paystack payment page slug.
-          Create the payment page at dashboard.paystack.com > Payment Pages.
-          Set it to a fixed or customer-set amount (for variable pricing).
-      -->
-
-      <p class="reassurance">
-        Your slot is held for <span class="countdown" id="countdown">15:00</span>.
-        <br>Questions? <a href="mailto:hello@mannyaziba.com">hello@mannyaziba.com</a>
-        <!--  ↑ Replace with your actual email address -->
-      </p>
-
+      <div class="process-step" role="listitem">
+        <span class="step-marker" aria-hidden="true"></span>
+        <div class="step-body">
+          <strong>Receive your audit</strong>
+          <span>Loom walkthrough + prioritised fix list in your inbox within 48–72 hours</span>
+        </div>
+      </div>
     </div>
-  </section>
 
-  <!-- ── FOOTER ───────────────────────────────────────────── -->
-  <p class="footer-identity">Manny Aziba · System Translator · Built on CPSA Architecture</p>
+    <!-- Amount -->
+    <div class="amount-block">
+      <span class="amount-label">UX Intelligence Audit</span>
+      <span class="amount-value">₦15,000</span>
+    </div>
 
-</div><!-- /page -->
+    <!-- Pay CTA -->
+    <a
+      href="https://paystack.shop/pay/ux-audit-ngn"
+      class="btn-pay"
+      id="pay-btn"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Pay ₦15,000 — Secure your audit
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <span class="sr-only">(opens Paystack in new tab)</span>
+    </a>
 
-<!-- ── CALENDLY JS ──────────────────────────────────────────── -->
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <p class="reassurance">
+      Questions? <a href="mailto:mannyaziba@gmail.com">mannyaziba@gmail.com</a>
+      &nbsp;·&nbsp;
+      <a href="https://wa.me/2348149686541" target="_blank" rel="noopener">WhatsApp</a>
+    </p>
 
-<!-- ── PAYMENT REVEAL + TRACKING — adopted from CPSA ──────── -->
+  </div>
+
+  <!-- ── LOOM PROOF ──────────────────────────────────────── -->
+  <div class="loom-proof anim" style="--delay:0.36s">
+    <p class="proof-label">See a real audit</p>
+    <a
+      href="https://www.loom.com/share/b1c902ff61664f0588d5f3ff65671252"
+      class="loom-link"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Watch the Remit-Path audit on Loom (opens in new tab)"
+    >
+      <div class="loom-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </div>
+      <div class="loom-meta">
+        <p class="loom-title">Remit-Path — MSIA-001 Audit</p>
+        <p class="loom-desc">Five-lens walkthrough · Structure + Feedback failures identified</p>
+      </div>
+      <svg class="loom-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────── -->
+  <p class="footer-identity anim" style="--delay:0.44s">Manny Aziba · Interface Intelligence Studio</p>
+
+</div>
+
 <script>
-/*
-  MANNY AZIBA — BOOKING PAGE
-  Adopted from CPSA's booking logic, adapted for Manny's offer structure.
+  function track(event, params) {
+    if (typeof gtag === 'undefined') return;
+    gtag('event', event, params || {});
+  }
 
-  HOW IT WORKS:
-  1. Calendly embeds inline — no popup, no redirect
-  2. On booking complete, Calendly fires postMessage: 'calendly.event_scheduled'
-  3. We reveal the payment panel + start 15-min countdown + track in GA4
-  4. Visitor pays on same page — no additional redirect
-*/
+  document.addEventListener('DOMContentLoaded', function () {
+    track('page_view', { page_path: '/book' });
 
-/* ── GA4 WRAPPER ────────────────────────────────────────── */
-function track(event, params) {
-  if (typeof gtag === 'undefined') return;
-  gtag('event', event, params || {});
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-
-  /* ── PAGE VIEW ──────────────────────────────────────── */
-  track('page_view', { page_path: '/book' });
-
-  /* ── HIDE CALENDLY LOADER AFTER WIDGET LOADS ────────── */
-  setTimeout(function () {
-    const loader = document.getElementById('calendly-loading');
-    if (loader) loader.classList.add('hidden');
-  }, 2800);
-
-  /* ── PAYMENT BUTTON TRACKING ────────────────────────── */
-  const payBtn = document.getElementById('pay-btn');
-  if (payBtn) {
-    payBtn.addEventListener('click', function () {
-      track('payment_initiated', {
-        offer:    'ux_audit',
-        currency: 'NGN',
-        method:   'paystack'
+    const payBtn = document.getElementById('pay-btn');
+    if (payBtn) {
+      payBtn.addEventListener('click', function () {
+        track('payment_initiated', {
+          offer: 'ux_audit',
+          currency: 'NGN',
+          amount: 15000,
+          method: 'paystack'
+        });
       });
-    });
-  }
-
-});
-
-/* ── CALENDLY EVENT LISTENER ────────────────────────────── */
-/*
-  Calendly fires 'calendly.event_scheduled' on booking completion.
-  We catch it and reveal the payment panel immediately, same page.
-
-  Other Calendly events (informational — not used here):
-    'calendly.date_and_time_selected'
-    'calendly.profile_page_viewed'
-    'calendly.event_type_viewed'
-*/
-window.addEventListener('message', function (e) {
-  if (!e.data || !e.data.event) return;
-  if (e.data.event !== 'calendly.event_scheduled') return;
-
-  const payload = e.data.payload || {};
-
-  /* ── 1. Track in GA4 ─────────────────────────────────── */
-  track('booking_confirmed', {
-    offer:         'ux_audit',
-    invitee_name:  payload.invitee  ? payload.invitee.name  : '',
-    invitee_email: payload.invitee  ? payload.invitee.email : '',
-    event_time:    payload.event    ? payload.event.start_time : ''
-  });
-
-  /* ── 2. Personalise heading if name available ─────────── */
-  const firstName = payload.invitee && payload.invitee.name
-    ? payload.invitee.name.split(' ')[0]
-    : null;
-
-  if (firstName) {
-    const heading = document.getElementById('payment-heading');
-    const subtext  = document.getElementById('payment-subtext');
-    if (heading) heading.textContent = firstName + ', your slot is locked.';
-    if (subtext)  subtext.textContent =
-      'Complete payment to confirm. Your Loom + written summary will be delivered within 3 working days of the session.';
-  }
-
-  /* ── 3. Reveal payment panel ─────────────────────────── */
-  revealPaymentPanel();
-});
-
-/* ── REVEAL PAYMENT PANEL ───────────────────────────────── */
-function revealPaymentPanel() {
-  const divider = document.getElementById('section-divider');
-  const section = document.getElementById('payment-section');
-  if (!section) return;
-
-  if (divider) divider.style.display = 'block';
-
-  section.classList.add('visible');
-  section.offsetHeight; /* force reflow for CSS transition */
-  section.classList.add('animated');
-
-  setTimeout(function () {
-    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 120);
-
-  startCountdown();
-  track('payment_panel_shown', { offer: 'ux_audit' });
-}
-
-/* ── COUNTDOWN TIMER ────────────────────────────────────── */
-function startCountdown() {
-  let total = 15 * 60;
-  const el = document.getElementById('countdown');
-  if (!el) return;
-
-  const timer = setInterval(function () {
-    total--;
-    const m = Math.floor(total / 60).toString().padStart(2, '0');
-    const s = (total % 60).toString().padStart(2, '0');
-    el.textContent = m + ':' + s;
-    if (total === 300) el.classList.add('urgent');
-    if (total <= 0) {
-      clearInterval(timer);
-      el.textContent = 'expired';
-      el.classList.add('urgent');
     }
-  }, 1000);
-}
+  });
 </script>
 </body>
 </html>
