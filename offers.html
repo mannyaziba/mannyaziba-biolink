@@ -18,15 +18,15 @@
   <link rel="icon" type="image/png" href="./favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- GA4 — replace G-XXXXXXXXXX with Measurement ID -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGPBLSWHQ4"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){ dataLayer.push(arguments); }
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX', { send_page_view: false });
+    gtag('config', 'G-LGPBLSWHQ4', { send_page_view: false });
   </script>
 
   <style>
@@ -142,6 +142,9 @@
       padding: 28px 0 0;
       text-align: center;
     }
+    .wordmark-first { color: var(--zen-bone); margin-right: 0.35em; }
+    .wordmark-last  { color: var(--gold); }
+
     .identity-stamp-text {
       font-family: 'Albert Sans', sans-serif;
       font-size: 11px; font-weight: 500;
@@ -217,19 +220,21 @@
 
     /* ── GHOST BUTTON ────────────────────────────────────── */
     .btn-ghost {
-      display: inline-flex; align-items: center; gap: 8px;
+      display: inline-flex; align-items: center; gap: 6px;
       font-family: 'Albert Sans', sans-serif;
-      font-size: 12px; font-weight: 500;
+      font-size: 11px; font-weight: 500;
       letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--fog); text-decoration: none;
       background: transparent;
-      padding: 14px 24px; border-radius: 2px;
-      border: 1px solid rgba(142,144,149,0.2);
-      transition: all 0.22s var(--ease);
+      padding: 14px 4px; border-radius: 2px;
+      border: none;
+      transition: color 0.2s var(--ease);
       cursor: pointer;
     }
-    .btn-ghost:hover { border-color: var(--gold-mid); color: var(--zen-bone); }
-    .btn-ghost:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+    .btn-ghost:hover { color: var(--zen-bone); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+    .btn-ghost svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; flex-shrink: 0; transition: transform 0.2s; }
+    .btn-ghost:hover svg { transform: translateX(2px); }
 
     /* ─────────────────────────────────────────────────────
        OFFERS SECTION
@@ -422,6 +427,66 @@
       color: var(--fog); opacity: 0.4;
     }
 
+    /* Ghost CTA — same height as offer-cta, no fill */
+    .offer-cta-ghost {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      padding: 8px 16px; border-radius: 2px;
+      border: 1px solid rgba(142,144,149,0.2);
+      transition: all 0.18s var(--ease);
+      white-space: nowrap;
+    }
+    .offer-cta-ghost:hover {
+      color: var(--zen-bone);
+      border-color: rgba(142,144,149,0.4);
+      background: rgba(142,144,149,0.06);
+    }
+    .offer-cta-ghost:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .offer-cta-ghost svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; transition: transform 0.18s; }
+    .offer-cta-ghost:hover svg { transform: translateX(2px); }
+
+    /* ── LOOM PROOF BLOCK (Tier 1 card) ─────────────────── */
+    .offer-loom-proof {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(47,184,176,0.06);
+      border: 1px solid rgba(47,184,176,0.18);
+      border-radius: 2px;
+      padding: 12px 14px;
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .offer-loom-proof:hover {
+      border-color: rgba(47,184,176,0.35);
+      background: rgba(47,184,176,0.1);
+    }
+    @media (prefers-reduced-motion: reduce) { .offer-loom-proof { transition: none; } }
+    .offer-loom-proof:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    .offer-loom-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(47,184,176,0.12);
+      border: 1px solid rgba(47,184,176,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .offer-loom-meta { flex: 1; min-width: 0; }
+    .offer-loom-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      color: var(--zen-bone);
+      display: block; margin-bottom: 2px; letter-spacing: 0.01em;
+    }
+    .offer-loom-desc {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; color: var(--fog);
+    }
+    .offer-loom-arrow { flex-shrink: 0; opacity: 0.4; transition: opacity 0.2s, transform 0.2s; }
+    .offer-loom-proof:hover .offer-loom-arrow { opacity: 0.8; transform: translateX(2px); }
+
     /* ─────────────────────────────────────────────────────
        MID CTA + FINAL CLOSE — adopted from CPSA
     ───────────────────────────────────────────────────── */
@@ -549,15 +614,15 @@
   <!-- ── NAV ──────────────────────────────────────────────── -->
   <div class="container">
     <nav class="nav anim" style="--delay:0.05s">
-      <a class="nav-logo" href="https://mannyaziba.vercel.app/">
+      <a class="nav-logo" href="./index.html">
         <img src="./manny_aziba_Logo.svg" alt="Manny Aziba" width="52" height="26" />
-        <span class="nav-wordmark" aria-hidden="true">Manny Aziba</span>
+        <span class="nav-wordmark" aria-hidden="true"><span class="wordmark-first">Manny</span><span class="wordmark-last">Aziba</span></span>
       </a>
-      <a class="nav-back" href="https://mannyaziba.vercel.app/">
+      <a class="nav-back" href="./audits.html">
         <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M7.5 2L3.5 6L7.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Portfolio
+        See audits
       </a>
     </nav>
   </div>
@@ -568,7 +633,7 @@
       <span class="identity-stamp-text">
         Manny Aziba
         <span class="identity-stamp-dot" aria-hidden="true"></span>
-        System Translator for Developer-Built Products
+        Interface Intelligence · Developer-Built Products
       </span>
     </div>
   </div>
@@ -576,7 +641,7 @@
   <!-- ── HERO ─────────────────────────────────────────────── -->
   <section class="hero" id="hero">
     <div class="container">
-      <div class="hero-eyebrow anim" style="--delay:0.15s">UX Intelligence Audits &amp; Interface Reworks</div>
+      <div class="hero-eyebrow anim" style="--delay:0.15s">UX Intelligence Audit · Interface Intelligence</div>
       <h1 class="hero-headline anim" id="hero-headline" style="--delay:0.2s">
         I will show you exactly where your<br>interface is <em>losing users.</em>
       </h1>
@@ -588,9 +653,9 @@
           <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
           Book a UX Intelligence Audit
         </a>
-        <a href="https://mannyaziba-free-trials.vercel.app/" class="btn-ghost" target="_blank" rel="noopener noreferrer">
-          Try a free sprint first
-          <span class="sr-only">(opens in new tab)</span>
+        <a href="./audits.html" class="btn-ghost">
+          See real audits
+          <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7.5 3 12 7l-4.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
         </a>
       </div>
     </div>
@@ -605,7 +670,7 @@
       <!-- Section frame — adopted from CPSA -->
       <p class="section-label anim" id="section-label" style="--delay:0.1s">The Tier System</p>
       <p class="price-anchor anim" style="--delay:0.16s">
-        Most engagements begin with a <strong>₦10,000 – ₦30,000</strong> audit. Everything follows from diagnosis.
+        Every engagement begins with a <strong>₦15,000 audit.</strong> Everything follows from diagnosis.
       </p>
 
       <div class="offers-grid">
@@ -617,8 +682,8 @@
           <h2 class="offer-title">UX Intelligence Audit</h2>
           <p class="offer-role">A structured diagnosis of your interface — what is broken, why it is broken, and what to fix first.</p>
 
-          <div class="offer-price">₦10,000 – ₦30,000</div>
-          <div class="price-note">$50 – $150 for international clients · Scales with product complexity</div>
+          <div class="offer-price">₦15,000</div>
+          <div class="price-note">Fixed price · No scope creep · Standalone deliverable</div>
 
           <div class="offer-includes">
             <div class="offer-includes-label">What you receive</div>
@@ -630,12 +695,30 @@
             </ul>
           </div>
 
+          <!-- Loom proof — real audit, live now -->
+          <a href="https://www.loom.com/share/b1c902ff61664f0588d5f3ff65671252" target="_blank" rel="noopener noreferrer" class="offer-loom-proof">
+            <span class="offer-loom-icon" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3" stroke="#2FB8B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="#2FB8B0"/></svg>
+            </span>
+            <span class="offer-loom-meta">
+              <span class="offer-loom-title">See a real audit — Remit-Path</span>
+              <span class="offer-loom-desc">Five-lens walkthrough · Structure + Feedback failures identified</span>
+            </span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" class="offer-loom-arrow" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="#8E9095" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+
           <div class="offer-foot">
             <span class="offer-note">Entry point · Standalone deliverable</span>
-            <a href="./book.html" class="offer-cta" data-cta="tier1">
-              Book audit
-              <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
-            </a>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <a href="./audits.html" class="offer-cta-ghost">
+                See the work
+                <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+              </a>
+              <a href="./book.html" class="offer-cta" data-cta="tier1">
+                Book audit
+                <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -647,7 +730,7 @@
           <p class="offer-role">The correction. After the audit identifies the problems, the rework fixes them — redesigning key screens, restructuring flow, rebuilding hierarchy.</p>
 
           <div class="offer-price">₦50,000 – ₦150,000</div>
-          <div class="price-note">$200 – $600+ internationally · Scoped per engagement or per screen</div>
+          <div class="price-note">Scoped per engagement · Defined after audit · Naira only</div>
 
           <div class="offer-includes">
             <div class="offer-includes-label">What you receive</div>
@@ -763,7 +846,7 @@
     <div class="container">
       <div class="footer-inner">
         <span class="footer-statement">"I remove noise until meaning remains."</span>
-        <span class="footer-cpsa">Built on CPSA Architecture · Manny Aziba v1.0</span>
+        <span class="footer-cpsa">Interface Intelligence Studio</span>
       </div>
     </div>
   </footer>
@@ -773,7 +856,7 @@
 <!-- ── EXIT INTENT BANNER — adopted from CPSA, reskinned ──── -->
 <div class="exit-banner" id="exit-banner" role="complementary" aria-label="One more thing">
   <p class="exit-banner-text">
-    Still deciding? The <strong>UX Intelligence Audit</strong> starts at ₦10,000 — a structured diagnosis of exactly what is breaking your interface. No commitment beyond that.
+    Still deciding? The <strong>UX Intelligence Audit</strong> is ₦15,000 — a structured diagnosis of exactly what is breaking your interface. No commitment beyond that.
   </p>
   <div class="exit-banner-actions">
     <a href="./book.html" class="btn-exit-cta" id="exit-cta">
