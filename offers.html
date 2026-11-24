@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Work with Manny Aziba — Brand &amp; Interface Designer</title>
+
+  <!-- SEO + OG -->
+  <meta name="description" content="Event flyers and posters, brand starters, landing pages built live, and UI audits. Manny Aziba designs it and builds it." />
+  <meta name="keywords" content="flyer design, poster design, brand identity, landing page, UI audit, Nigeria, Jos" />
+  <meta property="og:title" content="Work with Manny Aziba" />
+  <meta property="og:description" content="Brand and interface designer who builds what he designs." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Work with Manny Aziba" />
+  <meta name="twitter:description" content="Brand and interface designer who builds what he designs." />
+
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;1,9..144,300&family=Urbanist:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-LGPBLSWHQ4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-LGPBLSWHQ4', { send_page_view: false });
+  </script>
+
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --obsidian:       #0E0F11;
+      --obsidian-hover: #111215;
+      --graphite:       #1C1F24;
+      --graphite-2:     #22252b;
+      --zen-bone:       #ECEBE6;
+      --fog:            #8E9095;
+      --gold:           #B9A46A;
+      --gold-dim:       rgba(185,164,106,0.12);
+      --gold-mid:       rgba(185,164,106,0.25);
+      --gold-hi:        rgba(185,164,106,0.5);
+      --teal:           #2FB8B0;
+      --crimson:        #A12121;
+      --err:            #c94040;
+      --ease:           cubic-bezier(0.22,1,0.36,1);
+    }
+
+    /* ── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--obsidian);
+      color: var(--zen-bone);
+      font-family: 'Urbanist', sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .anim { animation: none !important; opacity: 1 !important; transform: none !important; }
+      * { transition: none !important; }
+    }
+
+    /* ── GRAIN + GLOW ────────────────────────────────────── */
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.022; pointer-events: none; z-index: 0;
+    }
+    body::after {
+      content: ''; position: fixed;
+      width: 900px; height: 600px; border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(185,164,106,0.03) 0%, transparent 70%);
+      top: 0; left: 50%; transform: translateX(-50%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── LAYOUT ──────────────────────────────────────────── */
+    .page { position: relative; z-index: 1; }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 64px;
+    }
+    @media (max-width: 960px)  { .container { padding: 0 32px; } }
+    @media (max-width: 580px)  { .container { padding: 0 20px; } }
+
+    /* ── DIVIDER ─────────────────────────────────────────── */
+    .divider {
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.15;
+      margin: 48px 0;
+    }
+
+    /* ── SR ONLY ─────────────────────────────────────────── */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       NAV
+    ───────────────────────────────────────────────────── */
+    .nav {
+      padding: 28px 0;
+      border-bottom: 1px solid var(--gold-dim);
+      display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .nav-logo img { width: 52px; height: 26px; display: block; }
+    .nav-wordmark {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog);
+    }
+    .nav-back {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      display: flex; align-items: center; gap: 7px;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--zen-bone); }
+    .nav-back svg { width: 12px; height: 12px; }
+    .nav-back:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+
+    /* ─────────────────────────────────────────────────────
+       IDENTITY STAMP
+    ───────────────────────────────────────────────────── */
+    .identity-stamp {
+      padding: 28px 0 0;
+      text-align: center;
+    }
+    .wordmark-first { color: var(--zen-bone); margin-right: 0.35em; }
+    .wordmark-last  { color: var(--gold); }
+
+    .identity-stamp-text {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog);
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .identity-stamp-dot {
+      width: 3px; height: 3px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       HERO, Manny voice + visual
+    ───────────────────────────────────────────────────── */
+    .hero {
+      padding: 64px 0 80px;
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; display: block;
+      width: 20px; height: 1px;
+      background: var(--gold); opacity: 0.4;
+    }
+
+    .hero-headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: clamp(36px, 5vw, 56px);
+      line-height: 1.1; letter-spacing: -0.015em;
+      color: var(--zen-bone);
+      margin-bottom: 20px;
+    }
+    /* Teal em accent — Manny's teal is the insight/interaction colour */
+    .hero-headline em { font-style: normal; color: var(--teal); }
+
+    .hero-sub {
+      font-size: 18px; font-weight: 400;
+      color: var(--fog); line-height: 1.65;
+      max-width: 520px; margin: 0 auto 36px;
+    }
+
+    /* ── PRIMARY CTA BUTTON ──────────────────────────────── */
+    /* Graphite + gold border — NOT crimson. Crimson is truth marker only. */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--zen-bone); text-decoration: none;
+      background: var(--graphite);
+      padding: 14px 28px; border-radius: 2px;
+      border: 1px solid var(--gold-mid);
+      transition: all 0.22s var(--ease);
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      background: var(--graphite-2);
+      border-color: var(--gold-hi);
+      transform: translateY(-2px);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+    .btn-primary svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; }
+
+    /* ── GHOST BUTTON ────────────────────────────────────── */
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      background: transparent;
+      padding: 14px 4px; border-radius: 2px;
+      border: none;
+      transition: color 0.2s var(--ease);
+      cursor: pointer;
+    }
+    .btn-ghost:hover { color: var(--zen-bone); }
+    .btn-ghost:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px; }
+    .btn-ghost svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; flex-shrink: 0; transition: transform 0.2s; }
+    .btn-ghost:hover svg { transform: translateX(2px); }
+
+    /* ─────────────────────────────────────────────────────
+       OFFERS SECTION
+    ───────────────────────────────────────────────────── */
+    .offers-section { padding: 0 0 80px; }
+
+    /* Section framing */
+    .section-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--fog); text-align: center;
+      margin-bottom: 10px;
+    }
+    .price-anchor {
+      font-family: 'Urbanist', sans-serif;
+      font-size: 16px; font-weight: 400;
+      color: var(--fog); text-align: center;
+      margin-bottom: 48px;
+      opacity: 0.7;
+    }
+    .price-anchor strong { color: var(--zen-bone); font-weight: 600; }
+
+    /* Grid: single column for cards — stacked, not side by side.
+       Tier system reads as a sequence, not a choice of equals. */
+    .offers-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: var(--gold-dim);
+      border: 1px solid var(--gold-dim);
+    }
+    @media (min-width: 720px) {
+      .offers-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      /* Tier 3 and collaboration span differently */
+      .offer-card.span-full {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* ── OFFER CARD ──────────────────────────────────────── */
+    .offer-card {
+      background: var(--obsidian);
+      padding: 36px 32px;
+      display: flex; flex-direction: column;
+      position: relative;
+      transition: background 0.22s;
+      cursor: default;
+    }
+    .offer-card:hover { background: var(--obsidian-hover); }
+
+    /* Status rules card top rule system */
+    .offer-card.tier-active   { border-top: 2px solid var(--gold); }
+    .offer-card.tier-entry    { border-top: 2px solid var(--teal); }
+    .offer-card.tier-inactive { border-top: 2px solid var(--graphite-2); }
+    .offer-card.tier-collab   { border-top: 2px solid rgba(142,144,149,0.3); }
+
+    /* Tag offer-tag */
+    .offer-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 2px;
+      margin-bottom: 20px; width: fit-content;
+    }
+    .tag-entry    { background: rgba(47,184,176,0.1); color: var(--teal); border: 1px solid rgba(47,184,176,0.25); }
+    .tag-active   { background: rgba(185,164,106,0.1); color: var(--gold); border: 1px solid rgba(185,164,106,0.22); }
+    .tag-inactive { background: rgba(142,144,149,0.08); color: var(--fog); border: 1px solid rgba(142,144,149,0.18); }
+    .tag-collab   { background: rgba(142,144,149,0.06); color: var(--fog); border: 1px solid rgba(142,144,149,0.14); }
+
+    .offer-tier {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.5;
+      margin-bottom: 8px;
+    }
+
+    /* Albert Sans — structural label, not philosophical anchor.
+       Fraunces reserved for: hero-headline, close-line, footer-statement. */
+    .offer-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-weight: 500; font-size: 20px;
+      letter-spacing: 0.01em; line-height: 1.2;
+      color: var(--zen-bone);
+      margin-bottom: 8px;
+    }
+
+    .offer-role {
+      font-size: 13px; font-weight: 400;
+      color: var(--fog); line-height: 1.6;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+
+    /* Price block */
+    .offer-price {
+      font-family: 'Urbanist', sans-serif;
+      font-weight: 600; font-size: 22px;
+      color: var(--zen-bone);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .price-note {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.6;
+      margin-bottom: 24px;
+    }
+
+    /* Deliverables list's offer-includes */
+    .offer-includes {
+      border-top: 1px solid var(--gold-dim);
+      padding-top: 20px;
+      margin-bottom: 24px;
+    }
+    .offer-includes-label {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.65;
+      margin-bottom: 12px;
+    }
+    .offer-includes ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+    .offer-includes ul li {
+      font-size: 13px; color: var(--fog);
+      line-height: 1.5;
+      padding-left: 18px; position: relative;
+    }
+    .offer-includes ul li::before {
+      content: '—';
+      position: absolute; left: 0;
+      color: var(--gold); opacity: 0.6;
+      font-size: 11px;
+    }
+
+    /* Collaboration table */
+    .collab-table { width: 100%; border-collapse: collapse; }
+    .collab-table tr { border-bottom: 1px solid var(--gold-dim); }
+    .collab-table tr:last-child { border-bottom: none; }
+    .collab-table td { padding: 10px 0; font-size: 13px; vertical-align: top; }
+    .collab-table td:first-child { color: var(--zen-bone); font-weight: 500; padding-right: 24px; white-space: nowrap; }
+    .collab-table td:last-child { color: var(--fog); }
+
+    /* Card CTA row */
+    .offer-foot {
+      margin-top: auto; padding-top: 20px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .offer-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gold); text-decoration: none;
+      padding: 8px 16px; border-radius: 2px;
+      border: 1px solid var(--gold-mid);
+      transition: all 0.18s var(--ease);
+      white-space: nowrap;
+    }
+    .offer-cta:hover {
+      background: var(--gold-dim);
+      border-color: var(--gold-hi);
+      color: var(--zen-bone);
+      transform: translateY(-1px);
+    }
+    .offer-cta:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .offer-cta svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; transition: transform 0.18s; }
+    .offer-cta:hover svg { transform: translate(2px, -2px); }
+
+    .offer-note {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9.5px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.45;
+    }
+
+    /* Inactive tier CTA — no link, just a signal */
+    .offer-cta-inactive {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--fog); opacity: 0.4;
+    }
+
+    /* Ghost CTA — same height as offer-cta, no fill */
+    .offer-cta-ghost {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--fog); text-decoration: none;
+      padding: 8px 16px; border-radius: 2px;
+      border: 1px solid rgba(142,144,149,0.2);
+      transition: all 0.18s var(--ease);
+      white-space: nowrap;
+    }
+    .offer-cta-ghost:hover {
+      color: var(--zen-bone);
+      border-color: rgba(142,144,149,0.4);
+      background: rgba(142,144,149,0.06);
+    }
+    .offer-cta-ghost:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+    .offer-cta-ghost svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; transition: transform 0.18s; }
+    .offer-cta-ghost:hover svg { transform: translateX(2px); }
+
+    /* ── LOOM PROOF BLOCK (Tier 1 card) ─────────────────── */
+    .offer-loom-proof {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(47,184,176,0.06);
+      border: 1px solid rgba(47,184,176,0.18);
+      border-radius: 2px;
+      padding: 12px 14px;
+      text-decoration: none;
+      margin-bottom: 20px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .offer-loom-proof:hover {
+      border-color: rgba(47,184,176,0.35);
+      background: rgba(47,184,176,0.1);
+    }
+    @media (prefers-reduced-motion: reduce) { .offer-loom-proof { transition: none; } }
+    .offer-loom-proof:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+    .offer-loom-icon {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: rgba(47,184,176,0.12);
+      border: 1px solid rgba(47,184,176,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .offer-loom-meta { flex: 1; min-width: 0; }
+    .offer-loom-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      color: var(--zen-bone);
+      display: block; margin-bottom: 2px; letter-spacing: 0.01em;
+    }
+    .offer-loom-desc {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 10px; color: var(--fog);
+    }
+    .offer-loom-arrow { flex-shrink: 0; opacity: 0.4; transition: opacity 0.2s, transform 0.2s; }
+    .offer-loom-proof:hover .offer-loom-arrow { opacity: 0.8; transform: translateX(2px); }
+
+    /* ─────────────────────────────────────────────────────
+       MID CTA + FINAL CLOSE
+    ───────────────────────────────────────────────────── */
+    .cta-section {
+      text-align: center;
+      padding: 64px 0;
+    }
+
+    .final-close {
+      text-align: center;
+      padding: 80px 0 64px;
+    }
+    .close-line {
+      font-family: 'Fraunces', serif;
+      font-weight: 300; font-size: 26px;
+      letter-spacing: -0.01em; line-height: 1.2;
+      color: var(--zen-bone); margin-bottom: 8px;
+    }
+    .close-sub {
+      font-size: 13px; color: var(--fog);
+      margin-bottom: 32px; opacity: 0.7;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       FOOTER
+    ───────────────────────────────────────────────────── */
+    .page-footer {
+      border-top: 1px solid var(--gold-dim);
+      padding: 28px 0 48px;
+    }
+    .footer-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-statement {
+      font-family: 'Fraunces', serif;
+      font-style: italic; font-weight: 300;
+      font-size: 13px; color: var(--fog); opacity: 0.6;
+    }
+    .footer-cpsa {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--crimson); opacity: 0.5;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       EXIT INTENT BANNER
+    ───────────────────────────────────────────────────── */
+    .exit-banner {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--graphite);
+      border-top: 1px solid var(--gold-mid);
+      padding: 18px 32px;
+      z-index: 1000;
+      align-items: center; justify-content: space-between; gap: 24px;
+      animation: slideUp 0.35s var(--ease) forwards;
+    }
+    .exit-banner.visible { display: flex; }
+    .exit-banner-text {
+      font-size: 14px; color: var(--fog); line-height: 1.55;
+      max-width: 560px;
+    }
+    .exit-banner-text strong { color: var(--gold); font-weight: 600; }
+    .exit-banner-actions { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
+    .btn-exit-cta {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--zen-bone); text-decoration: none;
+      background: var(--graphite-2);
+      padding: 9px 18px; border-radius: 2px;
+      border: 1px solid var(--gold-mid);
+      transition: all 0.18s var(--ease); white-space: nowrap;
+    }
+    .btn-exit-cta:hover { border-color: var(--gold-hi); background: rgba(185,164,106,0.08); }
+    .btn-exit-dismiss {
+      background: none; border: none;
+      color: var(--fog); opacity: 0.5;
+      cursor: pointer; font-size: 18px; line-height: 1; padding: 4px;
+      transition: opacity 0.2s;
+    }
+    .btn-exit-dismiss:hover { opacity: 1; }
+
+    @media (max-width: 640px) {
+      .exit-banner { flex-direction: column; align-items: flex-start; padding: 16px 20px; gap: 14px; }
+      .exit-banner-actions { width: 100%; }
+      .btn-exit-cta { flex: 1; justify-content: center; }
+    }
+
+    /* ─────────────────────────────────────────────────────
+       ANIMATION
+    ───────────────────────────────────────────────────── */
+    .anim {
+      opacity: 0;
+      animation: rise 0.65s var(--ease) var(--delay, 0s) forwards;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+
+    /* ─────────────────────────────────────────────────────
+       RESPONSIVE
+    ───────────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 0 56px; }
+      .offer-card { padding: 28px 22px; }
+      .offer-title { font-size: 20px; }
+      .offer-price { font-size: 18px; }
+      .close-line { font-size: 22px; }
+      .btn-primary { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── NAV ──────────────────────────────────────────────── -->
+  <div class="container">
+    <nav class="nav anim" style="--delay:0.05s">
+      <a class="nav-logo" href="./index.html">
+        <img src="./manny_aziba_Logo.svg" alt="Manny Aziba" width="52" height="26" />
+        <span class="nav-wordmark" aria-hidden="true"><span class="wordmark-first">Manny</span><span class="wordmark-last">Aziba</span></span>
+      </a>
+      <a class="nav-back" href="./index.html">
+        <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M7.5 2L3.5 6L7.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Home
+      </a>
+    </nav>
+  </div>
+
+  <!-- ── IDENTITY STAMP ───────────────── -->
+  <div class="container">
+    <div class="identity-stamp anim" style="--delay:0.1s">
+      <span class="identity-stamp-text">
+        Manny Aziba
+        <span class="identity-stamp-dot" aria-hidden="true"></span>
+        Brand &amp; Interface Designer
+      </span>
+    </div>
+  </div>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="hero-eyebrow anim" style="--delay:0.15s">Work with me</div>
+      <h1 class="hero-headline anim" id="hero-headline" style="--delay:0.2s">
+        I design it, then<br><em>I build it.</em>
+      </h1>
+      <p class="hero-sub anim" id="hero-sub" style="--delay:0.28s">
+        Four things I do well. Each has a fixed scope, a clear deliverable and a price agreed before work starts.
+      </p>
+      <div class="anim" style="--delay:0.35s; display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;">
+        <a href="https://wa.me/2348149686541?text=Hi%20Manny%2C%20I%27d%20like%20to%20talk%20about%20a%20project." class="btn-primary" data-cta="hero" id="hero-cta" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
+          Start a project on WhatsApp
+        </a>
+        <a href="./audits.html" class="btn-ghost">
+          See an audit example
+          <svg width="11" height="11" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7.5 3 12 7l-4.5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── OFFERS SECTION ───────────────────────────────────── -->
+  <section class="offers-section" id="offers">
+    <div class="container">
+
+      <!-- Section frame -->
+      <p class="section-label anim" id="section-label" style="--delay:0.1s">What I offer</p>
+      <p class="price-anchor anim" style="--delay:0.16s">
+        Not sure which one? <strong>Message me what you need</strong> and I will tell you which fits.
+      </p>
+
+      <div class="offers-grid">
+
+        <div class="offer-card tier-active anim" style="--delay:0.2s" data-offer="event_visual">
+          <span class="offer-tag tag-active">Events &amp; culture</span>
+          <div class="offer-tier">Offer 1</div>
+          <h2 class="offer-title">Event Flyer or Poster</h2>
+          <p class="offer-role">A flyer or poster that people read at a glance: one clear message, one clear action.</p>
+
+          <div class="offer-price" style="font-size:16px;">Price agreed before work starts</div>
+          <div class="price-note">Fixed scope · Two revisions · Delivered in files you own</div>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">What you receive</div>
+            <ul>
+              <li>One flyer or poster, print and social sizes</li>
+              <li>Clear hierarchy: what, when, where, how</li>
+              <li>Two rounds of revisions</li>
+              <li>Ready in 3 to 5 days</li>
+            </ul>
+          </div>
+
+          <div class="offer-foot">
+            <span class="offer-note">For events, shops, churches, campus programmes</span>
+            <a href="https://wa.me/2348149686541?text=Hi%20Manny%2C%20I%20need%20a%20flyer%20or%20poster%20for%20an%20event." class="offer-cta" data-cta="event_visual" target="_blank" rel="noopener noreferrer">
+              Message on WhatsApp
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="offer-card tier-active anim" style="--delay:0.24s" data-offer="brand_starter">
+          <span class="offer-tag tag-active">Small business</span>
+          <div class="offer-tier">Offer 2</div>
+          <h2 class="offer-title">Brand Starter</h2>
+          <p class="offer-role">A simple, consistent identity so your business looks like one business everywhere.</p>
+
+          <div class="offer-price" style="font-size:16px;">Price agreed before work starts</div>
+          <div class="price-note">Fixed scope · Two revisions · Delivered in files you own</div>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">What you receive</div>
+            <ul>
+              <li>Wordmark or logo mark</li>
+              <li>Colour palette and type choices</li>
+              <li>Business card design</li>
+              <li>One-page brand sheet showing how to use it</li>
+            </ul>
+          </div>
+
+          <div class="offer-foot">
+            <span class="offer-note">For new and small businesses</span>
+            <a href="https://wa.me/2348149686541?text=Hi%20Manny%2C%20I%27m%20interested%20in%20a%20brand%20starter%20for%20my%20business." class="offer-cta" data-cta="brand_starter" target="_blank" rel="noopener noreferrer">
+              Message on WhatsApp
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="offer-card tier-active anim" style="--delay:0.28s" data-offer="landing_page">
+          <span class="offer-tag tag-active">Business &amp; product</span>
+          <div class="offer-tier">Offer 3</div>
+          <h2 class="offer-title">Landing Page, Designed and Built</h2>
+          <p class="offer-role">One page that explains what you do and makes the next step obvious, designed and built live.</p>
+
+          <div class="offer-price" style="font-size:16px;">Price agreed before work starts</div>
+          <div class="price-note">Fixed scope · Two revisions · Delivered in files you own</div>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">What you receive</div>
+            <ul>
+              <li>Page designed in Figma</li>
+              <li>Built as a responsive live page</li>
+              <li>Contact or WhatsApp action wired in</li>
+              <li>Handover so you can update it</li>
+            </ul>
+          </div>
+
+          <div class="offer-foot">
+            <span class="offer-note">Design and build by the same person</span>
+            <a href="https://wa.me/2348149686541?text=Hi%20Manny%2C%20I%20need%20a%20landing%20page." class="offer-cta" data-cta="landing_page" target="_blank" rel="noopener noreferrer">
+              Message on WhatsApp
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── UI Audit ──────── -->
+        <div class="offer-card tier-entry anim" style="--delay:0.22s" data-offer="tier1_audit">
+          <span class="offer-tag tag-entry">Product &amp; studio</span>
+          <div class="offer-tier">Offer 4</div>
+          <h2 class="offer-title">UI Audit</h2>
+          <p class="offer-role">A recorded walkthrough of your interface: what is broken, why, and what to fix first.</p>
+
+          <div class="offer-price">₦15,000</div>
+          <div class="price-note">Fixed price · No scope creep · Standalone deliverable</div>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">What you receive</div>
+            <ul>
+              <li>Recorded video walkthrough, 10 to 20 minutes</li>
+              <li>Five-lens diagnostic: structure, flow, feedback, readability, consistency</li>
+              <li>Prioritised fix list — one clear first action</li>
+              <li>Optional written summary with the full breakdown</li>
+            </ul>
+          </div>
+
+          <!-- Loom proof — real audit, live now -->
+          <a href="https://www.loom.com/share/b1c902ff61664f0588d5f3ff65671252" target="_blank" rel="noopener noreferrer" class="offer-loom-proof">
+            <span class="offer-loom-icon" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3" stroke="#2FB8B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="#2FB8B0"/></svg>
+            </span>
+            <span class="offer-loom-meta">
+              <span class="offer-loom-title">See an example audit — Remit-Path</span>
+              <span class="offer-loom-desc">Practice audit · Five-lens walkthrough</span>
+            </span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" class="offer-loom-arrow" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="#8E9095" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+
+          <div class="offer-foot">
+            <span class="offer-note">Standalone deliverable</span>
+            <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+              <a href="./audits.html" class="offer-cta-ghost">
+                See the example
+                <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+              </a>
+              <a href="./book.html" class="offer-cta" data-cta="tier1">
+                Book audit
+                <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── TIER 2: Interface Rework ───────────────────── -->
+        <div class="offer-card tier-active anim" style="--delay:0.28s" data-offer="tier2_rework">
+          <span class="offer-tag tag-active">After audit</span>
+          <div class="offer-tier">Follow-on</div>
+          <h2 class="offer-title">Interface Rework</h2>
+          <p class="offer-role">The correction. After the audit identifies the problems, the rework fixes them — redesigning key screens, restructuring flow, rebuilding hierarchy.</p>
+
+          <div class="offer-price">₦50,000 – ₦150,000</div>
+          <div class="price-note">Scoped per engagement · Defined after audit · Naira only</div>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">What you receive</div>
+            <ul>
+              <li>Redesigned screens targeting the failures the audit named</li>
+              <li>Restructured flow and corrected visual hierarchy</li>
+              <li>Dev-ready handoff files</li>
+              <li>Scope defined after audit — no fixing the wrong things</li>
+            </ul>
+          </div>
+
+          <div class="offer-foot">
+            <span class="offer-note">Begins with the audit</span>
+            <a href="./book.html" class="offer-cta" data-cta="tier2">
+              Start with audit
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- ── COLLABORATION ───────────────────────────────── -->
+        <div class="offer-card tier-collab span-full anim" style="--delay:0.4s" data-offer="collaboration">
+          <span class="offer-tag tag-collab">For Studios & Partners</span>
+          <div class="offer-tier">Collaboration</div>
+          <h2 class="offer-title">Work Together</h2>
+          <p class="offer-role">I also work with other people: studios, event teams, developers and brands who need a designer who can build. Scope is agreed per project.</p>
+
+          <div class="offer-includes">
+            <div class="offer-includes-label">Engagement structures</div>
+            <table class="collab-table" role="table">
+              <tbody>
+                <tr>
+                  <td>Subcontracted design or build work</td>
+                  <td>Per screen or per project, agreed upfront</td>
+                </tr>
+                <tr>
+                  <td>Campaigns, shows and events</td>
+                  <td>Visuals and assets for a defined run, agreed upfront</td>
+                </tr>
+                <tr>
+                  <td>Studio or team partnership</td>
+                  <td>Revenue share or project-based split, agreed per engagement</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="offer-foot">
+            <span class="offer-note">Studios · Event teams · Developers · Brands</span>
+            <a href="mailto:hello@mannyaziba.com" class="offer-cta" data-cta="collab">
+              Start a conversation
+              <svg viewBox="0 0 14 14"><path d="M2 7h10M7.5 3 12 7l-4.5 4"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /offers-grid -->
+    </div>
+  </section>
+
+  <!-- ── MID CTA ──────────────────────── -->
+  <section class="cta-section anim" style="--delay:0.1s">
+    <div class="container">
+      <a href="https://wa.me/2348149686541?text=Hi%20Manny%2C%20I%27d%20like%20to%20talk%20about%20a%20project." class="btn-primary" data-cta="mid" id="mid-cta" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
+        Start a project on WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <div class="container"><div class="divider"></div></div>
+
+  <!-- ── FINAL CLOSE ───────────────────── -->
+  <section class="final-close anim" id="footer-close" style="--delay:0.1s">
+    <div class="container">
+      <p class="close-line">Tell me what you need.</p>
+      <p class="close-sub" style="margin-top:8px;">I will reply with scope, price and timeline before any work starts.</p>
+      <a href="https://wa.me/2348149686541?text=Hi%20Manny%2C%20I%27d%20like%20to%20talk%20about%20a%20project." class="btn-primary" data-cta="footer" id="footer-cta" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M7 2v10M2 7l5 5 5-5"/></svg>
+        Start a project on WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────── -->
+  <footer class="page-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-statement">"I remove noise until meaning remains."</span>
+        <span class="footer-cpsa">Brand &amp; Interface Designer</span>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /page -->
+
+<!-- ── EXIT INTENT BANNER ──── -->
+<div class="exit-banner" id="exit-banner" role="complementary" aria-label="One more thing">
+  <p class="exit-banner-text">
+    Not sure yet? Message me what you need. For products, the <strong>UI Audit</strong> is ₦15,000 and stands on its own.
+  </p>
+  <div class="exit-banner-actions">
+    <a href="./book.html" class="btn-exit-cta" id="exit-cta">
+      Book the UI audit
+    </a>
+    <button type="button" class="btn-exit-dismiss" onclick="dismissExitBanner()" aria-label="Dismiss">✕</button>
+  </div>
+</div>
+
+<!-- ── ANALYTICS + TRACKING ─────────────────────────────────── -->
+<script>
+/*
+  MANNY AZIBA — OFFER HUB ANALYTICS
+  Offer hub analytics.
+
+  TRACKING EVENTS:
+  ┌────────────────────────────────────────────────────────┐
+  │  page_view          on load                            │
+  │  cta_click          hero / mid / footer / exit_banner  │
+  │  offer_hover        per tier card                      │
+  │  offer_click        per tier card                      │
+  │  scroll_depth       25 / 50 / 75 / 100%               │
+  │  time_on_page       30s / 60s / 120s                   │
+  │  exit_intent        shown / dismissed                  │
+  │  session_duration   on pagehide                        │
+  └────────────────────────────────────────────────────────┘
+
+  A/B INFRASTRUCTURE: Built in but no active tests yet.
+  Enable when traffic volume supports statistical significance.
+  To activate a test: add a variant to TESTS, add copy to COPY,
+  and inject into DOM in the DOMContentLoaded handler.
+*/
+
+/* ── VARIANT INFRASTRUCTURE (inactive) ─────────────────── */
+const TESTS = {
+  /*
+    headline: {
+      key: 'manny_headline_v1',
+      variants: ['a', 'b'],
+      weights: [50, 50]
+    }
+  */
+};
+
+function assignVariant(test) {
+  const stored = localStorage.getItem(test.key);
+  if (stored) return stored;
+  const rand = Math.random() * 100;
+  let cumulative = 0;
+  for (let i = 0; i < test.variants.length; i++) {
+    cumulative += test.weights[i];
+    if (rand <= cumulative) {
+      localStorage.setItem(test.key, test.variants[i]);
+      return test.variants[i];
+    }
+  }
+  return test.variants[0];
+}
+
+const V = {}; /* No active variants yet */
+
+/* ── CORE TRACKING WRAPPER ──────────────────────────────── */
+function track(event, params) {
+  if (typeof gtag === 'undefined') return;
+  gtag('event', event, Object.assign({}, V, params || {}));
+}
+
+/* ── CTA CLICK HANDLER ──────────────────────────────────── */
+function handleCTA(position) {
+  track('cta_click', { position: position });
+  window.location.href = './book.html';
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  /* ── PAGE VIEW ────────────────────────────────────────── */
+  track('page_view', { page_path: window.location.pathname });
+
+  /* ── CTA BUTTONS ──────────────────────────────────────── */
+  ['hero-cta', 'mid-cta', 'footer-cta'].forEach(function (id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('click', function () {
+      track('cta_click', { position: id.replace('-cta', '') });
+    });
+  });
+
+  /* Exit CTA */
+  const exitCta = document.getElementById('exit-cta');
+  if (exitCta) {
+    exitCta.addEventListener('click', function () {
+      track('cta_click', { position: 'exit_banner' });
+      track('exit_intent', { action: 'converted' });
+    });
+  }
+
+  /* ── OFFER CARD TRACKING ──────────────────────────────── */
+  document.querySelectorAll('.offer-card').forEach(function (card) {
+    const offer = card.dataset.offer;
+    card.addEventListener('mouseenter', function () {
+      track('offer_hover', { offer: offer });
+    });
+    card.addEventListener('click', function () {
+      track('offer_click', { offer: offer });
+    });
+  });
+
+  /* ── OFFER CTA LINKS ──────────────────────────────────── */
+  document.querySelectorAll('[data-cta]').forEach(function (el) {
+    if (el.id) return; /* already handled above */
+    el.addEventListener('click', function () {
+      track('cta_click', { position: el.dataset.cta });
+    });
+  });
+
+  /* ── SCROLL DEPTH ─────────────────────────────────────── */
+  const depths = [25, 50, 75, 100];
+  const reached = new Set();
+  window.addEventListener('scroll', function () {
+    const pct = Math.round(
+      (window.scrollY + window.innerHeight) /
+      document.documentElement.scrollHeight * 100
+    );
+    depths.forEach(function (d) {
+      if (pct >= d && !reached.has(d)) {
+        reached.add(d);
+        track('scroll_depth', { depth_percent: d });
+      }
+    });
+  }, { passive: true });
+
+  /* ── TIME ON PAGE ─────────────────────────────────────── */
+  [30, 60, 120].forEach(function (secs) {
+    setTimeout(function () {
+      track('time_on_page', { seconds: secs });
+    }, secs * 1000);
+  });
+
+  /* ── EXIT INTENT — desktop ────────────────────────────── */
+  let exitShown = false;
+  document.addEventListener('mouseleave', function (e) {
+    if (e.clientY < 5 && !exitShown && !sessionStorage.getItem('exit_dismissed')) {
+      exitShown = true;
+      document.getElementById('exit-banner').classList.add('visible');
+      track('exit_intent', { action: 'shown' });
+    }
+  });
+
+  /* ── EXIT INTENT — mobile (scroll-back-up) ────────────── */
+  let lastScrollY = 0;
+  let mobileExitShown = false;
+  window.addEventListener('scroll', function () {
+    const curr = window.scrollY;
+    if (
+      !mobileExitShown &&
+      !sessionStorage.getItem('exit_dismissed') &&
+      lastScrollY > 400 &&
+      curr < lastScrollY - 80
+    ) {
+      mobileExitShown = true;
+      document.getElementById('exit-banner').classList.add('visible');
+      track('exit_intent', { action: 'shown_mobile' });
+    }
+    lastScrollY = curr;
+  }, { passive: true });
+
+  /* ── SESSION DURATION ─────────────────────────────────── */
+  const sessionStart = Date.now();
+  window.addEventListener('pagehide', function () {
+    track('session_duration', {
+      seconds: Math.round((Date.now() - sessionStart) / 1000)
+    });
+  });
+
+}); /* end DOMContentLoaded */
+
+/* ── EXIT BANNER DISMISS ────────────────────────────────── */
+function dismissExitBanner() {
+  document.getElementById('exit-banner').classList.remove('visible');
+  sessionStorage.setItem('exit_dismissed', '1');
+  track('exit_intent', { action: 'dismissed' });
+}
+</script>
+</body>
+</html>

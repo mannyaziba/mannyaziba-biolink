@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Manny Aziba — CV. Brand and interface designer who builds what he designs.">
+<title>CV — Manny Aziba</title>
+<link rel="icon" type="image/png" href="./favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600&family=Albert+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --obsidian:      #0E0F11;
+    --zen-bone:      #ECEBE6;
+    --quiet-gold:    #B9A46A;
+    --signal-teal:   #2FB8B0;
+    --graphite-ash:  #1C1F24;
+    --mid-grey:      #6B6F75;
+    --fog:           #9A9DA3;
+    --line:          rgba(236,235,230,0.1);
+    --line-strong:   rgba(236,235,230,0.18);
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--obsidian);
+    color: var(--zen-bone);
+    font-family: 'Urbanist', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
+    line-height: 1.65;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .eyebrow {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mid-grey);
+  }
+
+  /* ── NAV BAR ── */
+  .cv-nav {
+    padding: 28px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 52px;
+  }
+
+  .back-link {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid-grey);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.15s;
+  }
+
+  .back-link:hover { color: var(--zen-bone); }
+
+  .back-link svg {
+    width: 14px; height: 14px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  .nav-logo img {
+    height: 22px;
+    width: auto;
+    display: block;
+    opacity: 0.6;
+  }
+
+  /* ── CV HEADER ── */
+  .cv-header {
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 0;
+  }
+
+  .cv-name {
+    font-family: 'Urbanist', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(26px, 5.5vw, 36px);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+
+  .name-first { color: var(--zen-bone); }
+  .name-last  { color: var(--quiet-gold); }
+
+  .cv-title {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: clamp(13px, 2.2vw, 15px);
+    color: var(--zen-bone);
+    opacity: 0.75;
+    margin-bottom: 20px;
+    line-height: 1.45;
+  }
+
+  .cv-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .cv-meta-item {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 12px;
+    color: var(--mid-grey);
+    letter-spacing: 0.02em;
+  }
+
+  .cv-meta-sep {
+    color: var(--line-strong);
+    font-size: 12px;
+  }
+
+  .cv-meta-link {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 12px;
+    color: var(--quiet-gold);
+    text-decoration: none;
+    transition: opacity 0.15s;
+  }
+
+  .cv-meta-link:hover { opacity: 0.7; }
+
+  /* ── CV SECTIONS ── */
+  .cv-section {
+    padding: 36px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .cv-section:last-of-type { border-bottom: none; }
+
+  .cv-section > .eyebrow {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  /* Profile */
+  .profile-text {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: clamp(13px, 2vw, 14px);
+    color: var(--zen-bone);
+    opacity: 0.75;
+    line-height: 1.75;
+    max-width: 600px;
+  }
+
+  /* Competencies */
+  .competency-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 560px) {
+    .competency-grid { grid-template-columns: 1fr; }
+  }
+
+  .competency-card {
+    border: 1px solid var(--line-strong);
+    border-radius: 7px;
+    padding: 18px 16px;
+  }
+
+  .competency-title {
+    font-family: 'Urbanist', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--quiet-gold);
+    margin-bottom: 10px;
+    letter-spacing: -0.005em;
+  }
+
+  .competency-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .competency-list li {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 12px;
+    color: var(--zen-bone);
+    opacity: 0.6;
+    line-height: 1.4;
+    padding-left: 10px;
+    position: relative;
+  }
+
+  .competency-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 7px;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: var(--mid-grey);
+    opacity: 0.5;
+  }
+
+  /* Work entries */
+  .work-entry {
+    margin-bottom: 28px;
+  }
+
+  .work-entry:last-child { margin-bottom: 0; }
+
+  .work-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+  }
+
+  .work-role {
+    font-family: 'Urbanist', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: clamp(14px, 2.2vw, 15px);
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+
+  .work-period {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 12px;
+    color: var(--mid-grey);
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .work-context {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 12px;
+    color: var(--mid-grey);
+    margin-bottom: 10px;
+    letter-spacing: 0.01em;
+  }
+
+  .work-body {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: clamp(12px, 1.8vw, 13px);
+    color: var(--zen-bone);
+    opacity: 0.65;
+    line-height: 1.7;
+  }
+
+  /* Methodology */
+  .methodology-text {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: clamp(13px, 2vw, 14px);
+    color: var(--zen-bone);
+    opacity: 0.7;
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+
+  .lenses-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .lens-chip {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--quiet-gold);
+    border: 1px solid rgba(185,164,106,0.25);
+    border-radius: 4px;
+    padding: 4px 10px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Tools grid */
+  .tools-table {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .tool-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tool-row:last-child { border-bottom: none; }
+
+  .tool-category {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--mid-grey);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding-top: 1px;
+  }
+
+  .tool-items {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 13px;
+    color: var(--zen-bone);
+    opacity: 0.65;
+    line-height: 1.55;
+  }
+
+  /* Proof tools */
+  .proof-tools {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 440px) {
+    .proof-tools { grid-template-columns: 1fr; }
+  }
+
+  .proof-tool-card {
+    border: 1px solid var(--line-strong);
+    border-radius: 7px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .proof-tool-name {
+    font-family: 'Urbanist', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: #fff;
+  }
+
+  .proof-tool-desc {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 12px;
+    color: var(--zen-bone);
+    opacity: 0.55;
+    line-height: 1.45;
+  }
+
+  .proof-tool-link {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--mid-grey);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.15s;
+    margin-top: 2px;
+    display: inline-block;
+  }
+
+  .proof-tool-link:hover { color: var(--quiet-gold); }
+
+  /* Education */
+  .edu-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .edu-degree {
+    font-family: 'Urbanist', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    color: #fff;
+    margin-bottom: 3px;
+  }
+
+  .edu-institution {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 13px;
+    color: var(--mid-grey);
+  }
+
+  .edu-period {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 12px;
+    color: var(--mid-grey);
+    white-space: nowrap;
+  }
+
+  /* ── CV FOOTER ── */
+  .cv-footer {
+    padding: 36px 0 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .cv-footer-meta {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 11px;
+    color: var(--mid-grey);
+    opacity: 0.6;
+  }
+
+  .cv-footer-links {
+    display: flex;
+    gap: 16px;
+  }
+
+  .cv-footer-link {
+    font-family: 'Albert Sans', system-ui, sans-serif;
+    font-size: 12px;
+    color: var(--mid-grey);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .cv-footer-link:hover { color: var(--zen-bone); }
+
+  @media (max-width: 500px) {
+    .tool-row { grid-template-columns: 80px 1fr; }
+    .competency-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ── NAV ── -->
+  <nav class="cv-nav">
+    <a href="./about.html" class="back-link">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </a>
+    <div class="nav-logo">
+      <img src="./manny_aziba_Logo.svg" alt="Manny Aziba">
+    </div>
+  </nav>
+
+  <!-- ── CV HEADER ── -->
+  <header class="cv-header">
+    <h1 class="cv-name"><span class="name-first">Immanuel</span> <span class="name-last">Aziba</span></h1>
+    <p class="cv-title">Brand &amp; Interface Designer — builds what he designs</p>
+    <div class="cv-meta">
+      <span class="cv-meta-item">Nigeria</span>
+      <span class="cv-meta-sep">·</span>
+      <span class="cv-meta-item">Available for remote worldwide</span>
+      <span class="cv-meta-sep">·</span>
+      <a href="https://linkedin.com/in/imannuelaziba" class="cv-meta-link" target="_blank" rel="noopener">LinkedIn →</a>
+    </div>
+  </header>
+
+  <!-- ── PROFILE ── -->
+  <section class="cv-section">
+    <span class="eyebrow">Profile</span>
+    <p class="profile-text">
+      I design brand and interface work, and I build it myself. I make posters, flyers and brand starters for events and small businesses, build landing pages live, and audit interfaces using a five-lens framework. I publish one piece of work a week, with the principle behind it, and label practice work as practice. My two live tools are working proof of how I think about interfaces.
+    </p>
+  </section>
+
+  <!-- ── CORE COMPETENCIES ── -->
+  <section class="cv-section">
+    <span class="eyebrow">Core competencies</span>
+    <div class="competency-grid">
+      <div class="competency-card">
+        <p class="competency-title">Brand &amp; Graphic</p>
+        <ul class="competency-list">
+          <li>Typography and colour systems</li>
+          <li>Posters and flyers</li>
+          <li>Identity starters: wordmark, palette, card</li>
+          <li>One-page brand sheets</li>
+        </ul>
+      </div>
+      <div class="competency-card">
+        <p class="competency-title">Interface</p>
+        <ul class="competency-list">
+          <li>Five-lens diagnostic framework</li>
+          <li>Visual hierarchy and flow</li>
+          <li>Information architecture</li>
+          <li>Usability audit</li>
+        </ul>
+      </div>
+      <div class="competency-card">
+        <p class="competency-title">Build</p>
+        <ul class="competency-list">
+          <li>HTML / CSS, responsive layouts</li>
+          <li>JavaScript</li>
+          <li>Accessibility basics</li>
+          <li>Deployment on Vercel</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SELECTED WORK ── -->
+  <section class="cv-section">
+    <span class="eyebrow">Selected work</span>
+
+    <div class="work-entry">
+      <div class="work-header">
+        <span class="work-role">Independent Practice — Brand and Interface Design</span>
+        <span class="work-period">2024 — Present</span>
+      </div>
+      <p class="work-context">Posters and flyers · Brand starters · Landing pages · UX audits · Remote / Nigeria</p>
+      <p class="work-body">Built and shipped two live tools: a five-lens UX audit tool and BetNote, a scannable interface for high-frequency multi-sport data. Published a documented UX audit of Remit-Path. Developed the five-lens framework used to diagnose interfaces. Created the Manny Aziba brand system: colour, typography and component language. Now publishing one piece of work every week, from typography posters to brand identities to interfaces built live.</p>
+    </div>
+  </section>
+
+  <!-- ── METHODOLOGY ── -->
+  <section class="cv-section">
+    <span class="eyebrow">Methodology</span>
+    <p class="methodology-text">Every design decision and every audit runs through five lenses. Each choice gets a named reason, not a matter of taste.</p>
+    <div class="lenses-row">
+      <span class="lens-chip">Structure</span>
+      <span class="lens-chip">Flow</span>
+      <span class="lens-chip">Feedback</span>
+      <span class="lens-chip">Readability</span>
+      <span class="lens-chip">Consistency</span>
+    </div>
+  </section>
+
+  <!-- ── PROOF — LIVE TOOLS ── -->
+  <section class="cv-section">
+    <span class="eyebrow">Proof — live tools</span>
+    <div class="proof-tools">
+      <div class="proof-tool-card">
+        <p class="proof-tool-name">UX Audit Tool</p>
+        <p class="proof-tool-desc">Five-lens diagnostic framework applied in a structured, interactive audit format.</p>
+        <a href="https://ux-intelligence-audit.vercel.app/" class="proof-tool-link" target="_blank" rel="noopener">Try the tool →</a>
+      </div>
+      <div class="proof-tool-card">
+        <p class="proof-tool-name">BetNote</p>
+        <p class="proof-tool-desc">Clarity and readability design for data-dense interfaces under time pressure.</p>
+        <a href="https://betnote.vercel.app/" class="proof-tool-link" target="_blank" rel="noopener">Open BetNote →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TOOLS ── -->
+  <section class="cv-section">
+    <span class="eyebrow">Tools</span>
+    <div class="tools-table">
+      <div class="tool-row">
+        <span class="tool-category">Design</span>
+        <span class="tool-items">Figma · FigJam · Inkscape · Photopea</span>
+      </div>
+      <div class="tool-row">
+        <span class="tool-category">Systems</span>
+        <span class="tool-items">Design tokens · Component specifications · Brand sheets</span>
+      </div>
+      <div class="tool-row">
+        <span class="tool-category">Research</span>
+        <span class="tool-items">Heuristic evaluation · Usability analysis · Interface breakdowns</span>
+      </div>
+      <div class="tool-row">
+        <span class="tool-category">Front-end</span>
+        <span class="tool-items">HTML / CSS · JavaScript · Responsive design · Vercel deployment</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATION ── -->
+  <section class="cv-section">
+    <span class="eyebrow">Education</span>
+    <div class="edu-entry">
+      <div>
+        <p class="edu-degree">Software Engineering — BSc</p>
+        <p class="edu-institution">Miva Open University · In progress</p>
+      </div>
+      <span class="edu-period">2025 — 2028</span>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="cv-footer">
+    <span class="cv-footer-meta">Nigeria · Remote worldwide · mannyaziba.com</span>
+    <div class="cv-footer-links">
+      <a href="https://linkedin.com/in/imannuelaziba" class="cv-footer-link" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://twitter.com/mannyaziba" class="cv-footer-link" target="_blank" rel="noopener">Twitter / X</a>
+      <a href="./about.html" class="cv-footer-link">← Back to site</a>
+    </div>
+  </footer>
+
+</div>
+
+</body>
+</html>
